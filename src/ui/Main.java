@@ -21,7 +21,7 @@ class YoYoJudge {
 
     public static void main(String[] args) {
         YoYoJudge yyjh = new YoYoJudge();
-        yyjh.start();
+        yyjh.start(); 
     }
 }
 
