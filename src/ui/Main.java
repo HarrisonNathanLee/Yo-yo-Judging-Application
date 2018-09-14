@@ -3,7 +3,7 @@ package ui;
 import clicker.Score;
 
 class YoYoJudge {
- 
+
     public int clickerscore = 0;
 
     public YoYoJudge(){
