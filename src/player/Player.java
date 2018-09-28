@@ -1,107 +1,205 @@
 package player;
-import java.util.Scanner;
+
+import java.util.ArrayList;
 
 public class Player {
     private String firstName = "";
     private String lastName = "";
     private String division = "";
+    private int routineLength = 0;
     private int execution = 0;
     private int control = 0;
     private int trickDiversity = 0;
     private int spaceUseAndEmphasis = 0;
-    private int choreograhpy = 0;
+    private int choreography = 0;
     private int construction = 0;
     private int bodyControl = 0;
     private int showmanship = 0;
-    private float clickerScore = 0f;
+    private double clickerScore = 0;
+    private double positiveClicks = 0;
+    private double negativeClicks = 0;
+    ArrayList<String> clicksLog = new ArrayList<String>();
 
-    Scanner scanner = new Scanner(System.in);
-
-    public void getPlayerInformation() {
-        System.out.println("The start of a yo-yo judging application");
-        System.out.println("Player first name: ");
-        firstName = scanner.nextLine();
-        System.out.println("Player last name: ");
-        lastName = scanner.nextLine();
-        System.out.println("Player division: ");
-        division = scanner.nextLine();
-        System.out.println("Input the length of the routine in seconds: ");
-        int routineLength = scanner.nextInt();
+    //MODIFIES: This
+    //EFFECTS: Retrieves the first name of the player
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void getPerformanceEvals () {
-        System.out.println("Execution score is: ");
-        execution = scanner.nextInt();
-        System.out.println("Control score is: ");
-        control = scanner.nextInt();
-        System.out.println("Trick Diversity score is: ");
-        trickDiversity = scanner.nextInt();
-        System.out.println("Space Use & Emphasis score is: ");
-        spaceUseAndEmphasis = scanner.nextInt();
-        System.out.println("Music Use 1: Choreography score is: ");
-        choreograhpy = scanner.nextInt();
-        System.out.println("Music Use 2: Consruction score is: ");
-        construction = scanner.nextInt();
-        System.out.println("Body Control score is: ");
-        bodyControl = scanner.nextInt();
-        System.out.println("Showmanship score is: ");
-        showmanship = scanner.nextInt();
+    //MODIFIES: This
+    //EFFECTS: Retrieves the last name of the player
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public void awardClick() {
-        clickerScore++;
+    //MODIFIES: This
+    //EFFECTS: Retrieves the division of the player
+    public void setDivision(String division) {
+        this.division = division;
     }
 
-    public void removeClick() {
-        clickerScore--;
+    //MODIFIES: This
+    //EFFECTS: Retrieves the routine length of the player
+    public void setRoutineLength(int routineLength) {
+        this.routineLength = routineLength;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Retrieves the execution score of the player
+    public void setExecution(int execution) {
+        this.execution = execution;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Retrieves the control score of the player
+    public void setControl(int control) {
+        this.control = control;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Retrieves the trick diversity score of the player
+    public void setTrickDiversity(int trickDiversity) {
+        this.trickDiversity = trickDiversity;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Retrieves the space use and emphasis score of the player
+    public void setSpaceUseAndEmphasis(int spaceUseAndEmphasis) {
+        this.spaceUseAndEmphasis = spaceUseAndEmphasis;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Retrieves the choreography score of the player
+    public void setChoreography(int choreography) {
+        this.choreography = choreography;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Retrieves the construction score of the player
+    public void setConstruction(int construction) {
+        this.construction = construction;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Retrieves the body control score of the player
+    public void setBodyControl(int bodyControl) {
+        this.bodyControl = bodyControl;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Retrieves the showmanship score of the player
+    public void setShowmanship(int showmanship) {
+        this.showmanship = showmanship;
+    }
+
+    //EFFECTS: Returns the first name of the player
     public String getFirstName() {
         return firstName;
     }
 
+    //EFFECTS: Returns the last name of the player
     public String getLastName() {
         return lastName;
     }
 
-    public String getDivision() {
-        return division;
-    }
-
-    public float getScore() {
+    //EFFECTS: Returns the clicker score of the player
+    public double getScore() {
         return clickerScore;
     }
 
+    //EFFECTS: Returns the execution score of the player
     public int getExecution(){
         return execution;
     }
 
+    //EFFECTS: Returns the control score of the player
     public int getControl(){
         return control;
     }
 
+    //EFFECTS: Returns the trick diversity score of the player
     public int getTrickDiversity(){
         return trickDiversity;
     }
 
+    //EFFECTS: Returns the space use and emphasis score of the player
     public int getSpaceUseAndEmphasis(){
         return spaceUseAndEmphasis;
     }
 
+    //EFFECTS: Returns the choreography score of the player
     public int getChoreography(){
-        return choreograhpy;
+        return choreography;
     }
 
-    public int getConstruction(){
+    //EFFECTS: Returns the construction score of the player
+    public int getConstruction() {
         return construction;
     }
 
+    //EFFECTS: Returns the body control score of the player
     public int getBodyControl (){
         return bodyControl;
     }
 
+    //EFFECTS: Returns the showmanship score of the player
     public int getShowmanship (){
         return showmanship;
     }
+
+    //EFFECTS: Returns the clicker score of the player
+    public double getClickerScore() {
+        return clickerScore;
+    }
+
+    //EFFECTS: Returns the positive clicks of a player
+    public double getPositiveClicks() {
+        return positiveClicks;
+    }
+
+    //EFFECTS: Returns the negative clicks of the player
+    public double getNegativeClicks() {
+        return negativeClicks;
+    }
+
+    //EFFECTS: Returns a log of clicks
+    public ArrayList<String> getClicksLog() {
+        return clicksLog;
+    }
+
+    //EFFECTS: Returns the division of the player
+    public String getDivision() {
+        return division;
+    }
+
+    //EFFECTS: Returns the routine length
+    public int getRoutineLength() {
+        return routineLength;
+    }
+
+
+    //MODIFIES: This
+    //EFFECTS: Adds one to positive clicks and logs the click to clicksLog
+    public void awardClick() {
+        positiveClicks++;
+        clicksLog.add("positive");
+
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Adds one to negative clicks and logs the click to clicksLog
+    public void removeClick() {
+        negativeClicks++;
+        clicksLog.add("negative");
+    }
+
+    //MODIFIES: This
+    //EFFECTS: produces and returns the final clickerScore from the positive clicks awarded and the negative clicks deducted
+    public void produceClickerScore(){
+        clickerScore = getPositiveClicks() - getNegativeClicks();
+        System.out.println(getFirstName() + " " + getLastName() + "'s" + " final clickerscore is: " + getClickerScore());
+    }
+
 }
+
 

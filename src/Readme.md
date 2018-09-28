@@ -20,3 +20,15 @@
 - Things that need to be fixed
     - Improve/write better code according to the 4 step design process
     - Using requires, effects, and modifies clauses
+
+3: Abstraction and Testing
+- Cleaned up code and added requires,effects,modifies statements to methods
+- Added data analysis class which analyzes the clicker data for a given player
+- Only method in data analysis currently determines fire and tilt sections of routine
+- Was going to add timing element; however cannot implement effectively until I have a UI: would need a-synchronous code
+- Things which have yet to be implemented:
+    - More data analysis features which can be implemented without a GUI:
+        - Clicks per second based off of the pre-selected routine length value (wildcard, prelim, semi, 2-minute, final)
+    - Clicker
+        - reset clicker values by hitting reset button
+    - Interfaces for wildcard, prelim, semi, 2-minute, final
