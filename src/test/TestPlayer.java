@@ -90,50 +90,152 @@ public class TestPlayer {
         assertEquals(0,dummyPlayer.getClickerScore());
         assertEquals(2,dummyPlayer.getClicksLog().size());
     }
+
+    //Tests for Major deducts
+
+    @Test
+    public void testOneRestart(){
+        dummyPlayer.restart();
+        dummyPlayer.multiplyRestart();
+        assertEquals(1, dummyPlayer.getRestartFinal());
+    }
+
+    @Test
+    public void testTwoRestart(){
+        dummyPlayer.restart();
+        dummyPlayer.restart();
+        dummyPlayer.multiplyRestart();
+        assertEquals(2, dummyPlayer.getRestartFinal());
+    }
+
+    @Test
+    public void testOneChange(){
+        dummyPlayer.change();
+        dummyPlayer.multiplyChange();
+        assertEquals(3, dummyPlayer.getChangeFinal());
+    }
+
+    @Test
+    public void testTwoChange(){
+        dummyPlayer.change();
+        dummyPlayer.change();
+        dummyPlayer.multiplyChange();
+        assertEquals(6, dummyPlayer.getChangeFinal());
+    }
+
+    @Test
+    public void testOneDiscard(){
+        dummyPlayer.discard();
+        dummyPlayer.multiplyDiscard();
+        assertEquals(5, dummyPlayer.getDiscardFinal());
+    }
+
+    @Test
+    public void testTwoDiscard(){
+        dummyPlayer.discard();
+        dummyPlayer.discard();
+        dummyPlayer.multiplyDiscard();
+        assertEquals(10, dummyPlayer.getDiscardFinal());
+    }
+
+    //Tests for resetting clickers
+
+    @Test
+    public void testResetZeroClicks(){
+       dummyPlayer.resetClicks();
+       dummyPlayer.produceClickerScore();
+       assertEquals(0, dummyPlayer.getPositiveClicks());
+       assertEquals(0, dummyPlayer.getNegativeClicks());
+       assertEquals(0,dummyPlayer.getClickerScore());
+    }
+
+    @Test
+    public void testResetOnePositiveClick() {
+        dummyPlayer.awardClick();
+        dummyPlayer.produceClickerScore();
+        assertEquals(1, dummyPlayer.getPositiveClicks());
+        assertEquals(1, dummyPlayer.getClickerScore());
+        dummyPlayer.resetClicks();
+        dummyPlayer.produceClickerScore();
+        assertEquals(0, dummyPlayer.getPositiveClicks());
+        assertEquals(0, dummyPlayer.getClickerScore());
+
+    }
+    @Test
+    public void testResetOneNegativeClick () {
+        dummyPlayer.removeClick();
+        dummyPlayer.produceClickerScore();
+        assertEquals(1, dummyPlayer.getNegativeClicks());
+        assertEquals(-1, dummyPlayer.getClickerScore());
+        dummyPlayer.resetClicks();
+        dummyPlayer.produceClickerScore();
+        assertEquals(0, dummyPlayer.getNegativeClicks());
+        assertEquals(0, dummyPlayer.getClickerScore());
+    }
+
+    @Test
+    public void testResetNetZero() {
+        dummyPlayer.awardClick();
+        dummyPlayer.removeClick();
+        dummyPlayer.produceClickerScore();
+        assertEquals(1, dummyPlayer.getPositiveClicks());
+        assertEquals(1, dummyPlayer.getNegativeClicks());
+        assertEquals(0, dummyPlayer.getClickerScore());
+        dummyPlayer.resetClicks();
+        dummyPlayer.produceClickerScore();
+        assertEquals(0, dummyPlayer.getPositiveClicks());
+        assertEquals(0, dummyPlayer.getNegativeClicks());
+        assertEquals(0, dummyPlayer.getClickerScore());
+    }
+
+
+    @Test
+    public void testResetRandomNetNegative() {
+        dummyPlayer.removeClick();
+        dummyPlayer.removeClick();
+        dummyPlayer.removeClick();
+        dummyPlayer.removeClick();
+        dummyPlayer.removeClick();
+        dummyPlayer.awardClick();
+        dummyPlayer.produceClickerScore();
+        assertEquals(1, dummyPlayer.getPositiveClicks());
+        assertEquals(5, dummyPlayer.getNegativeClicks());
+        assertEquals(-4, dummyPlayer.getClickerScore());
+        dummyPlayer.resetClicks();
+        dummyPlayer.produceClickerScore();
+        assertEquals(0, dummyPlayer.getPositiveClicks());
+        assertEquals(0, dummyPlayer.getNegativeClicks());
+        assertEquals(0, dummyPlayer.getClickerScore());
+    }
+
+    //Tests for resetting major deducts
+
+    @Test
+    public void testResetZeroDeducts(){
+        dummyPlayer.resetMajorDeducts();
+        assertEquals(0, dummyPlayer.getNumberOfRestarts());
+        assertEquals(0,dummyPlayer.getNumberOfChanges());
+        assertEquals(0,dummyPlayer.getNumberOfDiscards());
+    }
+    @Test
+    public void testResetMajors(){
+        dummyPlayer.restart();
+        dummyPlayer.restart();
+        dummyPlayer.discard();
+        dummyPlayer.discard();
+        dummyPlayer.change();
+        dummyPlayer.change();
+        assertEquals(2,dummyPlayer.getNumberOfRestarts());
+        assertEquals(2,dummyPlayer.getNumberOfChanges());
+        assertEquals(2,dummyPlayer.getNumberOfDiscards());
+        dummyPlayer.resetMajorDeducts();
+        assertEquals(0,dummyPlayer.getNumberOfRestarts());
+        assertEquals(0,dummyPlayer.getNumberOfChanges());
+        assertEquals(0,dummyPlayer.getNumberOfDiscards());
+    }
+
+
+
 }
 
-/*
-    @Test
-    public void testStopImmediatelyZeroClicks(){
-        int routineLength = 30;
-        dummyPlayer.clicker();
-        String keyPress = "stop";
-        keyPress.equals("stop");
-        assertEquals(dummyPlayer.clickerScore == 0);
 
-    }
-
-    @Test
-    public void testPositiveClicksOnly(){
-        Player dummyPlayer = new Player();
-        int routineLength = 30;
-        dummyPlayer.clicker();
-        String keyPress = "j";
-        keyPress.equals("j");
-        // have a positive value for clicker score
-        assertEquals(dummyPlayer.clickerScore == 1);
-
-    }
-
-    @Test
-    public void testNegativeClicksOnly(){
-        Player dummyPlayer = new Player();
-        int routineLength = 30;
-        dummyPlayer.clicker();
-        String keyPress = "f";
-        keyPress.equals("f");
-        // have a negative value for clicker score
-        assertEquals(dummyPlayer.clickerScore == -1);
-    }
-
-
-    @Test
-    public void testZeroClick(){
-        Player dummyPlayer = new Player();
-        int routineLength = 30;
-        dummyPlayer.clicker();
-        // will subtract positive value and negative value and return a value of zero for clicker score
-        assertEquals(dummyPlayer.clickerScore ==0);
-    }
-
-*/

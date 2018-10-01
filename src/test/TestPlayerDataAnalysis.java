@@ -18,6 +18,8 @@ public class TestPlayerDataAnalysis {
         data = new PlayerDataAnalysis(player);
     }
 
+    //Tests for clicksOnTilt and ClicksOnFire
+
     @Test
     public void testNoClick(){
         assertEquals(0, data.clicksOnFire());
@@ -137,6 +139,20 @@ public class TestPlayerDataAnalysis {
         assertEquals(0,data.clicksOnTilt());
         assertEquals(0,data.clicksOnFire());
     }
+
+// Need to fix this test
+    @Test
+    public void testCPS(){
+        int positiveClicks = 100;
+        int negativeClicks = 10;
+        int routineLength = 90;
+        player.setRoutineLength(routineLength);
+        player.setPositiveClicks(positiveClicks);
+        player.setNegativeClicks(negativeClicks);
+        //assertEquals(85, player.getClickerScore());
+        //assertEquals(1, data.clicksPerSecond());
+    }
+
 
 
 }

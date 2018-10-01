@@ -18,6 +18,28 @@ public class Player {
     private double clickerScore = 0;
     private double positiveClicks = 0;
     private double negativeClicks = 0;
+    private int numberOfRestarts = 0;
+    private int numberOfChanges = 0;
+    private int numberOfDiscards = 0;
+    private int restartMultiplier = 1;
+    private int changeMultiplier = 3;
+    private int discardMultiplier = 5;
+
+    public int getRestartFinal() {
+        return restartFinal;
+    }
+
+    public int getChangeFinal() {
+        return changeFinal;
+    }
+
+    public int getDiscardFinal() {
+        return discardFinal;
+    }
+
+    private int restartFinal = 0;
+    private int changeFinal = 0;
+    private int discardFinal = 0;
     ArrayList<String> clicksLog = new ArrayList<String>();
 
     //MODIFIES: This
@@ -92,6 +114,14 @@ public class Player {
         this.showmanship = showmanship;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the positive clicks of the player
+    public void setPositiveClicks(int positiveClicks) {this.positiveClicks = positiveClicks; }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the negative clicks of the player
+    public void setNegativeClicks(int negativeClicks) {this.negativeClicks = negativeClicks; }
+
     //EFFECTS: Returns the first name of the player
     public String getFirstName() {
         return firstName;
@@ -103,7 +133,7 @@ public class Player {
     }
 
     //EFFECTS: Returns the clicker score of the player
-    public double getScore() {
+    public double getClickerScore() {
         return clickerScore;
     }
 
@@ -147,11 +177,6 @@ public class Player {
         return showmanship;
     }
 
-    //EFFECTS: Returns the clicker score of the player
-    public double getClickerScore() {
-        return clickerScore;
-    }
-
     //EFFECTS: Returns the positive clicks of a player
     public double getPositiveClicks() {
         return positiveClicks;
@@ -161,6 +186,26 @@ public class Player {
     public double getNegativeClicks() {
         return negativeClicks;
     }
+
+    //EFFECTS: Returns the number of restarts of the player
+    public int getNumberOfRestarts() { return numberOfRestarts; }
+
+    //EFFECTS: Returns the number of changes of the player
+    public int getNumberOfChanges() { return numberOfChanges; }
+
+    //EFFECTS: Returns the number of discards of the player
+    public int getNumberOfDiscards() { return numberOfDiscards; }
+
+    //EFFECTS: Returns the restart multiplier
+    public int getRestartMultiplier() { return restartMultiplier; }
+
+    //EFFECTS: Returns the change multiplier
+    public int getChangeMultiplier() {
+        return changeMultiplier;
+    }
+
+    //EFFECTS: Returns the discard multiplier
+    public int getDiscardMultiplier() { return discardMultiplier; }
 
     //EFFECTS: Returns a log of clicks
     public ArrayList<String> getClicksLog() {
@@ -177,13 +222,11 @@ public class Player {
         return routineLength;
     }
 
-
     //MODIFIES: This
     //EFFECTS: Adds one to positive clicks and logs the click to clicksLog
     public void awardClick() {
         positiveClicks++;
         clicksLog.add("positive");
-
     }
 
     //MODIFIES: This
@@ -194,11 +237,85 @@ public class Player {
     }
 
     //MODIFIES: This
-    //EFFECTS: produces and returns the final clickerScore from the positive clicks awarded and the negative clicks deducted
+    //EFFECTS: Produces and returns the final clickerScore from the positive clicks awarded and the negative clicks deducted
     public void produceClickerScore(){
         clickerScore = getPositiveClicks() - getNegativeClicks();
         System.out.println(getFirstName() + " " + getLastName() + "'s" + " final clickerscore is: " + getClickerScore());
     }
+
+    //REQUIRES:
+    //MODIFIES: This
+    //EFFECTS: Adds one to number of restarts
+    public void restart(){
+        numberOfRestarts++;
+    }
+
+    //REQUIRES:
+    //MODIFIES: This
+    //EFFECTS: Returns and multiplies number of restarts by restart multiplier
+    public void multiplyRestart(){
+        restartFinal = getNumberOfRestarts() * getRestartMultiplier();
+    }
+
+    //REQUIRES:
+    //MODIFIES: This
+    //EFFECTS: Adds one to number of changes
+    public void change(){
+        numberOfChanges++;
+    }
+
+    //REQUIRES:
+    //MODIFIES: This
+    //EFFECTS: Returns and multiplies number of changes by change multiplier
+    public void multiplyChange(){
+        changeFinal = getNumberOfChanges() * getChangeMultiplier();
+    }
+
+    //REQUIRES:
+    //MODIFIES: This
+    //EFFECTS: Adds one to number of discards
+    public void discard(){
+       numberOfDiscards++;
+    }
+
+    //REQUIRES:
+    //MODIFIES: This
+    //EFFECTS: Returns and multiplies number of discards by discard multiplier
+    public void multiplyDiscard(){
+        discardFinal = getNumberOfDiscards() * getDiscardMultiplier();
+    }
+
+    //REQUIRES:
+    //MODIFIES: This
+    //EFFECTS: Sets positive clicks and negative clicks to zero
+    public void resetClicks(){
+        positiveClicks = 0;
+        negativeClicks = 0;
+    }
+
+    // probably reset statistics too!
+
+    //REQUIRES:
+    //MODIFIES: This
+    //EFFECTS: Sets all major deducts to zero
+    public void resetMajorDeducts(){
+        numberOfRestarts = 0;
+        numberOfChanges = 0;
+        numberOfDiscards = 0;
+    }
+
+    //REQUIRES:
+    //MODIFIES: This
+    //EFFECTS: Sets positive clicks, negative clicks, change, discard, and restart to zero
+    public void resetEverything(){
+        positiveClicks = 0;
+        negativeClicks = 0;
+        numberOfRestarts = 0;
+        numberOfChanges = 0;
+        numberOfDiscards = 0;
+    }
+
+
 
 }
 

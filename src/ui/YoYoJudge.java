@@ -17,13 +17,21 @@ public class YoYoJudge {
         Player p = new Player();
         setPlayerInformation(p);
         clicker(p);
+        p.restart();
+        p.multiplyChange();
+        p.multiplyDiscard();
+        System.out.println( p.getFirstName()+" "+ p.getLastName() +" final reset score is: "+p.getRestartFinal());
+        System.out.println(p.getFirstName()+" "+p.getLastName()+" final change score is: "+p.getChangeFinal());
+        System.out.println(p.getFirstName()+" "+p.getLastName()+" final discard score is: " +p.getDiscardFinal());
         setPerformanceEvals(p);
         getPerformanceEvals(p);
         PlayerDataAnalysis data = new PlayerDataAnalysis(p);
         int clicksOnFire = data.clicksOnFire();
         int clicksOnTilt = data.clicksOnTilt();
+        double clicksPerSecond = data.clicksPerSecond();
         System.out.println("Fire sections in routine: " +clicksOnFire);
         System.out.println("Tilted sections in routine: " +clicksOnTilt);
+        System.out.println("Clicks per second: " + clicksPerSecond);
     }
 
     //MODIFIES: This, player
@@ -56,6 +64,24 @@ public class YoYoJudge {
             }
             else if (keyPress.equals("j")) {
                 p.awardClick();
+            }
+            else if (keyPress.equals("q")) {
+                p.restart();
+            }
+            else if (keyPress.equals("w")) {
+                p.change();
+            }
+            else if (keyPress.equals("e")) {
+                p.discard();
+            }
+            else if (keyPress.equals("i")){
+                p.resetClicks();
+            }
+            else if (keyPress.equals("o")){
+                p.resetMajorDeducts();
+            }
+            else if (keyPress.equals("p")) {
+                p.resetEverything();
             }
             else if (keyPress.equals("stop")) {
                 p.produceClickerScore();

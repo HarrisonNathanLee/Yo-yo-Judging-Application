@@ -49,6 +49,14 @@ public class PlayerDataAnalysis {
         }
         return numberOfTiltedSectionsInRoutine;
     }
+
+    //REQUIRES: RoutineLength > 0
+    //EFFECTS: Will return the number of clicks per second of a routine
+    public double clicksPerSecond(){
+        double CPS = player.getClickerScore()/ player.getRoutineLength();
+        return CPS;
+    }
+
 }
 
 
