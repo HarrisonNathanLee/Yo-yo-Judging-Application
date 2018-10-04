@@ -7,6 +7,7 @@ import player.PlayerDataAnalysis;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
+
 public class TestPlayerDataAnalysis {
 
     Player player;
@@ -22,16 +23,20 @@ public class TestPlayerDataAnalysis {
 
     @Test
     public void testNoClick(){
-        assertEquals(0, data.clicksOnFire());
-        assertEquals(0, data.clicksOnTilt());
+        data.clicksOnFire();
+        data.clicksOnTilt();
+        assertEquals(0, data.getNumberOfFireSectionsInRoutine());
+        assertEquals(0, data.getNumberOfTiltedSectionsInRoutine());
     }
 
     @Test
     public void testNoFireNoTilt(){
         player.awardClick();
         player.removeClick();
-        assertEquals(0, data.clicksOnFire());
-        assertEquals(0, data.clicksOnTilt());
+        data.clicksOnFire();
+        data.clicksOnTilt();
+        assertEquals(0, data.getNumberOfFireSectionsInRoutine());
+        assertEquals(0, data.getNumberOfTiltedSectionsInRoutine());
     }
 
     @Test
@@ -40,8 +45,10 @@ public class TestPlayerDataAnalysis {
             player.awardClick();
             player.removeClick();
         }
-        assertEquals(0, data.clicksOnFire());
-        assertEquals(0, data.clicksOnTilt());
+        data.clicksOnFire();
+        data.clicksOnTilt();
+        assertEquals(0, data.getNumberOfFireSectionsInRoutine());
+        assertEquals(0, data.getNumberOfTiltedSectionsInRoutine());
     }
 
 
@@ -51,7 +58,8 @@ public class TestPlayerDataAnalysis {
             player.awardClick();
         }
         player.removeClick();
-        assertEquals(0, data.clicksOnFire());
+        data.clicksOnFire();
+        assertEquals(0, data.getNumberOfFireSectionsInRoutine());
     }
 
     @Test
@@ -60,7 +68,8 @@ public class TestPlayerDataAnalysis {
             player.removeClick();
         }
         player.awardClick();
-        assertEquals(0, data.clicksOnTilt());
+        data.clicksOnTilt();
+        assertEquals(0, data.getNumberOfTiltedSectionsInRoutine());
     }
 
     @Test
@@ -68,7 +77,8 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 10; i++) {
             player.awardClick();
         }
-        assertEquals(1, data.clicksOnFire());
+        data.clicksOnFire();
+        assertEquals(1, data.getNumberOfFireSectionsInRoutine());
     }
 
     @Test
@@ -76,7 +86,8 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 10; i++) {
             player.removeClick();
         }
-        assertEquals(1, data.clicksOnTilt());
+        data.clicksOnTilt();
+        assertEquals(1, data.getNumberOfTiltedSectionsInRoutine());
     }
 
     @Test
@@ -87,8 +98,10 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 10; i++){
             player.awardClick();
         }
-        assertEquals(1, data.clicksOnFire());
-        assertEquals(1, data.clicksOnTilt());
+        data.clicksOnFire();
+        data.clicksOnTilt();
+        assertEquals(1, data.getNumberOfFireSectionsInRoutine());
+        assertEquals(1, data.getNumberOfTiltedSectionsInRoutine());
     }
 
 
@@ -97,7 +110,8 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 20; i++) {
             player.awardClick();
         }
-        assertEquals(2, data.clicksOnFire());
+        data.clicksOnFire();
+        assertEquals(2, data.getNumberOfFireSectionsInRoutine());
     }
 
     @Test
@@ -105,7 +119,8 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 20; i++) {
             player.removeClick();
         }
-        assertEquals(2, data.clicksOnTilt());
+        data.clicksOnTilt();
+        assertEquals(2, data.getNumberOfTiltedSectionsInRoutine());
 
     }
 
@@ -114,7 +129,8 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 19; i++) {
             player.awardClick();
         }
-        assertEquals(1, data.clicksOnFire());
+        data.clicksOnFire();
+        assertEquals(1, data.getNumberOfFireSectionsInRoutine());
     }
 
     @Test
@@ -122,7 +138,8 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 19; i++) {
             player.removeClick();
         }
-        assertEquals(1, data.clicksOnTilt());
+        data.clicksOnTilt();
+        assertEquals(1, data.getNumberOfTiltedSectionsInRoutine());
     }
 
     @Test
@@ -136,11 +153,45 @@ public class TestPlayerDataAnalysis {
             player.removeClick();
         }
         player.awardClick();
-        assertEquals(0,data.clicksOnTilt());
-        assertEquals(0,data.clicksOnFire());
+        data.clicksOnFire();
+        data.clicksOnTilt();
+        assertEquals(0,data.getNumberOfFireSectionsInRoutine());
+        assertEquals(0,data.getNumberOfTiltedSectionsInRoutine());
     }
 
-// Need to fix this test
+    //Tests for resetting fire and tilt sections in routine count
+
+    @Test
+    public void testResetZeroFireTilt(){
+        data.resetFireTilt();
+        data.clicksOnFire();
+        data.clicksOnTilt();
+        assertEquals(0,data.getNumberOfFireSectionsInRoutine());
+        assertEquals(0,data.getNumberOfTiltedSectionsInRoutine());
+    }
+
+    @Test
+    public void testResetFireTilt(){
+        for(int i = 0; i < 10; i++) {
+            player.removeClick();
+        }
+        for(int i = 0; i < 10; i++){
+            player.awardClick();
+        }
+
+        data.clicksOnFire();
+        data.clicksOnTilt();
+        assertEquals(1,data.getNumberOfFireSectionsInRoutine());
+        assertEquals(1,data.getNumberOfTiltedSectionsInRoutine());
+        data.resetFireTilt();
+        assertEquals(0, player.getClicksLog().size());
+        data.clicksOnFire();
+        data.clicksOnTilt();
+        assertEquals(0,data.getNumberOfFireSectionsInRoutine());
+        assertEquals(0,data.getNumberOfTiltedSectionsInRoutine());
+
+    }
+
     @Test
     public void testCPS(){
         int positiveClicks = 100;
@@ -149,9 +200,121 @@ public class TestPlayerDataAnalysis {
         player.setRoutineLength(routineLength);
         player.setPositiveClicks(positiveClicks);
         player.setNegativeClicks(negativeClicks);
-        //assertEquals(85, player.getClickerScore());
-        //assertEquals(1, data.clicksPerSecond());
+        player.produceClickerScore();
+        assertEquals(90, player.getClickerScore());
+        data.clicksPerSecond();
+        assertEquals(1, data.getCPS());
     }
+
+
+    //TODO: Create tests for clickRatio method
+
+    @Test
+    public void testNoClicksCR(){
+        int positiveClicks = 0;
+        int negativeClicks = 0;
+        player.setPositiveClicks(positiveClicks);
+        player.setNegativeClicks(negativeClicks);
+        player.produceClickerScore();
+        data.clickRatio();
+        assertEquals(0,data.getCR());
+    }
+
+    @Test
+    public void testJustPositiveCR(){
+        int positiveClicks = 10;
+        int negativeClicks = 0;
+        player.setPositiveClicks(positiveClicks);
+        player.setNegativeClicks(negativeClicks);
+        player.produceClickerScore();
+        data.clickRatio();
+        assertEquals(0,data.getCR());
+    }
+
+
+    @Test
+    public void testJustNegativeCR(){
+        int positiveClicks = 0;
+        int negativeClicks = 10;
+        player.setPositiveClicks(positiveClicks);
+        player.setNegativeClicks(negativeClicks);
+        player.produceClickerScore();
+        data.clickRatio();
+        assertEquals(0,data.getCR());
+    }
+
+    @Test
+    public void testSamePositiveNegativeCR(){
+        int positiveClicks = 10;
+        int negativeClicks = 10;
+        player.setPositiveClicks(positiveClicks);
+        player.setNegativeClicks(negativeClicks);
+        player.produceClickerScore();
+        data.clickRatio();
+        assertEquals(1,data.getCR());
+    }
+
+    @Test
+    public void testMoreNegativePositiveCR(){
+        int positiveClicks = 5;
+        int negativeClicks = 10;
+        player.setPositiveClicks(positiveClicks);
+        player.setNegativeClicks(negativeClicks);
+        player.produceClickerScore();
+        data.clickRatio();
+        assertEquals(2,data.getCR());
+    }
+
+
+    @Test
+    public void testMorePositiveNegativeCR(){
+        int positiveClicks = 10;
+        int negativeClicks = 5;
+        player.setPositiveClicks(positiveClicks);
+        player.setNegativeClicks(negativeClicks);
+        player.produceClickerScore();
+        data.clickRatio();
+        assertEquals(0.5,data.getCR());
+    }
+
+
+    //TODO: write tests for clicks if perfect
+
+    @Test
+    public void testZeroClicksIfPerfect(){
+        player.produceClickerScore();
+        data.clicksIfPerfect();
+        assertEquals(0, data.getNumberIfPerfect());
+    }
+
+
+    @Test
+    public void testPositiveIfPerfect(){
+        int positiveClicks = 1;
+        player.setPositiveClicks(positiveClicks);
+        data.clicksIfPerfect();
+        assertEquals(1, data.getNumberIfPerfect());
+    }
+
+    @Test
+    public void testNegativeIfPerfect(){
+        int negativeClicks = 1;
+        player.setNegativeClicks(negativeClicks);
+        data.clicksIfPerfect();
+        assertEquals(2, data.getNumberIfPerfect());
+    }
+
+
+    @Test
+    public void testRandomIfPerfect(){
+        int positiveClicks = 1;
+        int negativeClicks = 1;
+        player.setPositiveClicks(positiveClicks);
+        player.setNegativeClicks(negativeClicks);
+        data.clicksIfPerfect();
+        assertEquals(3, data.getNumberIfPerfect());
+    }
+
 
 
 
@@ -160,6 +323,7 @@ public class TestPlayerDataAnalysis {
 /*
     @Test
     public void testIntervalCreation(){
+
     }
 
     @Test
