@@ -38,3 +38,17 @@
     - Clicker
         - reset clicker values by hitting reset button
     - Interfaces for wildcard, prelim, semi, 2-minute, final
+
+4: Types, Interfaces, and Saving
+- Added additional data analysis features (CPS, CR, ClicksIfPerfect, etc)
+- Added save and load feature for individual players:
+    - Everytime you save a new player, a new CSV file will be created
+    - Can overwrite that player by saving on top of it
+    - can read a player from memory if that player is in memory
+- Things which have yet to be implemented:
+    - Data analysis features:
+        - clicks per second if perfect
+        - Weighting function for evals and clickers (60%/40%)
+    - Adding exceptions for all eval scores (out of 10)/ tell judge to input a different score
+    - Create a list of player's/competition roster class which extends player (add multiple players to a single list)
+

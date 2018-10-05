@@ -141,7 +141,7 @@ public class PlayerDataAnalysis implements Saveable, Readable{
     //EFFECTS: Will save data analysis information to csv file
     @Override
     public void save(String saveLocation) throws IOException {
-        PrintWriter pw = new PrintWriter(new FileOutputStream(this.saveLocation, true));
+        PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation, false));
         StringBuilder sb = new StringBuilder();
         /*
         sb.append("firstName");
@@ -181,19 +181,26 @@ public class PlayerDataAnalysis implements Saveable, Readable{
     //EFFECTS: Will output player analysis information from saved file
     @Override
     public void read(String saveLocation) throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(this.saveLocation));
-        for (String line : lines) {
-            ArrayList<String> partsOfLine = splitOnComma(line);
-            System.out.println("firstName: " + partsOfLine.get(0) + " ");
-            System.out.println("lastName: " + partsOfLine.get(1) + " ");
-            System.out.println("numberOfFireSectionsInRoutine: " + partsOfLine.get(2) + " ");
-            System.out.println("numberOfTiltedSectionsInRoutine: " + partsOfLine.get(3) + " ");
-            System.out.println("CPS: " + partsOfLine.get(4) + " ");
-            System.out.println("CR: " + partsOfLine.get(5) + " ");
-            System.out.println("numberIfPerfect: " + partsOfLine.get(6) + " ");
-            System.out.println("---------------------------------------");
+        List<String> lines = Files.readAllLines(Paths.get(saveLocation));
+        String line  = lines.get(0);
+        ArrayList<String> partsOfLine = splitOnComma(line);
+        System.out.println("firstName: " + partsOfLine.get(0) + " ");
+        System.out.println("lastName: " + partsOfLine.get(1) + " ");
+        System.out.println("numberOfFireSectionsInRoutine: " + partsOfLine.get(2) + " ");
+        System.out.println("numberOfTiltedSectionsInRoutine: " + partsOfLine.get(3) + " ");
+        System.out.println("CPS: " + partsOfLine.get(4) + " ");
+        System.out.println("CR: " + partsOfLine.get(5) + " ");
+        System.out.println("numberIfPerfect: " + partsOfLine.get(6) + " ");
+        player.setFirstName(partsOfLine.get(0));
+        player.setLastName(partsOfLine.get(1));
+        this.numberOfTiltedSectionsInRoutine = Integer.parseInt(partsOfLine.get(2));
+        this.numberOfTiltedSectionsInRoutine = Integer.parseInt(partsOfLine.get(3));
+        this.CPS = Double.parseDouble(partsOfLine.get(4));
+        this.CR = Double.parseDouble(partsOfLine.get(5));
+        this.numberIfPerfect = Integer.parseInt(partsOfLine.get(6));
+        System.out.println("---------------------------------------");
         }
-    }
+
 
     public static ArrayList<String> splitOnComma(String line) {
         String[] splits = line.split(",");

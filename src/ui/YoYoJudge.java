@@ -13,7 +13,7 @@ public class YoYoJudge {
     }
 
     //EFFECTS: Starts the yo-yo judging application
-    public void start() throws IOException {
+    public void start(String inputPlayerName) throws IOException {
         Player p = new Player();
         PlayerDataAnalysis data = new PlayerDataAnalysis(p);
         setPlayerInformation(p);
@@ -32,12 +32,13 @@ public class YoYoJudge {
         System.out.println("Clicks ratio: " + data.getCR());
         System.out.println("The player's clicks if perfect: " + data.getNumberIfPerfect());
         System.out.println("-------------------------------------------");
-        p.save(p.getSaveLocation());
+        inputPlayerName = p.getFirstName();
+        p.save(inputPlayerName+"_player.csv");
         //System.out.println("Reading saved data");
-        //p.read();
-        data.save(data.getSaveLocation());
+        //p.read(inputPlayerName+"_player.csv");
+        data.save(inputPlayerName+"_playerDataAnalysis.csv");
         //System.out.println("Reading saved data");
-        //data.read();
+        //data.read(inputPlayerName+"_playerDataAnalysis.csv");
     }
 
     //MODIFIES: This, player
@@ -147,13 +148,12 @@ public class YoYoJudge {
         System.out.println("Showmanship: " + p.getShowmanship());
     }
 
-
     //EFFECTS: Will read from memory
-    public void readFromMemory() throws IOException {
+    public void readFromMemory(String inputPlayerName) throws IOException {
         Player p = new Player();
         PlayerDataAnalysis data = new PlayerDataAnalysis(p);
-        p.read(p.getSaveLocation());
-        data.read(data.getSaveLocation());
+        p.read(inputPlayerName+"_player.csv");
+        data.read(inputPlayerName+"_playerDataAnalysis.csv");
     }
 
     public static void main(String[] args) throws IOException {
@@ -163,12 +163,16 @@ public class YoYoJudge {
         System.out.println("Type start to start judging a player");
         System.out.println("Type read to read from memory");
         String choice = "";
+        String inputPlayerName = "";
         choice = scanner.nextLine();
         if (choice.equals("start")){
-            yyjh.start();
+            yyjh.start(inputPlayerName);
         }
         if (choice.equals("read")){
-            yyjh.readFromMemory();
+            System.out.println("Type in the name of a player who has already been judged");
+            inputPlayerName = scanner.next();
+            yyjh.readFromMemory(inputPlayerName);
+            yyjh.start(inputPlayerName);
         }
     }
 }

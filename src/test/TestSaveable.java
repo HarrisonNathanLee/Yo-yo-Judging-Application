@@ -1,4 +1,3 @@
-
 package test;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -30,8 +29,8 @@ public class TestSaveable {
 
     @Test
     public void testSaveForPlayer() throws IOException {
-        player.setFirstName("Harrison");
-        player.setLastName("Lee");
+        player.setFirstName("Test");
+        player.setLastName("Test");
         player.setDivision("1a");
         player.setRoutineLength(60);
         player.setPositiveClicks(5);
@@ -51,39 +50,39 @@ public class TestSaveable {
         player.setConstruction(6);
         player.setBodyControl(7);
         player.setShowmanship(8);
-        player.setSaveLocation("testPlayer.csv");
+        player.setSaveLocation(player.getFirstName() + "_testPlayer.csv");
         player.save(player.getSaveLocation());
         List<String> lines = Files.readAllLines(Paths.get(player.getSaveLocation()));
-        for (String line : lines) {
-            ArrayList<String> partsOfLine = player.splitOnComma(line);
-            assertEquals("Harrison", partsOfLine.get(0));
-            assertEquals("Lee", partsOfLine.get(1));
-            assertEquals("1a", partsOfLine.get(2));
-            assertEquals("60", partsOfLine.get(3));
-            assertEquals("5.0", partsOfLine.get(4));
-            assertEquals("5.0", partsOfLine.get(5));
-            assertEquals("0.0", partsOfLine.get(6));
-            assertEquals("1", partsOfLine.get(7));
-            assertEquals("2", partsOfLine.get(8));
-            assertEquals("3", partsOfLine.get(9));
-            assertEquals("1", partsOfLine.get(10));
-            assertEquals("6", partsOfLine.get(11));
-            assertEquals("15", partsOfLine.get(12));
-            assertEquals("1", partsOfLine.get(13));
-            assertEquals("2", partsOfLine.get(14));
-            assertEquals("3", partsOfLine.get(15));
-            assertEquals("4", partsOfLine.get(16));
-            assertEquals("5", partsOfLine.get(17));
-            assertEquals("6", partsOfLine.get(18));
-            assertEquals("7", partsOfLine.get(19));
-            assertEquals("8", partsOfLine.get(20));
-        }
+        String line = lines.get(0);
+        ArrayList<String> partsOfLine = player.splitOnComma(line);
+        assertEquals("Test", partsOfLine.get(0));
+        assertEquals("Test", partsOfLine.get(1));
+        assertEquals("1a", partsOfLine.get(2));
+        assertEquals("60", partsOfLine.get(3));
+        assertEquals("5.0", partsOfLine.get(4));
+        assertEquals("5.0", partsOfLine.get(5));
+        assertEquals("0.0", partsOfLine.get(6));
+        assertEquals("1", partsOfLine.get(7));
+        assertEquals("2", partsOfLine.get(8));
+        assertEquals("3", partsOfLine.get(9));
+        assertEquals("1", partsOfLine.get(10));
+        assertEquals("6", partsOfLine.get(11));
+        assertEquals("15", partsOfLine.get(12));
+        assertEquals("1", partsOfLine.get(13));
+        assertEquals("2", partsOfLine.get(14));
+        assertEquals("3", partsOfLine.get(15));
+        assertEquals("4", partsOfLine.get(16));
+        assertEquals("5", partsOfLine.get(17));
+        assertEquals("6", partsOfLine.get(18));
+        assertEquals("7", partsOfLine.get(19));
+        assertEquals("8", partsOfLine.get(20));
     }
+
 
     @Test
     public void testSaveForPlayerDataAnalysis() throws IOException {
-        player.setFirstName("Harrison");
-        player.setLastName("Lee");
+        player.setFirstName("Test");
+        player.setLastName("Test");
         for (int i = 0; i < 10; i++) {
             player.removeClick();
         }
@@ -93,20 +92,19 @@ public class TestSaveable {
         player.setRoutineLength(100);
         player.produceClickerScore();
         data.callAllDataAnalysis();
-        data.setSaveLocation("testPlayerDataAnalysis.csv");
+        data.setSaveLocation(player.getFirstName() + "_testPlayerDataAnalysis.csv");
         data.save(data.getSaveLocation());
         List<String> lines = Files.readAllLines(Paths.get(data.getSaveLocation()));
-        for (String line : lines) {
-            ArrayList<String> partsOfLine = data.splitOnComma(line);
-            assertEquals("Harrison", partsOfLine.get(0)); //firstName
-            assertEquals("Lee", partsOfLine.get(1)); //lastName
-            assertEquals("2", partsOfLine.get(2)); //numberOfFireSectionsInRoutine
-            assertEquals("1", partsOfLine.get(3)); //numberOfTiltedSectionsInRoutine
-            assertEquals("0.1", partsOfLine.get(4));//CPS
-            assertEquals("0.5", partsOfLine.get(5));//CR
-            assertEquals("40", partsOfLine.get(6));//numberIfPerfect
+        String line = lines.get(0);
+        ArrayList<String> partsOfLine = data.splitOnComma(line);
+        assertEquals("Test", partsOfLine.get(0)); //firstName
+        assertEquals("Test", partsOfLine.get(1)); //lastName
+        assertEquals("2", partsOfLine.get(2)); //numberOfFireSectionsInRoutine
+        assertEquals("1", partsOfLine.get(3)); //numberOfTiltedSectionsInRoutine
+        assertEquals("0.1", partsOfLine.get(4));//CPS
+        assertEquals("0.5", partsOfLine.get(5));//CR
+        assertEquals("40", partsOfLine.get(6));//numberIfPerfect
 
-        }
     }
 
 }
