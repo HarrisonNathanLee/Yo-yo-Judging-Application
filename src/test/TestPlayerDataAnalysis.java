@@ -2,21 +2,20 @@ package test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import player.Player;
-import player.PlayerDataAnalysis;
+import player.PrelimPlayer;
+import player.PrelimPlayerDataAnalysis;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
 
 public class TestPlayerDataAnalysis {
 
-    Player player;
-    PlayerDataAnalysis data;
+    PrelimPlayer player;
+    PrelimPlayerDataAnalysis data;
 
     @BeforeEach
     public void setUp() {
-        player = new Player();
-        data = new PlayerDataAnalysis(player);
+        player = new PrelimPlayer();
+        data = new PrelimPlayerDataAnalysis(player);
     }
 
     //Tests for clicksOnTilt and ClicksOnFire
@@ -315,10 +314,25 @@ public class TestPlayerDataAnalysis {
         assertEquals(3, data.getNumberIfPerfect());
     }
 
+    @Test
+    public void testCPSifPerfect(){
+        int positiveClicks = 10;
+        int negativeClicks = 5;
+        player.setPositiveClicks(positiveClicks);
+        player.setNegativeClicks(negativeClicks);
+        player.setRoutineLength(80);
+        player.produceClickerScore();
+        data.clicksIfPerfect();
+        assertEquals(20, data.getNumberIfPerfect());
+        data.clicksIfPerfectPerSecond();
+        assertEquals(0.25, data.getCIPPS());
+
+    }
 
 
 
 }
+
 
 /*
     @Test

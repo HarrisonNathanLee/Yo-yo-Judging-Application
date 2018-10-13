@@ -52,3 +52,12 @@
     - Adding exceptions for all eval scores (out of 10)/ tell judge to input a different score
     - Create a list of player's/competition roster class which extends player (add multiple players to a single list)
 
+5: Abstracts and Extends
+- Added wildcard, prelim, semi, two minute, and final classes which extends player and playerDataAnalysis
+- Cleaned up code and made everything streamline
+- Added more tests
+- Things which have yet to be implemented
+    - Adding exceptions for all eval scores (out of 10)/ tell judge to input a different score
+    - Adding exceptions for everything
+    - Creating a list of player's/competition
+    - Aggregate and database functions

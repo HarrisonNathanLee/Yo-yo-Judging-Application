@@ -2,30 +2,29 @@ package test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import player.*;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public class TestWorldFinalReadable {
 
-public class TestReadable {
-
-    PrelimPlayer player;
-    PrelimPlayerDataAnalysis data;
+    WorldFinalPlayer player;
+    WorldFinalPlayerDataAnalysis data;
 
     @BeforeEach
     public void setUp() {
-        player = new PrelimPlayer();
-        data = new PrelimPlayerDataAnalysis(player);
+        player = new WorldFinalPlayer();
+        data = new WorldFinalPlayerDataAnalysis(player);
     }
 
     @Test
     public void testReadForPlayer() throws IOException {
-        player.read("Test_testPlayer.csv");
+        player.read("Test_testWorldFinalPlayer.csv");
         assertEquals(player.getFirstName(), "Test");
         assertEquals(player.getLastName(), "Test");
         assertEquals(player.getDivision(), "1a");
-        assertEquals(player.getRoutineType(), "Prelim");
+        assertEquals(player.getRoutineType(), "World Final");
         assertEquals(player.getPositiveClicks(),5.0);
         assertEquals(player.getNegativeClicks(), 5.0);
         assertEquals(player.getClickerScore(), 0.0);
@@ -37,14 +36,18 @@ public class TestReadable {
         assertEquals(player.getDiscardFinal(),15);
         assertEquals(player.getExecution(), 1);
         assertEquals(player.getControl(), 2);
-        assertEquals(player.getChoreography(), 3);
-        assertEquals(player.getBodyControl(), 4);
+        assertEquals(player.getTrickDiversity(), 3);
+        assertEquals(player.getSpaceUseAndEmphasis(), 4);
+        assertEquals(player.getChoreography(), 5);
+        assertEquals(player.getConstruction(), 6);
+        assertEquals(player.getBodyControl(), 7);
+        assertEquals(player.getShowmanship(), 8);
 
     }
 
     @Test
     public void testReadForPlayerDataAnalysis() throws IOException {
-        data.read("Test_testPlayerDataAnalysis.csv");
+        data.read("Test_testWorldFinalPlayerDataAnalysis.csv");
         assertEquals(player.getFirstName(),"Test");
         assertEquals(player.getLastName(), "Test"); //lastName
         assertEquals(data.getNumberOfFireSectionsInRoutine(), 2); //numberOfFireSectionsInRoutine
@@ -55,4 +58,7 @@ public class TestReadable {
         assertEquals(data.getCIPPS(),0.4);//CIPPS
     }
 
+
 }
+
+

@@ -9,33 +9,34 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public class Player implements Saveable, Readable {
-    private String firstName = "";
-    private String lastName = "";
-    private String division = "";
-    private int routineLength = 0;
-    private int execution = 0;
-    private int control = 0;
-    private int trickDiversity = 0;
-    private int spaceUseAndEmphasis = 0;
-    private int choreography = 0;
-    private int construction = 0;
-    private int bodyControl = 0;
-    private int showmanship = 0;
-    private double clickerScore = 0;
-    private double positiveClicks = 0;
-    private double negativeClicks = 0;
-    private int numberOfRestarts = 0;
-    private int numberOfChanges = 0;
-    private int numberOfDiscards = 0;
-    private int restartMultiplier = 1;
-    private int changeMultiplier = 3;
-    private int discardMultiplier = 5;
-    private int restartFinal = 0;
-    private int changeFinal = 0;
-    private int discardFinal = 0;
-    private String saveLocation = "player.csv";
-    ArrayList<String> clicksLog = new ArrayList<String>();
+public abstract class Player implements Saveable, Readable {
+    protected String firstName = "";
+    protected String lastName = "";
+    protected String division = "";
+    protected String routineType = "";
+    protected int routineLength = 0;
+    protected int execution = 0;
+    protected int control = 0;
+    protected int trickDiversity = 0;
+    protected int spaceUseAndEmphasis = 0;
+    protected int choreography = 0;
+    protected int construction = 0;
+    protected int bodyControl = 0;
+    protected int showmanship = 0;
+    protected double clickerScore = 0;
+    protected double positiveClicks = 0;
+    protected double negativeClicks = 0;
+    protected int numberOfRestarts = 0;
+    protected int numberOfChanges = 0;
+    protected int numberOfDiscards = 0;
+    protected int restartMultiplier = 1;
+    protected int changeMultiplier = 3;
+    protected int discardMultiplier = 5;
+    protected int restartFinal = 0;
+    protected int changeFinal = 0;
+    protected int discardFinal = 0;
+    protected String saveLocation = "player.csv";
+    ArrayList<String> clicksLog = new ArrayList<>();
 
     //MODIFIES: This
     //EFFECTS: Retrieves the first name of the player
@@ -51,9 +52,11 @@ public class Player implements Saveable, Readable {
 
     //MODIFIES: This
     //EFFECTS: Retrieves the division of the player
-    public void setDivision(String division) {
-        this.division = division;
-    }
+    public void setDivision(String division) { this.division = division; }
+
+    //MODIFIES: This
+    //EFFECTS: Retrieves the routine type of the player
+    public void setRoutineType(String routineType) { this.routineType = routineType; }
 
     //MODIFIES: This
     //EFFECTS: Retrieves the routine length of the player
@@ -111,39 +114,27 @@ public class Player implements Saveable, Readable {
 
     //MODIFIES: This
     //EFFECTS: Sets the positive clicks of the player
-    public void setPositiveClicks(int positiveClicks) {
-        this.positiveClicks = positiveClicks;
-    }
+    public void setPositiveClicks(int positiveClicks) { this.positiveClicks = positiveClicks; }
 
     //MODIFIES: This
     //EFFECTS: Sets the negative clicks of the player
-    public void setNegativeClicks(int negativeClicks) {
-        this.negativeClicks = negativeClicks;
-    }
+    public void setNegativeClicks(int negativeClicks) { this.negativeClicks = negativeClicks; }
 
     //MODIFIES: This
     //EFFECTS: Sets the number of restarts of the player
-    public void setNumberOfRestarts(int numberOfRestarts) {
-        this.numberOfRestarts = numberOfRestarts;
-    }
+    public void setNumberOfRestarts(int numberOfRestarts) { this.numberOfRestarts = numberOfRestarts; }
 
     //MODIFIES: This
     //EFFECTS: Sets the number of changes of the player
-    public void setNumberOfChanges(int numberOfChanges) {
-        this.numberOfChanges = numberOfChanges;
-    }
+    public void setNumberOfChanges(int numberOfChanges) { this.numberOfChanges = numberOfChanges; }
 
     //MODIFIES: This
     //EFFECTS: Sets the number of discards of the player
-    public void setNumberOfDiscards(int numberOfDiscards) {
-        this.numberOfDiscards = numberOfDiscards;
-    }
+    public void setNumberOfDiscards(int numberOfDiscards) { this.numberOfDiscards = numberOfDiscards; }
 
     //MODIFIES: This
     //EFFECTS: Sets the number of clicker score of the player
-    public void setClickerScore(double clickerScore) {
-        this.clickerScore = clickerScore;
-    }
+    public void setClickerScore(double clickerScore) { this.clickerScore = clickerScore; }
 
     //MODIFIES: This
     //EFFECTS: Sets the save location to a different location from default
@@ -166,45 +157,49 @@ public class Player implements Saveable, Readable {
         return clickerScore;
     }
 
+    //EFFECTS: Returns the division of the player
+    public String getDivision() {
+        return division;
+    }
+
+    //EFFECTS: Returns the routine length
+    public int getRoutineLength() {
+        return routineLength;
+    }
+
+    //REQUIRES: int < 10
     //EFFECTS: Returns the execution score of the player
-    public int getExecution() {
-        return execution;
-    }
+    public int getExecution() { return execution; }
 
+    //REQUIRES: int < 10
     //EFFECTS: Returns the control score of the player
-    public int getControl() {
-        return control;
-    }
+    public int getControl() { return control; }
 
+    //REQUIRES: int < 10
     //EFFECTS: Returns the trick diversity score of the player
-    public int getTrickDiversity() {
-        return trickDiversity;
-    }
+    public int getTrickDiversity() { return trickDiversity; }
 
+    //REQUIRES: int < 10
     //EFFECTS: Returns the space use and emphasis score of the player
-    public int getSpaceUseAndEmphasis() {
-        return spaceUseAndEmphasis;
-    }
+    public int getSpaceUseAndEmphasis() { return spaceUseAndEmphasis; }
 
+    //REQUIRES: int < 10
     //EFFECTS: Returns the choreography score of the player
-    public int getChoreography() {
-        return choreography;
-    }
+    public int getChoreography() { return choreography; }
 
+    //REQUIRES: int < 10
     //EFFECTS: Returns the construction score of the player
     public int getConstruction() {
         return construction;
     }
 
+    //REQUIRES: int < 10
     //EFFECTS: Returns the body control score of the player
-    public int getBodyControl() {
-        return bodyControl;
-    }
+    public int getBodyControl() { return bodyControl; }
 
+    //REQUIRES: int < 10
     //EFFECTS: Returns the showmanship score of the player
-    public int getShowmanship() {
-        return showmanship;
-    }
+    public int getShowmanship() { return showmanship; }
 
     //EFFECTS: Returns the positive clicks of a player
     public double getPositiveClicks() {
@@ -217,24 +212,21 @@ public class Player implements Saveable, Readable {
     }
 
     //EFFECTS: Returns the number of restarts of the player
-    public int getNumberOfRestarts() {
-        return numberOfRestarts;
-    }
+    public int getNumberOfRestarts() { return numberOfRestarts; }
 
     //EFFECTS: Returns the number of changes of the player
-    public int getNumberOfChanges() {
-        return numberOfChanges;
-    }
+    public int getNumberOfChanges() { return numberOfChanges; }
 
     //EFFECTS: Returns the number of discards of the player
     public int getNumberOfDiscards() {
         return numberOfDiscards;
     }
 
+    //EFFECTS: Returns the routine type
+    public String getRoutineType() { return routineType; }
+
     //EFFECTS: Returns the restart multiplier
-    public int getRestartMultiplier() {
-        return restartMultiplier;
-    }
+    public int getRestartMultiplier() { return restartMultiplier; }
 
     //EFFECTS: Returns the change multiplier
     public int getChangeMultiplier() {
@@ -242,20 +234,7 @@ public class Player implements Saveable, Readable {
     }
 
     //EFFECTS: Returns the discard multiplier
-    public int getDiscardMultiplier() {
-        return discardMultiplier;
-    }
-
-    //EFFECTS: Returns the division of the player
-    public String getDivision() {
-        return division;
-    }
-
-    //EFFECTS: Returns the routine length
-    public int getRoutineLength() {
-        return routineLength;
-    }
-
+    public int getDiscardMultiplier() { return discardMultiplier; }
 
     //EFFECTS: Returns the save location
     public String getSaveLocation() {
@@ -283,10 +262,11 @@ public class Player implements Saveable, Readable {
 
     //MODIFIES: This
     //EFFECTS: Produces and returns the final clickerScore from the positive clicks awarded and the negative clicks deducted
-    public void produceClickerScore() {
+    public void produceClickerScore(){
         clickerScore = this.positiveClicks - this.negativeClicks;
         System.out.println(this.firstName + " " + this.lastName + "'s" + " final clickerscore is: " + this.clickerScore);
     }
+
 
     //MODIFIES: This
     //EFFECTS: Adds one to number of restarts
@@ -317,6 +297,7 @@ public class Player implements Saveable, Readable {
     //MODIFIES: This
     //EFFECTS: Returns and multiplies number of changes by change multiplier
     public void multiplyChange() {
+
         changeFinal = this.numberOfChanges * this.changeMultiplier;
     }
 
@@ -376,50 +357,6 @@ public class Player implements Saveable, Readable {
     public void save(String saveLocation) throws IOException {
         PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation, false));
         StringBuilder sb = new StringBuilder();
-        /*
-        sb.append("firstName");
-        sb.append(",");
-        sb.append("lastName");
-        sb.append(",");
-        sb.append("division");
-        sb.append(",");
-        sb.append("routineLength");
-        sb.append(",");
-        sb.append("positiveClicks");
-        sb.append(",");
-        sb.append("negativeClicks");
-        sb.append(",");
-        sb.append("clickerScore");
-        sb.append(",");
-        sb.append("numberOfRestarts");
-        sb.append(",");
-        sb.append("numberOfChanges");
-        sb.append(",");
-        sb.append("numberOfDiscards");
-        sb.append(",");
-        sb.append("restartFinal");
-        sb.append(",");
-        sb.append("changeFinal");
-        sb.append(",");
-        sb.append("discardFinal");
-        sb.append(",");
-        sb.append("execution");
-        sb.append(",");
-        sb.append("control");
-        sb.append(",");
-        sb.append("trickDiversity");
-        sb.append(",");
-        sb.append("spaceUseAndEmphasis");
-        sb.append(",");
-        sb.append("choreography");
-        sb.append(",");
-        sb.append("construction");
-        sb.append(",");
-        sb.append("bodyControl");
-        sb.append(",");
-        sb.append("showmanship");
-        sb.append("\n");
-        */
 
         sb.append(this.firstName);
         sb.append(",");
@@ -427,7 +364,7 @@ public class Player implements Saveable, Readable {
         sb.append(",");
         sb.append(this.division);
         sb.append(",");
-        sb.append(this.routineLength);
+        sb.append(this.routineType);
         sb.append(",");
         sb.append(this.positiveClicks);
         sb.append(",");
@@ -451,33 +388,28 @@ public class Player implements Saveable, Readable {
         sb.append(",");
         sb.append(this.control);
         sb.append(",");
-        sb.append(this.trickDiversity);
-        sb.append(",");
-        sb.append(this.spaceUseAndEmphasis);
-        sb.append(",");
         sb.append(this.choreography);
         sb.append(",");
-        sb.append(this.construction);
-        sb.append(",");
         sb.append(this.bodyControl);
-        sb.append(",");
-        sb.append(this.showmanship);
         sb.append("\n");
 
         pw.write(sb.toString());
         pw.close();
     }
 
+    //REQUIRES: Save location to exist in memory
     //EFFECTS: Will read player information from csv file
     @Override
     public void read(String saveLocation) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(saveLocation));
         String line = lines.get(0);
         ArrayList<String> partsOfLine = splitOnComma(line);
+        System.out.println("Player information and raw scores from memory");
+        System.out.println("---------------------------------------");
         System.out.println("firstName: " + partsOfLine.get(0) + " ");
         System.out.println("lastName: " + partsOfLine.get(1) + " ");
         System.out.println("division: " + partsOfLine.get(2) + " ");
-        System.out.println("routineLength: " + partsOfLine.get(3) + " ");
+        System.out.println("routineType: " + partsOfLine.get(3) + " ");
         System.out.println("positiveClicks: " + partsOfLine.get(4) + " ");
         System.out.println("negativeClicks: " + partsOfLine.get(5) + " ");
         System.out.println("clickerScore: " + partsOfLine.get(6) + " ");
@@ -489,15 +421,12 @@ public class Player implements Saveable, Readable {
         System.out.println("discardFinal: " + partsOfLine.get(12) + " ");
         System.out.println("execution: " + partsOfLine.get(13) + " ");
         System.out.println("control: " + partsOfLine.get(14) + " ");
-        System.out.println("trickDiversity: " + partsOfLine.get(15) + " ");
-        System.out.println("spaceUseAndEmphasis: " + partsOfLine.get(16) + " ");
-        System.out.println("choreography: " + partsOfLine.get(17) + " ");
-        System.out.println("bodyControl: " + partsOfLine.get(18) + " ");
-        System.out.println("showmanship: " + partsOfLine.get(19) + " ");
+        System.out.println("choreography: " + partsOfLine.get(15) + " ");
+        System.out.println("bodyControl: " + partsOfLine.get(16) + " ");
         this.firstName = partsOfLine.get(0);
         this.lastName = partsOfLine.get(1);
         this.division = partsOfLine.get(2);
-        this.routineLength = Integer.parseInt(partsOfLine.get(3));
+        this.routineType = partsOfLine.get(3);
         this.positiveClicks = Double.parseDouble(partsOfLine.get(4));
         this.negativeClicks = Double.parseDouble(partsOfLine.get(5));
         this.clickerScore = Double.parseDouble(partsOfLine.get(6));
@@ -509,35 +438,14 @@ public class Player implements Saveable, Readable {
         this.discardFinal = Integer.parseInt(partsOfLine.get(12));
         this.execution = Integer.parseInt(partsOfLine.get(13));
         this.control = Integer.parseInt(partsOfLine.get(14));
-        this.trickDiversity = Integer.parseInt(partsOfLine.get(15));
-        this.spaceUseAndEmphasis = Integer.parseInt(partsOfLine.get(16));
-        this.choreography = Integer.parseInt(partsOfLine.get(17));
-        this.construction = Integer.parseInt(partsOfLine.get(18));
-        this.bodyControl = Integer.parseInt(partsOfLine.get(19));
-        this.showmanship = Integer.parseInt(partsOfLine.get(20));
+        this.choreography = Integer.parseInt(partsOfLine.get(15));
+        this.bodyControl = Integer.parseInt(partsOfLine.get(16));
         System.out.println("---------------------------------------");
-
     }
 
     public static ArrayList<String> splitOnComma(String line) {
         String[] splits = line.split(",");
         return new ArrayList<>(Arrays.asList(splits));
     }
+
 }
-
-/*
-    @Override
-    public void save() throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get("inputouptfile.txt"));
-        PrintWriter writer = new PrintWriter("inputoutputfile.txt","UTF-8");
-        lines.add(this.firstName);
-        for (String line: lines){
-            ArrayList<String> partsOfLine = splitOnComma(line);
-            writer.println(line);
-        }
-        writer.close();
-    }
-
-    */
-
-

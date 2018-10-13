@@ -10,16 +10,17 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class PlayerDataAnalysis implements Saveable, Readable{
-    private Player player;
-    private static final int TILTED = 10; //an arbitrary number for now -> will vary depending on the routine length in the future
-    private static final int FIRE = 10; //an arbitrary number for now
-    private int numberOfFireSectionsInRoutine = 0;
-    private int numberOfTiltedSectionsInRoutine = 0;
-    private double CPS = 0;
-    private double CR = 0;
-    private int numberIfPerfect = 0;
-    private String saveLocation = "playerDataAnalysis.csv";
+public abstract class PlayerDataAnalysis implements Saveable, Readable{
+    protected Player player;
+    protected static final int TILTED = 10; //an arbitrary number for now -> will vary depending on the routine length in the future
+    protected static final int FIRE = 10; //an arbitrary number for now
+    protected int numberOfFireSectionsInRoutine = 0;
+    protected int numberOfTiltedSectionsInRoutine = 0;
+    protected double CPS = 0;
+    protected double CR = 0;
+    protected int numberIfPerfect = 0;
+    protected double CIPPS = 0;
+    protected String saveLocation = "playerDataAnalysis.csv";
 
     //MODIFIES: This
     //EFFECTS: Sets the save location to a different location from default
@@ -53,9 +54,9 @@ public class PlayerDataAnalysis implements Saveable, Readable{
     }
 
     //EFFECTS: Returns the CR of the player
-    public double getCR() {
-        return CR;
-    }
+    public double getCR() { return CR; }
+
+    public double getCIPPS() { return CIPPS; }
 
     public PlayerDataAnalysis(Player player) {
         this.player = player;
@@ -125,7 +126,14 @@ public class PlayerDataAnalysis implements Saveable, Readable{
     //MODIFIES: This
     //EFFECTS: Returns a predicted clicker score value if the player had zero mistakes
     public void clicksIfPerfect (){
-        this.numberIfPerfect = (int) (player.getPositiveClicks() + (2 * player.getNegativeClicks()));
+        numberIfPerfect = (int) (player.getPositiveClicks() + (2 * player.getNegativeClicks()));
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Returns the clicks if perfect per second
+    public void clicksIfPerfectPerSecond(){
+        this.clicksIfPerfect();
+        this.CIPPS = (double)this.numberIfPerfect/player.getRoutineLength();
     }
 
     //MODIFIES: This
@@ -136,6 +144,7 @@ public class PlayerDataAnalysis implements Saveable, Readable{
         this.clicksPerSecond();
         this.clickRatio();
         this.clicksIfPerfect();
+        this.clicksIfPerfectPerSecond();
     }
 
     //EFFECTS: Will save data analysis information to csv file
@@ -143,20 +152,6 @@ public class PlayerDataAnalysis implements Saveable, Readable{
     public void save(String saveLocation) throws IOException {
         PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation, false));
         StringBuilder sb = new StringBuilder();
-        /*
-        sb.append("firstName");
-        sb.append(",");
-        sb.append("lastName");
-        sb.append(",");
-        sb.append("numberOfFireSectionsInRoutine");
-        sb.append(",");
-        sb.append("numberOfTiltedSectionsInRoutine");
-        sb.append(",");
-        sb.append("CPS");
-        sb.append(",");
-        sb.append("CR");
-        sb.append("\n");
-        */
 
         sb.append(player.getFirstName());
         sb.append(",");
@@ -171,6 +166,8 @@ public class PlayerDataAnalysis implements Saveable, Readable{
         sb.append(this.CR);
         sb.append(",");
         sb.append(this.numberIfPerfect);
+        sb.append(",");
+        sb.append(this.CIPPS);
         sb.append("\n");
 
         pw.write(sb.toString());
@@ -178,12 +175,15 @@ public class PlayerDataAnalysis implements Saveable, Readable{
 
     }
 
+    //REQUIRES: Save location to exist in memory
     //EFFECTS: Will output player analysis information from saved file
     @Override
     public void read(String saveLocation) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(saveLocation));
         String line  = lines.get(0);
         ArrayList<String> partsOfLine = splitOnComma(line);
+        System.out.println("Player data analysis information from memory");
+        System.out.println("---------------------------------------");
         System.out.println("firstName: " + partsOfLine.get(0) + " ");
         System.out.println("lastName: " + partsOfLine.get(1) + " ");
         System.out.println("numberOfFireSectionsInRoutine: " + partsOfLine.get(2) + " ");
@@ -193,19 +193,20 @@ public class PlayerDataAnalysis implements Saveable, Readable{
         System.out.println("numberIfPerfect: " + partsOfLine.get(6) + " ");
         player.setFirstName(partsOfLine.get(0));
         player.setLastName(partsOfLine.get(1));
-        this.numberOfTiltedSectionsInRoutine = Integer.parseInt(partsOfLine.get(2));
+        this.numberOfFireSectionsInRoutine = Integer.parseInt(partsOfLine.get(2));
         this.numberOfTiltedSectionsInRoutine = Integer.parseInt(partsOfLine.get(3));
         this.CPS = Double.parseDouble(partsOfLine.get(4));
         this.CR = Double.parseDouble(partsOfLine.get(5));
         this.numberIfPerfect = Integer.parseInt(partsOfLine.get(6));
+        this.CIPPS = Double.parseDouble(partsOfLine.get(7));
         System.out.println("---------------------------------------");
         }
-
 
     public static ArrayList<String> splitOnComma(String line) {
         String[] splits = line.split(",");
         return new ArrayList<>(Arrays.asList(splits));
     }
+
 }
 
 //TODO: Implement when I have a UI and can get timer functionality working

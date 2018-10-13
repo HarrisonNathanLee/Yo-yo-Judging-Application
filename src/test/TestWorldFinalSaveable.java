@@ -2,9 +2,6 @@ package test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import player.WorldFinalPlayer;
-import player.WorldFinalPlayerDataAnalysis;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,15 +11,15 @@ import player.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestSaveable {
+public class TestWorldFinalSaveable {
 
-    PrelimPlayer player;
-    PrelimPlayerDataAnalysis data;
+    WorldFinalPlayer player;
+    WorldFinalPlayerDataAnalysis data;
 
     @BeforeEach
     public void setUp() {
-        player = new PrelimPlayer();
-        data = new PrelimPlayerDataAnalysis(player);
+        player = new WorldFinalPlayer();
+        data = new WorldFinalPlayerDataAnalysis(player);
     }
 
 
@@ -31,7 +28,7 @@ public class TestSaveable {
         player.setFirstName("Test");
         player.setLastName("Test");
         player.setDivision("1a");
-        player.setRoutineType("Prelim");
+        player.setRoutineType("World Final");
         player.setPositiveClicks(5);
         player.setNegativeClicks(5);
         player.produceClickerScore();
@@ -43,9 +40,13 @@ public class TestSaveable {
         player.multiplyDiscard();
         player.setExecution(1);
         player.setControl(2);
-        player.setChoreography(3);
-        player.setBodyControl(4);
-        player.setSaveLocation(player.getFirstName() + "_testPlayer.csv");
+        player.setTrickDiversity(3);
+        player.setSpaceUseAndEmphasis(4);
+        player.setChoreography(5);
+        player.setConstruction(6);
+        player.setBodyControl(7);
+        player.setShowmanship(8);
+        player.setSaveLocation(player.getFirstName() + "_testWorldFinalPlayer.csv");
         player.save(player.getSaveLocation());
         List<String> lines = Files.readAllLines(Paths.get(player.getSaveLocation()));
         String line = lines.get(0);
@@ -53,7 +54,7 @@ public class TestSaveable {
         assertEquals("Test", partsOfLine.get(0));
         assertEquals("Test", partsOfLine.get(1));
         assertEquals("1a", partsOfLine.get(2));
-        assertEquals("Prelim", partsOfLine.get(3));
+        assertEquals("World Final", partsOfLine.get(3));
         assertEquals("5.0", partsOfLine.get(4));
         assertEquals("5.0", partsOfLine.get(5));
         assertEquals("0.0", partsOfLine.get(6));
@@ -67,6 +68,10 @@ public class TestSaveable {
         assertEquals("2", partsOfLine.get(14));
         assertEquals("3", partsOfLine.get(15));
         assertEquals("4", partsOfLine.get(16));
+        assertEquals("5", partsOfLine.get(17));
+        assertEquals("6", partsOfLine.get(18));
+        assertEquals("7", partsOfLine.get(19));
+        assertEquals("8", partsOfLine.get(20));
     }
 
 
@@ -83,7 +88,7 @@ public class TestSaveable {
         player.setRoutineLength(100);
         player.produceClickerScore();
         data.callAllDataAnalysis();
-        data.setSaveLocation(player.getFirstName() + "_testPlayerDataAnalysis.csv");
+        data.setSaveLocation(player.getFirstName() + "_testWorldFinalPlayerDataAnalysis.csv");
         data.save(data.getSaveLocation());
         List<String> lines = Files.readAllLines(Paths.get(data.getSaveLocation()));
         String line = lines.get(0);
@@ -98,4 +103,7 @@ public class TestSaveable {
         assertEquals("0.4",partsOfLine.get(7));//CIPPS
 
     }
+
 }
+
+

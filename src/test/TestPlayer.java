@@ -1,17 +1,18 @@
 package test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import player.Player;
+import player.PrelimPlayer;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class TestPlayer {
 
-    Player player;
+    PrelimPlayer player;
 
     @BeforeEach
     public void setUp(){
-        player = new Player();
+        player = new PrelimPlayer();
     }
 
     @Test
