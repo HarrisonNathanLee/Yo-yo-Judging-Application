@@ -22,6 +22,10 @@ public abstract class PlayerDataAnalysis implements Saveable, Readable{
     protected double CIPPS = 0;
     protected String saveLocation = "playerDataAnalysis.csv";
 
+    public PlayerDataAnalysis(Player player) {
+        this.player = player;
+    }
+
     //MODIFIES: This
     //EFFECTS: Sets the save location to a different location from default
     public void setSaveLocation(String saveLocation) {
@@ -56,11 +60,9 @@ public abstract class PlayerDataAnalysis implements Saveable, Readable{
     //EFFECTS: Returns the CR of the player
     public double getCR() { return CR; }
 
+    //EFFECTS: Returns the CIPPS of the player
     public double getCIPPS() { return CIPPS; }
 
-    public PlayerDataAnalysis(Player player) {
-        this.player = player;
-    }
 
     //EFFECTS: Will count the number of FIRE(judge has awarded multiple clicks in a row) sections in a routine
     public void clicksOnFire() {
@@ -151,26 +153,7 @@ public abstract class PlayerDataAnalysis implements Saveable, Readable{
     @Override
     public void save(String saveLocation) throws IOException {
         PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation, false));
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(player.getFirstName());
-        sb.append(",");
-        sb.append(player.getLastName());
-        sb.append(",");
-        sb.append(this.numberOfFireSectionsInRoutine);
-        sb.append(",");
-        sb.append(this.numberOfTiltedSectionsInRoutine);
-        sb.append(",");
-        sb.append(this.CPS);
-        sb.append(",");
-        sb.append(this.CR);
-        sb.append(",");
-        sb.append(this.numberIfPerfect);
-        sb.append(",");
-        sb.append(this.CIPPS);
-        sb.append("\n");
-
-        pw.write(sb.toString());
+        pw.write(playerDataAnalysisToSaveString());
         pw.close();
 
     }
@@ -191,6 +174,37 @@ public abstract class PlayerDataAnalysis implements Saveable, Readable{
         System.out.println("CPS: " + partsOfLine.get(4) + " ");
         System.out.println("CR: " + partsOfLine.get(5) + " ");
         System.out.println("numberIfPerfect: " + partsOfLine.get(6) + " ");
+        playerDataAnalysisReadOutput(partsOfLine);
+        System.out.println("---------------------------------------");
+        }
+
+    public static ArrayList<String> splitOnComma(String line) {
+        String[] splits = line.split(",");
+        return new ArrayList<>(Arrays.asList(splits));
+    }
+
+    public String playerDataAnalysisToSaveString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(player.getFirstName());
+        sb.append(",");
+        sb.append(player.getLastName());
+        sb.append(",");
+        sb.append(this.numberOfFireSectionsInRoutine);
+        sb.append(",");
+        sb.append(this.numberOfTiltedSectionsInRoutine);
+        sb.append(",");
+        sb.append(this.CPS);
+        sb.append(",");
+        sb.append(this.CR);
+        sb.append(",");
+        sb.append(this.numberIfPerfect);
+        sb.append(",");
+        sb.append(this.CIPPS);
+        sb.append("\n");
+        return sb.toString();
+    }
+
+    public void playerDataAnalysisReadOutput(ArrayList<String> partsOfLine){
         player.setFirstName(partsOfLine.get(0));
         player.setLastName(partsOfLine.get(1));
         this.numberOfFireSectionsInRoutine = Integer.parseInt(partsOfLine.get(2));
@@ -199,12 +213,6 @@ public abstract class PlayerDataAnalysis implements Saveable, Readable{
         this.CR = Double.parseDouble(partsOfLine.get(5));
         this.numberIfPerfect = Integer.parseInt(partsOfLine.get(6));
         this.CIPPS = Double.parseDouble(partsOfLine.get(7));
-        System.out.println("---------------------------------------");
-        }
-
-    public static ArrayList<String> splitOnComma(String line) {
-        String[] splits = line.split(",");
-        return new ArrayList<>(Arrays.asList(splits));
     }
 
 }

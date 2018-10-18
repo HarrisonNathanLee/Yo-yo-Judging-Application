@@ -1,6 +1,7 @@
 package player;
 
 import java.io.FileOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -356,8 +357,47 @@ public abstract class Player implements Saveable, Readable {
     @Override
     public void save(String saveLocation) throws IOException {
         PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation, false));
-        StringBuilder sb = new StringBuilder();
+        pw.write(playerToSaveString());
+        pw.close();
+    }
 
+    //REQUIRES: Save location to exist in memory
+    //EFFECTS: Will read player information from csv file
+    @Override
+    public void read(String saveLocation) throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get(saveLocation));
+        String line = lines.get(0);
+        ArrayList<String> partsOfLine = splitOnComma(line);
+        System.out.println("Player information and raw scores from memory");
+        System.out.println("---------------------------------------");
+        System.out.println("firstName: " + partsOfLine.get(0) + " ");
+        System.out.println("lastName: " + partsOfLine.get(1) + " ");
+        System.out.println("division: " + partsOfLine.get(2) + " ");
+        System.out.println("routineType: " + partsOfLine.get(3) + " ");
+        System.out.println("positiveClicks: " + partsOfLine.get(4) + " ");
+        System.out.println("negativeClicks: " + partsOfLine.get(5) + " ");
+        System.out.println("clickerScore: " + partsOfLine.get(6) + " ");
+        System.out.println("numberOfRestarts: " + partsOfLine.get(7) + " ");
+        System.out.println("numberOfChanges: " + partsOfLine.get(8) + " ");
+        System.out.println("numberOfDiscards: " + partsOfLine.get(9) + " ");
+        System.out.println("restartFinal: " + partsOfLine.get(10) + " ");
+        System.out.println("changeFinal: " + partsOfLine.get(11) + " ");
+        System.out.println("discardFinal: " + partsOfLine.get(12) + " ");
+        System.out.println("execution: " + partsOfLine.get(13) + " ");
+        System.out.println("control: " + partsOfLine.get(14) + " ");
+        System.out.println("choreography: " + partsOfLine.get(15) + " ");
+        System.out.println("bodyControl: " + partsOfLine.get(16) + " ");
+        playerReadOutput(partsOfLine);
+        System.out.println("---------------------------------------");
+    }
+
+    public static ArrayList<String> splitOnComma(String line) {
+        String[] splits = line.split(",");
+        return new ArrayList<>(Arrays.asList(splits));
+    }
+
+    public String playerToSaveString(){
+        StringBuilder sb = new StringBuilder();
         sb.append(this.firstName);
         sb.append(",");
         sb.append(this.lastName);
@@ -392,37 +432,10 @@ public abstract class Player implements Saveable, Readable {
         sb.append(",");
         sb.append(this.bodyControl);
         sb.append("\n");
-
-        pw.write(sb.toString());
-        pw.close();
+        return sb.toString();
     }
 
-    //REQUIRES: Save location to exist in memory
-    //EFFECTS: Will read player information from csv file
-    @Override
-    public void read(String saveLocation) throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(saveLocation));
-        String line = lines.get(0);
-        ArrayList<String> partsOfLine = splitOnComma(line);
-        System.out.println("Player information and raw scores from memory");
-        System.out.println("---------------------------------------");
-        System.out.println("firstName: " + partsOfLine.get(0) + " ");
-        System.out.println("lastName: " + partsOfLine.get(1) + " ");
-        System.out.println("division: " + partsOfLine.get(2) + " ");
-        System.out.println("routineType: " + partsOfLine.get(3) + " ");
-        System.out.println("positiveClicks: " + partsOfLine.get(4) + " ");
-        System.out.println("negativeClicks: " + partsOfLine.get(5) + " ");
-        System.out.println("clickerScore: " + partsOfLine.get(6) + " ");
-        System.out.println("numberOfRestarts: " + partsOfLine.get(7) + " ");
-        System.out.println("numberOfChanges: " + partsOfLine.get(8) + " ");
-        System.out.println("numberOfDiscards: " + partsOfLine.get(9) + " ");
-        System.out.println("restartFinal: " + partsOfLine.get(10) + " ");
-        System.out.println("changeFinal: " + partsOfLine.get(11) + " ");
-        System.out.println("discardFinal: " + partsOfLine.get(12) + " ");
-        System.out.println("execution: " + partsOfLine.get(13) + " ");
-        System.out.println("control: " + partsOfLine.get(14) + " ");
-        System.out.println("choreography: " + partsOfLine.get(15) + " ");
-        System.out.println("bodyControl: " + partsOfLine.get(16) + " ");
+    public void playerReadOutput (ArrayList<String> partsOfLine){
         this.firstName = partsOfLine.get(0);
         this.lastName = partsOfLine.get(1);
         this.division = partsOfLine.get(2);
@@ -440,12 +453,6 @@ public abstract class Player implements Saveable, Readable {
         this.control = Integer.parseInt(partsOfLine.get(14));
         this.choreography = Integer.parseInt(partsOfLine.get(15));
         this.bodyControl = Integer.parseInt(partsOfLine.get(16));
-        System.out.println("---------------------------------------");
-    }
-
-    public static ArrayList<String> splitOnComma(String line) {
-        String[] splits = line.split(",");
-        return new ArrayList<>(Arrays.asList(splits));
     }
 
 }

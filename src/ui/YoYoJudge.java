@@ -1,5 +1,6 @@
 package ui;
 
+import Competition.Competition;
 import player.*;
 import java.io.IOException;
 import java.util.Scanner;
@@ -11,10 +12,11 @@ public class YoYoJudge {
     }
 
     //EFFECTS: Starts the yo-yo judging application
-    public void start() throws IOException {
+    public Player start() throws IOException {
         System.out.println("Input the routine type (Wildcard, Prelim, Semi, Two Minute Final, World Final): ");
         String routineType = scanner.nextLine();
         if (routineType.equals("Wildcard")) {
+            // create a helper function which allows us to re use code
             WildcardPlayer w = new WildcardPlayer();
             WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(w);
             setPlayerInformation(w);
@@ -26,6 +28,7 @@ public class YoYoJudge {
             System.out.println("-------------------------------------------");
             String inputPlayerName = w.getFirstName();
             callAllSave(w,data,inputPlayerName,routineType);
+            return w;
         }
         else if(routineType.equals("Prelim")){
             PrelimPlayer pp = new PrelimPlayer();
@@ -40,6 +43,7 @@ public class YoYoJudge {
             printAnalyzedRoutineInformation(data);
             String inputPlayerName = pp.getFirstName();
             callAllSave(pp,data,inputPlayerName,routineType);
+            return pp;
         }
         else if(routineType.equals("Semi")){
             SemiPlayer s = new SemiPlayer();
@@ -54,6 +58,7 @@ public class YoYoJudge {
             printAnalyzedRoutineInformation(data);
             String inputPlayerName = s.getFirstName();
             callAllSave(s,data,inputPlayerName,routineType);
+            return s;
         }
         else if(routineType.equals("Two Minute Final")){
             TwoMinuteFinalPlayer t = new TwoMinuteFinalPlayer();
@@ -68,6 +73,7 @@ public class YoYoJudge {
             printAnalyzedRoutineInformation(data);
             String inputPlayerName = t.getFirstName();
             callAllSave(t,data,inputPlayerName,routineType);
+            return t;
         }
         else if(routineType.equals("World Final")){
             WorldFinalPlayer f = new WorldFinalPlayer();
@@ -82,7 +88,9 @@ public class YoYoJudge {
             printAnalyzedRoutineInformation(data);
             String inputPlayerName = f.getFirstName();
             callAllSave(f,data,inputPlayerName,routineType);
+            return f;
         }
+        return null;
     }
 
     //EFFECTS: Prints various post performance information
@@ -306,24 +314,45 @@ public class YoYoJudge {
         Scanner scanner = new Scanner(System.in);
         YoYoJudge yyjh = new YoYoJudge();
         System.out.println("Welcome to the yo-yo judging application");
-        //System.out.println("Type Competition to begin competition mode and Individual to begin individual player mode");
-        System.out.println("Type start to start judging a player");
-        System.out.println("Type read to read from memory");
-        String choice = "";
-        String inputPlayerName = "";
-        String inputRoutineType = "";
-        choice = scanner.nextLine();
-        if (choice.equals("start")){
-            yyjh.start();
+        System.out.println("Type competition to begin competition mode and individual to begin individual player mode");
+        String competitionOrPlayerMode = "";
+        competitionOrPlayerMode = scanner.nextLine();
+        if (competitionOrPlayerMode.equals("competition")) {
+            System.out.println("What type of competition is it? (Wildcard, Prelim, Semi, Two Minute Final, World Final)");
+            String typeOfCompetition = scanner.nextLine();
+            Competition c = new Competition();
+            while (true) {
+                Player p = yyjh.start(); //start method asks for the type of player
+                c.addPlayer(p);
+                System.out.println("Is there another player to judge in this competition yes or no");
+                String anotherPlayer = "";
+                anotherPlayer = scanner.nextLine();
+                if (anotherPlayer.equals("no")){
+                    c.save("Test_competition");
+                    break;
+                }
+            }
+
         }
-        else if (choice.equals("read")){
-            System.out.println("Type in the name of a player who has already been judged");
-            inputPlayerName = scanner.nextLine();
-            System.out.println("Type in the routine type(Wildcard, Prelim, Semi, Two Minute Final, World Final) of the player you would like to view");
-            inputRoutineType = scanner.nextLine();
-            yyjh.readFromMemory(inputPlayerName, inputRoutineType);
-            yyjh.start();
+        else if (competitionOrPlayerMode.equals("individual")) {
+            System.out.println("Type start to start judging a player");
+            System.out.println("Type read to read from memory");
+            String choice = "";
+            String inputPlayerName = "";
+            String inputRoutineType = "";
+            choice = scanner.nextLine();
+            if (choice.equals("start")) {
+                yyjh.start();
+            } else if (choice.equals("read")) {
+                System.out.println("Type in the name of a player who has already been judged");
+                inputPlayerName = scanner.nextLine();
+                System.out.println("Type in the routine type(Wildcard, Prelim, Semi, Two Minute Final, World Final) of the player you would like to view");
+                inputRoutineType = scanner.nextLine();
+                yyjh.readFromMemory(inputPlayerName, inputRoutineType);
+                yyjh.start();
+            }
         }
     }
+
 }
 
