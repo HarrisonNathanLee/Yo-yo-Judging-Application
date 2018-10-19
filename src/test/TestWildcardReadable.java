@@ -23,20 +23,20 @@ public class TestWildcardReadable {
     @Test
     public void testReadForPlayer() throws IOException {
         player.read("Test_testWildcardPlayer.csv");
-        assertEquals(player.getFirstName(), "Test");
-        assertEquals(player.getLastName(), "Test");
-        assertEquals(player.getDivision(), "1a");
-        assertEquals(player.getRoutineType(), "Wildcard");
-        assertEquals(player.getPositiveClicks(),5.0);
-        assertEquals(player.getClickerScore(), 5.0);
+        assertEquals("Test",player.getFirstName());
+        assertEquals("Test",player.getLastName());
+        assertEquals("1a",player.getDivision());
+        assertEquals("Wildcard",player.getRoutineType());
+        assertEquals(5.0,player.getPositiveClicks());
+        assertEquals(5.0,player.getClickerScore());
     }
 
     @Test
     public void testReadForPlayerDataAnalysis() throws IOException {
         data.read("Test_testWildcardPlayerDataAnalysis.csv");
-        assertEquals(player.getFirstName(),"Test");
-        assertEquals(player.getLastName(), "Test"); //lastName
-        assertEquals(data.getCPS(), 0.1);//CPS
+        assertEquals("Test",player.getFirstName());
+        assertEquals("Test", player.getLastName()); //lastName
+        assertEquals(0.5,data.getCPS());//CPS
     }
 
 }

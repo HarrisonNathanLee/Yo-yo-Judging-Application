@@ -77,10 +77,10 @@ public class TestSaveable {
         for (int i = 0; i < 10; i++) {
             player.removeClick();
         }
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 40; i++) {
             player.awardClick();
         }
-        player.setRoutineLength(100);
+        player.setRoutineLength("Prelim");
         player.produceClickerScore();
         data.callAllDataAnalysis();
         data.setSaveLocation(player.getFirstName() + "_testPlayerDataAnalysis.csv");
@@ -90,12 +90,12 @@ public class TestSaveable {
         ArrayList<String> partsOfLine = data.splitOnComma(line);
         assertEquals("Test", partsOfLine.get(0)); //firstName
         assertEquals("Test", partsOfLine.get(1)); //lastName
-        assertEquals("2", partsOfLine.get(2)); //numberOfFireSectionsInRoutine
+        assertEquals("4", partsOfLine.get(2)); //numberOfFireSectionsInRoutine
         assertEquals("1", partsOfLine.get(3)); //numberOfTiltedSectionsInRoutine
-        assertEquals("0.1", partsOfLine.get(4));//CPS
-        assertEquals("0.5", partsOfLine.get(5));//CR
-        assertEquals("40", partsOfLine.get(6));//numberIfPerfect
-        assertEquals("0.4",partsOfLine.get(7));//CIPPS
+        assertEquals("0.5", partsOfLine.get(4));//CPS
+        assertEquals("0.25", partsOfLine.get(5));//CR
+        assertEquals("60", partsOfLine.get(6));//numberIfPerfect
+        assertEquals("1.0",partsOfLine.get(7));//CIPPS
 
     }
 }

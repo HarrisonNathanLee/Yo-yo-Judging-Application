@@ -63,7 +63,6 @@ public abstract class PlayerDataAnalysis implements Saveable, Readable{
     //EFFECTS: Returns the CIPPS of the player
     public double getCIPPS() { return CIPPS; }
 
-
     //EFFECTS: Will count the number of FIRE(judge has awarded multiple clicks in a row) sections in a routine
     public void clicksOnFire() {
         int numberOfPositiveInRow = 0;

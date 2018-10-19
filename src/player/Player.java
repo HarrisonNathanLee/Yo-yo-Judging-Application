@@ -1,7 +1,6 @@
 package player;
 
 import java.io.FileOutputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -60,9 +59,23 @@ public abstract class Player implements Saveable, Readable {
     public void setRoutineType(String routineType) { this.routineType = routineType; }
 
     //MODIFIES: This
-    //EFFECTS: Retrieves the routine length of the player
-    public void setRoutineLength(int routineLength) {
-        this.routineLength = routineLength;
+    //EFFECTS: Sets the routineLength of the player based of the routineType
+    public void setRoutineLength(String routineType) {
+        if (routineType.equals("Wildcard")){
+            routineLength = 30;
+        }
+        if (routineType.equals("Prelim")){
+            routineLength = 60;
+        }
+        if (routineType.equals("Semi")){
+            routineLength = 90;
+        }
+        if (routineType.equals("Two Minute Final")){
+            routineLength = 120;
+        }
+        if (routineType.equals("World Final")){
+            routineLength = 180;
+        }
     }
 
     //MODIFIES: This
@@ -111,6 +124,33 @@ public abstract class Player implements Saveable, Readable {
     //EFFECTS: Retrieves the showmanship score of the player
     public void setShowmanship(int showmanship) {
         this.showmanship = showmanship;
+    }
+
+    public void setEvaluation(int score, String evalParameter){
+        if (evalParameter.equals("execution")){
+            this.execution = score;
+        }
+        if (evalParameter.equals("control")){
+            this.control = score;
+        }
+        if (evalParameter.equals("trickDiversity")){
+            this.trickDiversity = score;
+        }
+        if (evalParameter.equals("spaceUseAndEmphasis")){
+            this.spaceUseAndEmphasis = score;
+        }
+        if (evalParameter.equals("choreography")){
+            this.choreography = score;
+        }
+        if (evalParameter.equals("construction")){
+            this.construction = score;
+        }
+        if (evalParameter.equals("bodyControl")){
+            this.bodyControl= score;
+        }
+        if (evalParameter.equals("showmanship")){
+            this.showmanship = score;
+        }
     }
 
     //MODIFIES: This

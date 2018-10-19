@@ -1,111 +1,131 @@
 package ui;
 
 import Competition.Competition;
+import Exceptions.IncorrectUserInputException;
 import player.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class YoYoJudge {
     Scanner scanner = new Scanner(System.in);
+    ArrayList<String> performanceEvaluationQuestionsWorld = new ArrayList<>();
+    ArrayList<String> evaluationKeywordsWorld = new ArrayList<>();
+    ArrayList<String> performanceEvaluationQuestions = new ArrayList<>();
+    ArrayList<String> evaluationKeywords = new ArrayList<>();
+
 
     public YoYoJudge() {
+        performanceEvaluationQuestionsWorld.add("Execution score is: ");
+        performanceEvaluationQuestionsWorld.add("Control score is: ");
+        performanceEvaluationQuestionsWorld.add("Trick diversity score is: ");
+        performanceEvaluationQuestionsWorld.add("Space Use & Emphasis score is: ");
+        performanceEvaluationQuestionsWorld.add("Music Use 1: Choreography score is: ");
+        performanceEvaluationQuestionsWorld.add("Music Use 2: Construction score is: ");
+        performanceEvaluationQuestionsWorld.add("Body Control score is: ");
+        performanceEvaluationQuestionsWorld.add("Showmanship score is: ");
+
+        evaluationKeywordsWorld.add("execution");
+        evaluationKeywordsWorld.add("control");
+        evaluationKeywordsWorld.add("trickDiversity");
+        evaluationKeywordsWorld.add("spaceUseAndEmphasis");
+        evaluationKeywordsWorld.add("choreography");
+        evaluationKeywordsWorld.add("construction ");
+        evaluationKeywordsWorld.add("bodyControl");
+        evaluationKeywordsWorld.add("Showmanship");
+
+        performanceEvaluationQuestions.add("Execution score is: ");
+        performanceEvaluationQuestions.add("Control score is: ");
+        performanceEvaluationQuestions.add("Music Use 1: Choreography score is: ");
+        performanceEvaluationQuestions.add("Body Control score is: ");
+
+        evaluationKeywords.add("execution");
+        evaluationKeywords.add("control");
+        evaluationKeywords.add("choreography");
+        evaluationKeywords.add("bodyControl");
+
     }
 
     //EFFECTS: Starts the yo-yo judging application
-    public Player start() throws IOException {
-        System.out.println("Input the routine type (Wildcard, Prelim, Semi, Two Minute Final, World Final): ");
-        String routineType = scanner.nextLine();
+    public Player start(String routineType) throws IOException {
         if (routineType.equals("Wildcard")) {
-            // create a helper function which allows us to re use code
             WildcardPlayer w = new WildcardPlayer();
             WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(w);
-            setPlayerInformation(w);
-            w.setRoutineLength(30);
-            wildcardClicker(w);
-            System.out.println(w.getFirstName()+" "+ w.getLastName()+" positive clicks: "+w.getPositiveClicks());
-            data.callAllDataAnalysis();
-            System.out.println("Clicks per second: " + data.getCPS());
-            System.out.println("-------------------------------------------");
-            String inputPlayerName = w.getFirstName();
-            callAllSave(w,data,inputPlayerName,routineType);
-            return w;
-        }
-        else if(routineType.equals("Prelim")){
+            return runStartAsWildcardPlayer(w, routineType, data);
+        } else if (routineType.equals("Prelim")) {
             PrelimPlayer pp = new PrelimPlayer();
             PrelimPlayerDataAnalysis data = new PrelimPlayerDataAnalysis(pp);
-            setPlayerInformation(pp);
-            pp.setRoutineLength(60);
-            clicker(pp,data);
-            printRawRoutineInformation(pp);
-            setPerformanceEvals(pp);
-            getPerformanceEvals(pp);
-            data.callAllDataAnalysis();
-            printAnalyzedRoutineInformation(data);
-            String inputPlayerName = pp.getFirstName();
-            callAllSave(pp,data,inputPlayerName,routineType);
-            return pp;
-        }
-        else if(routineType.equals("Semi")){
+            return runStartAsPrelimSemiTwoMinutePlayer(pp, routineType, data);
+        } else if (routineType.equals("Semi")) {
             SemiPlayer s = new SemiPlayer();
             SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(s);
-            setPlayerInformation(s);
-            s.setRoutineLength(90);
-            clicker(s,data);
-            printRawRoutineInformation(s);
-            setPerformanceEvals(s);
-            getPerformanceEvals(s);
-            data.callAllDataAnalysis();
-            printAnalyzedRoutineInformation(data);
-            String inputPlayerName = s.getFirstName();
-            callAllSave(s,data,inputPlayerName,routineType);
-            return s;
-        }
-        else if(routineType.equals("Two Minute Final")){
+            return runStartAsPrelimSemiTwoMinutePlayer(s, routineType, data);
+        } else if (routineType.equals("Two Minute Final")) {
             TwoMinuteFinalPlayer t = new TwoMinuteFinalPlayer();
             TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(t);
-            setPlayerInformation(t);
-            t.setRoutineLength(120);
-            clicker(t,data);
-            printRawRoutineInformation(t);
-            setPerformanceEvals(t);
-            getPerformanceEvals(t);
-            data.callAllDataAnalysis();
-            printAnalyzedRoutineInformation(data);
-            String inputPlayerName = t.getFirstName();
-            callAllSave(t,data,inputPlayerName,routineType);
-            return t;
-        }
-        else if(routineType.equals("World Final")){
+            return runStartAsPrelimSemiTwoMinutePlayer(t, routineType, data);
+        } else if (routineType.equals("World Final")) {
             WorldFinalPlayer f = new WorldFinalPlayer();
             WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(f);
-            setPlayerInformation(f);
-            f.setRoutineLength(180);
-            clicker(f,data);
-            printRawRoutineInformation(f);
-            setWorldPerformanceEvals(f);
-            getWorldPerformanceEvals(f);
-            data.callAllDataAnalysis();
-            printAnalyzedRoutineInformation(data);
-            String inputPlayerName = f.getFirstName();
-            callAllSave(f,data,inputPlayerName,routineType);
-            return f;
+            return runStartAsWorldFinalPlayer(f, routineType, data);
         }
         return null;
     }
 
+    public Player runStartAsPrelimSemiTwoMinutePlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
+        setPlayerInformation(p);
+        p.setRoutineLength(routineType);
+        clicker(p, data);
+        printRawRoutineInformation(p);
+        setAllPerformanceEvals(p, performanceEvaluationQuestions, evaluationKeywords);
+        getPerformanceEvals(p);
+        data.callAllDataAnalysis();
+        printAnalyzedRoutineInformation(data);
+        String firstName = p.getFirstName();
+        callAllSave(p, data, firstName, routineType);
+        return p;
+    }
+
+    public Player runStartAsWorldFinalPlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
+        setPlayerInformation(p);
+        p.setRoutineLength(routineType);
+        clicker(p, data);
+        printRawRoutineInformation(p);
+        setAllPerformanceEvals(p, performanceEvaluationQuestionsWorld, evaluationKeywordsWorld);
+        getWorldPerformanceEvals(p);
+        data.callAllDataAnalysis();
+        printAnalyzedRoutineInformation(data);
+        String firstName = p.getFirstName();
+        callAllSave(p, data, firstName, routineType);
+        return p;
+    }
+
+    public Player runStartAsWildcardPlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
+        setPlayerInformation(p);
+        p.setRoutineLength(routineType);
+        wildcardClicker(p);
+        System.out.println(p.getFirstName() + " " + p.getLastName() + " positive clicks: " + p.getPositiveClicks());
+        data.callAllDataAnalysis();
+        System.out.println("Clicks per second: " + data.getCPS());
+        System.out.println("-------------------------------------------");
+        String firstName = p.getFirstName();
+        callAllSave(p, data, firstName, routineType);
+        return p;
+    }
+
     //EFFECTS: Prints various post performance information
-    public void printRawRoutineInformation(Player p){
-        System.out.println(p.getFirstName()+" "+ p.getLastName()+" positive clicks: "+p.getPositiveClicks());
-        System.out.println(p.getFirstName()+" "+ p.getLastName()+" negative clicks: "+p.getNegativeClicks());
-        System.out.println(p.getFirstName()+" "+ p.getLastName() +" final reset score is: "+p.getRestartFinal());
-        System.out.println(p.getFirstName()+" "+p.getLastName()+" final change score is: "+p.getChangeFinal());
-        System.out.println(p.getFirstName()+" "+p.getLastName()+" final discard score is: " +p.getDiscardFinal());
+    public void printRawRoutineInformation(Player p) {
+        System.out.println(p.getFirstName() + " " + p.getLastName() + " positive clicks: " + p.getPositiveClicks());
+        System.out.println(p.getFirstName() + " " + p.getLastName() + " negative clicks: " + p.getNegativeClicks());
+        System.out.println(p.getFirstName() + " " + p.getLastName() + " final reset score is: " + p.getRestartFinal());
+        System.out.println(p.getFirstName() + " " + p.getLastName() + " final change score is: " + p.getChangeFinal());
+        System.out.println(p.getFirstName() + " " + p.getLastName() + " final discard score is: " + p.getDiscardFinal());
     }
 
     //EFFECTS: Prints analyzed routine information of a player
-    public void printAnalyzedRoutineInformation(PlayerDataAnalysis data){
-        System.out.println("Fire sections in routine: " +data.getNumberOfFireSectionsInRoutine());
-        System.out.println("Tilted sections in routine: " +data.getNumberOfTiltedSectionsInRoutine());
+    public void printAnalyzedRoutineInformation(PlayerDataAnalysis data) {
+        System.out.println("Fire sections in routine: " + data.getNumberOfFireSectionsInRoutine());
+        System.out.println("Tilted sections in routine: " + data.getNumberOfTiltedSectionsInRoutine());
         System.out.println("Clicks per second: " + data.getCPS());
         System.out.println("Clicks ratio: " + data.getCR());
         System.out.println("The player's clicks if perfect: " + data.getNumberIfPerfect());
@@ -131,7 +151,7 @@ public class YoYoJudge {
 
     //MODIFIES: This, player
     //EFFECTS: Will increase/decrease the clicker score of a player and then return the clicker score after the routine is over
-    public void wildcardClicker(Player p){
+    public void wildcardClicker(Player p) {
         String keyPress = "";
         System.out.println("Press the j key to increment the player's score.");
         System.out.println("Press the i key to reset the players clickerscore");
@@ -140,11 +160,9 @@ public class YoYoJudge {
             keyPress = scanner.nextLine();
             if (keyPress.equals("j")) {
                 p.awardClick();
-            }
-            else if (keyPress.equals("i")) {
+            } else if (keyPress.equals("i")) {
                 p.resetClicks();
-            }
-            else if (keyPress.equals("stop")) {
+            } else if (keyPress.equals("stop")) {
                 p.produceClickerScore();
                 break;
             }
@@ -153,7 +171,7 @@ public class YoYoJudge {
 
     //MODIFIES: This, player
     //EFFECTS: Will increase/decrease the clicker score of a player and then return the clicker score after the routine is over
-    public void clicker(Player p, PlayerDataAnalysis data){
+    public void clicker(Player p, PlayerDataAnalysis data) {
         String keyPress = "";
         System.out.println("Press the j key to increment and the f key to decrement the player's score.");
         System.out.println("Press the q key to give the player a restart");
@@ -167,54 +185,29 @@ public class YoYoJudge {
             keyPress = scanner.nextLine();
             if (keyPress.equals("f")) {
                 p.removeClick();
-            }
-            else if (keyPress.equals("j")) {
+            } else if (keyPress.equals("j")) {
                 p.awardClick();
-            }
-            else if (keyPress.equals("q")) {
+            } else if (keyPress.equals("q")) {
                 p.restart();
-            }
-            else if (keyPress.equals("w")) {
+            } else if (keyPress.equals("w")) {
                 p.change();
-            }
-            else if (keyPress.equals("e")) {
+            } else if (keyPress.equals("e")) {
                 p.discard();
-            }
-            else if (keyPress.equals("i")){
+            } else if (keyPress.equals("i")) {
                 p.resetClicks();
                 data.resetFireTilt();
-            }
-            else if (keyPress.equals("o")){
+            } else if (keyPress.equals("o")) {
                 p.resetMajorDeducts();
-            }
-            else if (keyPress.equals("p")) {
+            } else if (keyPress.equals("p")) {
                 p.resetEverything();
                 data.resetFireTilt();
-            }
-            else if (keyPress.equals("stop")) {
+            } else if (keyPress.equals("stop")) {
                 p.produceClickerScore();
                 break;
             }
         }
     }
 
-    //MODIFIES: This, player
-    //EFFECTS: Records judge's performance evaluation scores for a given player
-    public void setPerformanceEvals (Player p) {
-        System.out.println("Execution score is: ");
-        int execution = scanner.nextInt();
-        System.out.println("Control score is: ");
-        int control = scanner.nextInt();
-        System.out.println("Music Use 1: Choreography score is: ");
-        int choreograhpy = scanner.nextInt();
-        System.out.println("Body Control score is: ");
-        int bodyControl = scanner.nextInt();
-        p.setExecution(execution);
-        p.setControl(control);
-        p.setChoreography(choreograhpy);
-        p.setBodyControl(bodyControl);
-
-    }
 
     //EFFECTS: Prints judge inputted performance evaluations
     public void getPerformanceEvals(Player p) {
@@ -225,33 +218,27 @@ public class YoYoJudge {
         System.out.println("Body control: " + p.getBodyControl());
     }
 
+
     //MODIFIES: This, player
     //EFFECTS: Records judge's performance evaluation scores for a given player
-    public void setWorldPerformanceEvals (Player p) {
-        System.out.println("Execution score is: ");
-        int execution = scanner.nextInt();
-        System.out.println("Control score is: ");
-        int control = scanner.nextInt();
-        System.out.println("Trick Diversity score is: ");
-        int trickDiversity = scanner.nextInt();
-        System.out.println("Space Use & Emphasis score is: ");
-        int spaceUseAndEmphasis = scanner.nextInt();
-        System.out.println("Music Use 1: Choreography score is: ");
-        int choreograhpy = scanner.nextInt();
-        System.out.println("Music Use 2: Consruction score is: ");
-        int construction = scanner.nextInt();
-        System.out.println("Body Control score is: ");
-        int bodyControl = scanner.nextInt();
-        System.out.println("Showmanship score is: ");
-        int showmanship = scanner.nextInt();
-        p.setExecution(execution);
-        p.setControl(control);
-        p.setTrickDiversity(trickDiversity);
-        p.setSpaceUseAndEmphasis(spaceUseAndEmphasis);
-        p.setChoreography(choreograhpy);
-        p.setConstruction(construction);
-        p.setBodyControl(bodyControl);
-        p.setShowmanship(showmanship);
+    public void setAllPerformanceEvals(Player p, ArrayList<String> evaluationQuestionList, ArrayList<String> evaluationKeywordsList) {
+        for (int i = 0; i < evaluationQuestionList.size(); i++) {
+            try {
+                setIndividualPerformanceEval(i, p, evaluationQuestionList, evaluationKeywordsList);
+            } catch (IncorrectUserInputException e) {
+                i--;
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void setIndividualPerformanceEval(int i, Player p, ArrayList<String> evaluationQuestionList, ArrayList<String> evaluationKeywordsList) throws IncorrectUserInputException {
+        System.out.println(evaluationQuestionList.get(i));
+        int score = scanner.nextInt();
+        if (score > 10 || score < 0) {
+            throw new IncorrectUserInputException("Please input an integer greater than 0 but less than 10");
+        }
+        p.setEvaluation(score, evaluationKeywordsList.get(i));
     }
 
     //EFFECTS: Prints judge inputted performance evaluations
@@ -268,91 +255,152 @@ public class YoYoJudge {
     }
 
     //EFFECTS: Reads from memory
-    public void readFromMemory(String inputPlayerName, String inputRoutineType) throws IOException {
-        if (inputRoutineType.equals("Wildcard")) {
+    public void readFromMemory(String firstName, String routineType) throws IOException {
+        if (routineType.equals("Wildcard")) {
             WildcardPlayer w = new WildcardPlayer();
             WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(w);
-            CallAllRead(w,data,inputPlayerName,inputRoutineType);
+            CallAllRead(w, data, firstName, routineType);
         }
-        else if(inputRoutineType.equals("Prelim")){
+        else if (routineType.equals("Prelim")) {
             PrelimPlayer pp = new PrelimPlayer();
             PrelimPlayerDataAnalysis data = new PrelimPlayerDataAnalysis(pp);
-            CallAllRead(pp,data,inputPlayerName,inputRoutineType);
+            CallAllRead(pp, data, firstName, routineType);
         }
-        else if(inputRoutineType.equals("Semi")){
+        else if (routineType.equals("Semi")) {
             SemiPlayer s = new SemiPlayer();
             SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(s);
-            CallAllRead(s,data,inputPlayerName,inputRoutineType);
+            CallAllRead(s, data, firstName, routineType);
         }
-        else if(inputRoutineType.equals("Two Minute Final")){
+        else if (routineType.equals("Two Minute Final")) {
             TwoMinuteFinalPlayer t = new TwoMinuteFinalPlayer();
             TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(t);
-            CallAllRead(t,data,inputPlayerName,inputRoutineType);
+            CallAllRead(t, data, firstName, routineType);
 
         }
-        else if(inputRoutineType.equals("World Final")){
+        else if (routineType.equals("World Final")) {
             WorldFinalPlayer f = new WorldFinalPlayer();
             WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(f);
-            CallAllRead(f,data,inputPlayerName,inputRoutineType);
+            CallAllRead(f, data, firstName, routineType);
         }
     }
 
     //EFFECTS: Calls the read methods of player and playerDataAnalysis
-    public void CallAllRead(Player p, PlayerDataAnalysis data, String inputPlayerName, String inputRoutineType) throws IOException {
-        p.read(inputPlayerName+ "_"+inputRoutineType+"_player.csv");
-        data.read(inputPlayerName+ "_"+inputRoutineType+"_playerDataAnalysis.csv");
+    public void CallAllRead(Player p, PlayerDataAnalysis data, String firstName, String routineType) throws IOException {
+        p.read(firstName + "_" + routineType + "_player.csv");
+        data.read(firstName + "_" + routineType + "_playerDataAnalysis.csv");
     }
 
     //EFFECTS: Calls the save methods of player and playerDataAnalysis
-    public void callAllSave(Player p, PlayerDataAnalysis data, String inputPlayerName, String inputRoutineType) throws IOException {
-        p.setRoutineType(inputRoutineType);
-        p.save(inputPlayerName+"_"+inputRoutineType+"_player.csv");
-        data.save(inputPlayerName+"_"+inputRoutineType+"_playerDataAnalysis.csv");
+    public void callAllSave(Player p, PlayerDataAnalysis data, String firstName, String routineType) throws IOException {
+        p.setRoutineType(routineType);
+        p.save(firstName + "_" + routineType + "_player.csv");
+        data.save(firstName + "_" + routineType + "_playerDataAnalysis.csv");
     }
 
-    public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        YoYoJudge yyjh = new YoYoJudge();
-        System.out.println("Welcome to the yo-yo judging application");
-        System.out.println("Type competition to begin competition mode and individual to begin individual player mode");
-        String competitionOrPlayerMode = "";
-        competitionOrPlayerMode = scanner.nextLine();
-        if (competitionOrPlayerMode.equals("competition")) {
+    public String retrieveRoutineType(String choice) {
+        if (choice.equals("read")) {
+            System.out.println("Input the routine type (Wildcard, Prelim, Semi, Two Minute Final, World Final): ");
+        }
+        if (choice.equals("save")) {
+            System.out.println("Type in the routine type(Wildcard, Prelim, Semi, Two Minute Final, World Final) of the player you would like to view");
+        }
+        if (choice.equals("competition")) {
             System.out.println("What type of competition is it? (Wildcard, Prelim, Semi, Two Minute Final, World Final)");
-            String typeOfCompetition = scanner.nextLine();
+        }
+        String routineType = scanner.nextLine();
+        return routineType;
+    }
+
+    public void competitionMode(YoYoJudge yyjh, String choice) throws IOException {
+            String routineType = yyjh.retrieveRoutineType(choice);
             Competition c = new Competition();
             while (true) {
-                Player p = yyjh.start(); //start method asks for the type of player
+                Player p = yyjh.start(routineType);
                 c.addPlayer(p);
                 System.out.println("Is there another player to judge in this competition yes or no");
-                String anotherPlayer = "";
+                String anotherPlayer;
                 anotherPlayer = scanner.nextLine();
-                if (anotherPlayer.equals("no")){
+                if (anotherPlayer.equals("no")) {
                     c.save("Test_competition");
                     break;
                 }
             }
-
         }
-        else if (competitionOrPlayerMode.equals("individual")) {
-            System.out.println("Type start to start judging a player");
-            System.out.println("Type read to read from memory");
-            String choice = "";
-            String inputPlayerName = "";
-            String inputRoutineType = "";
+
+        public void individualMode(YoYoJudge yyjh) throws IOException {
+            System.out.println("Type start to start judging a player or read to read from memory");
+            String choice;
+            String firstName;
+            String routineType;
             choice = scanner.nextLine();
             if (choice.equals("start")) {
-                yyjh.start();
+                yyjh.start(yyjh.retrieveRoutineType(choice));
             } else if (choice.equals("read")) {
                 System.out.println("Type in the name of a player who has already been judged");
-                inputPlayerName = scanner.nextLine();
-                System.out.println("Type in the routine type(Wildcard, Prelim, Semi, Two Minute Final, World Final) of the player you would like to view");
-                inputRoutineType = scanner.nextLine();
-                yyjh.readFromMemory(inputPlayerName, inputRoutineType);
-                yyjh.start();
+                firstName = scanner.nextLine();
+                routineType = yyjh.retrieveRoutineType(choice);
+                boolean readFromMem = true;
+                while (readFromMem) {
+                    try {
+                        yyjh.readFromMemory(firstName, routineType);
+                    } catch (IOException e) {
+                        readFromMem = false;
+                    }
+                    System.out.println("Player name and routine type combination inputted is not saved in memory");
+                }
+            }
+        }
+
+
+        public static void main (String[]args) throws IOException {
+            Scanner scanner = new Scanner(System.in);
+            YoYoJudge yyjh = new YoYoJudge();
+            System.out.println("Welcome to the yo-yo judging application");
+            System.out.println("Type competition to begin competition mode and individual to begin individual player mode");
+            String competitionOrPlayerMode;
+            competitionOrPlayerMode = scanner.nextLine();
+            if (competitionOrPlayerMode.equals("competition")) {
+                //yyjh.competitionMode(yyjh,competitionOrPlayerMode);
+                String routineType = yyjh.retrieveRoutineType(competitionOrPlayerMode);
+                Competition c = new Competition();
+                while (true) {
+                    Player p = yyjh.start(routineType);
+                    c.addPlayer(p);
+                    System.out.println("Is there another player to judge in this competition yes or no");
+                    String anotherPlayer;
+                    anotherPlayer = scanner.nextLine();
+                    if (anotherPlayer.equals("no")) {
+                        c.save("Test_competition");
+                        break;
+                    }
+                }
+
+            }
+            else if (competitionOrPlayerMode.equals("individual")) {
+                //yyjh.individualMode(yyjh);
+                System.out.println("Type start to start judging a player or read to read from memory");
+                String choice;
+                String firstName;
+                String routineType;
+                choice = scanner.nextLine();
+                if (choice.equals("start")) {
+                    yyjh.start(yyjh.retrieveRoutineType(choice));
+                } else if (choice.equals("read")) {
+                    System.out.println("Type in the name of a player who has already been judged");
+                    firstName = scanner.nextLine();
+                    routineType = yyjh.retrieveRoutineType(choice);
+                    boolean readFromMem = true;
+                    while (readFromMem) {
+                        try {
+                            yyjh.readFromMemory(firstName, routineType);
+                        } catch (IOException e) {
+                            readFromMem = false;
+                        }
+                        System.out.println("Player name and routine type combination inputted is not saved in memory");
+                    }
+                }
             }
         }
     }
 
-}
 

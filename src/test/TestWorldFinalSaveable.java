@@ -82,10 +82,10 @@ public class TestWorldFinalSaveable {
         for (int i = 0; i < 10; i++) {
             player.removeClick();
         }
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 100; i++) {
             player.awardClick();
         }
-        player.setRoutineLength(100);
+        player.setRoutineLength("World Final");
         player.produceClickerScore();
         data.callAllDataAnalysis();
         data.setSaveLocation(player.getFirstName() + "_testWorldFinalPlayerDataAnalysis.csv");
@@ -95,12 +95,12 @@ public class TestWorldFinalSaveable {
         ArrayList<String> partsOfLine = data.splitOnComma(line);
         assertEquals("Test", partsOfLine.get(0)); //firstName
         assertEquals("Test", partsOfLine.get(1)); //lastName
-        assertEquals("2", partsOfLine.get(2)); //numberOfFireSectionsInRoutine
+        assertEquals("10", partsOfLine.get(2)); //numberOfFireSectionsInRoutine
         assertEquals("1", partsOfLine.get(3)); //numberOfTiltedSectionsInRoutine
-        assertEquals("0.1", partsOfLine.get(4));//CPS
-        assertEquals("0.5", partsOfLine.get(5));//CR
-        assertEquals("40", partsOfLine.get(6));//numberIfPerfect
-        assertEquals("0.4",partsOfLine.get(7));//CIPPS
+        assertEquals("0.5", partsOfLine.get(4));//CPS
+        assertEquals("0.1", partsOfLine.get(5));//CR
+        assertEquals("120", partsOfLine.get(6));//numberIfPerfect
+        assertEquals("0.6666666666666666",partsOfLine.get(7));//CIPPS
 
     }
 

@@ -21,41 +21,41 @@ public class TestWorldFinalReadable {
     @Test
     public void testReadForPlayer() throws IOException {
         player.read("Test_testWorldFinalPlayer.csv");
-        assertEquals(player.getFirstName(), "Test");
-        assertEquals(player.getLastName(), "Test");
-        assertEquals(player.getDivision(), "1a");
-        assertEquals(player.getRoutineType(), "World Final");
-        assertEquals(player.getPositiveClicks(),5.0);
-        assertEquals(player.getNegativeClicks(), 5.0);
-        assertEquals(player.getClickerScore(), 0.0);
-        assertEquals(player.getNumberOfRestarts(), 1);
-        assertEquals(player.getNumberOfChanges(), 2);
-        assertEquals(player.getNumberOfDiscards(), 3);
-        assertEquals(player.getRestartFinal(), 1);
-        assertEquals(player.getChangeFinal(), 6);
-        assertEquals(player.getDiscardFinal(),15);
-        assertEquals(player.getExecution(), 1);
-        assertEquals(player.getControl(), 2);
-        assertEquals(player.getTrickDiversity(), 3);
-        assertEquals(player.getSpaceUseAndEmphasis(), 4);
-        assertEquals(player.getChoreography(), 5);
-        assertEquals(player.getConstruction(), 6);
-        assertEquals(player.getBodyControl(), 7);
-        assertEquals(player.getShowmanship(), 8);
+        assertEquals("Test",player.getFirstName());
+        assertEquals("Test",player.getLastName());
+        assertEquals("1a",player.getDivision());
+        assertEquals("World Final",player.getRoutineType());
+        assertEquals(5.0,player.getPositiveClicks());
+        assertEquals(5.0,player.getNegativeClicks());
+        assertEquals(0.0,player.getClickerScore());
+        assertEquals(1,player.getNumberOfRestarts());
+        assertEquals(2,player.getNumberOfChanges());
+        assertEquals(3,player.getNumberOfDiscards());
+        assertEquals(1,player.getRestartFinal());
+        assertEquals(6,player.getChangeFinal());
+        assertEquals(15,player.getDiscardFinal());
+        assertEquals(1,player.getExecution());
+        assertEquals(2,player.getControl());
+        assertEquals(3,player.getTrickDiversity());
+        assertEquals(4,player.getSpaceUseAndEmphasis());
+        assertEquals(5,player.getChoreography());
+        assertEquals(6,player.getConstruction());
+        assertEquals(7,player.getBodyControl());
+        assertEquals(8,player.getShowmanship());
 
     }
 
     @Test
     public void testReadForPlayerDataAnalysis() throws IOException {
         data.read("Test_testWorldFinalPlayerDataAnalysis.csv");
-        assertEquals(player.getFirstName(),"Test");
-        assertEquals(player.getLastName(), "Test"); //lastName
-        assertEquals(data.getNumberOfFireSectionsInRoutine(), 2); //numberOfFireSectionsInRoutine
-        assertEquals(data.getNumberOfTiltedSectionsInRoutine(), 1); //numberOfTiltedSectionsInRoutine
-        assertEquals(data.getCPS(), 0.1);//CPS
-        assertEquals(data.getCR(),0.5);//CR
-        assertEquals(data.getNumberIfPerfect(), 40);//numberIfPerfect
-        assertEquals(data.getCIPPS(),0.4);//CIPPS
+        assertEquals("Test",player.getFirstName());
+        assertEquals("Test",player.getLastName()); //lastName
+        assertEquals(10,data.getNumberOfFireSectionsInRoutine()); //numberOfFireSectionsInRoutine
+        assertEquals(1,data.getNumberOfTiltedSectionsInRoutine()); //numberOfTiltedSectionsInRoutine
+        assertEquals(0.5,data.getCPS());//CPS
+        assertEquals(0.1,data.getCR());//CR
+        assertEquals(120,data.getNumberIfPerfect());//numberIfPerfect
+        assertEquals(0.6666666666666666,data.getCIPPS());//CIPPS
     }
 
 

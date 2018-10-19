@@ -195,8 +195,7 @@ public class TestPlayerDataAnalysis {
     public void testCPS(){
         int positiveClicks = 100;
         int negativeClicks = 10;
-        int routineLength = 90;
-        player.setRoutineLength(routineLength);
+        player.setRoutineLength("Semi");
         player.setPositiveClicks(positiveClicks);
         player.setNegativeClicks(negativeClicks);
         player.produceClickerScore();
@@ -315,17 +314,17 @@ public class TestPlayerDataAnalysis {
     }
 
     @Test
-    public void testCPSifPerfect(){
+    public void testCIPPS(){
         int positiveClicks = 10;
-        int negativeClicks = 5;
+        int negativeClicks = 10;
         player.setPositiveClicks(positiveClicks);
         player.setNegativeClicks(negativeClicks);
-        player.setRoutineLength(80);
+        player.setRoutineLength("Prelim");
         player.produceClickerScore();
         data.clicksIfPerfect();
-        assertEquals(20, data.getNumberIfPerfect());
+        assertEquals(30, data.getNumberIfPerfect());
         data.clicksIfPerfectPerSecond();
-        assertEquals(0.25, data.getCIPPS());
+        assertEquals(0.5, data.getCIPPS());
 
     }
 

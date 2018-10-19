@@ -54,10 +54,10 @@ public class TestWildcardSaveable {
     public void testSaveForPlayerDataAnalysis() throws IOException {
         player.setFirstName("Test");
         player.setLastName("Test");
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 15; i++) {
             player.awardClick();
         }
-        player.setRoutineLength(100);
+        player.setRoutineLength("Wildcard");
         player.produceClickerScore();
         data.callAllDataAnalysis();
         data.setSaveLocation(player.getFirstName() + "_testWildcardPlayerDataAnalysis.csv");
@@ -67,7 +67,7 @@ public class TestWildcardSaveable {
         ArrayList<String> partsOfLine = data.splitOnComma(line);
         assertEquals("Test", partsOfLine.get(0)); //firstName
         assertEquals("Test", partsOfLine.get(1)); //lastName
-        assertEquals("0.1", partsOfLine.get(2));//CPS
+        assertEquals("0.5", partsOfLine.get(2));//CPS
 
     }
 }

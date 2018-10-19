@@ -27,6 +27,10 @@ public class Competition implements Saveable {
         players.add(p);
     }
 
+    public void addPlayerDataAnalysis(PlayerDataAnalysis data){
+        dataAnalyses.add(data);
+    }
+
 
     public void save(String saveLocation) throws IOException {
         PrintWriter pw1 = new PrintWriter(new FileOutputStream(saveLocation + "Player.csv", true));

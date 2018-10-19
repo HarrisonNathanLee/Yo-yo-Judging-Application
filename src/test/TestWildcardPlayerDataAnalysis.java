@@ -20,8 +20,8 @@ public class TestWildcardPlayerDataAnalysis {
     @Test
     public void testCPS(){
         int positiveClicks = 90;
-        int routineLength = 90;
-        player.setRoutineLength(routineLength);
+        String routineType = "Semi";
+        player.setRoutineLength(routineType);
         player.setPositiveClicks(positiveClicks);
         player.produceClickerScore();
         assertEquals(90, player.getClickerScore());
