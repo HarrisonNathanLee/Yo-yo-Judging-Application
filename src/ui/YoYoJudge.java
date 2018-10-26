@@ -164,6 +164,7 @@ public class YoYoJudge {
                 p.resetClicks();
             } else if (keyPress.equals("stop")) {
                 p.produceClickerScore();
+                System.out.println(p.getFirstName()+ " " + p.getLastName() + "'s" + " final clickerscore is: " + p.getClickerScore());
                 break;
             }
         }
@@ -203,6 +204,7 @@ public class YoYoJudge {
                 data.resetFireTilt();
             } else if (keyPress.equals("stop")) {
                 p.produceClickerScore();
+                System.out.println(p.getFirstName()+ " " + p.getLastName() + "'s" + " final clickerscore is: " + p.getClickerScore());
                 break;
             }
         }
@@ -298,71 +300,25 @@ public class YoYoJudge {
     }
 
     public String retrieveRoutineType(String choice) {
-        if (choice.equals("read")) {
+        if (choice.equals("start")) {
             System.out.println("Input the routine type (Wildcard, Prelim, Semi, Two Minute Final, World Final): ");
         }
-        if (choice.equals("save")) {
+        if (choice.equals("read")) {
             System.out.println("Type in the routine type(Wildcard, Prelim, Semi, Two Minute Final, World Final) of the player you would like to view");
         }
         if (choice.equals("competition")) {
             System.out.println("What type of competition is it? (Wildcard, Prelim, Semi, Two Minute Final, World Final)");
         }
-        String routineType = scanner.nextLine();
-        return routineType;
+        return scanner.nextLine();
     }
 
-    public void competitionMode(YoYoJudge yyjh, String choice) throws IOException {
-            String routineType = yyjh.retrieveRoutineType(choice);
-            Competition c = new Competition();
-            while (true) {
-                Player p = yyjh.start(routineType);
-                c.addPlayer(p);
-                System.out.println("Is there another player to judge in this competition yes or no");
-                String anotherPlayer;
-                anotherPlayer = scanner.nextLine();
-                if (anotherPlayer.equals("no")) {
-                    c.save("Test_competition");
-                    break;
-                }
-            }
-        }
-
-        public void individualMode(YoYoJudge yyjh) throws IOException {
-            System.out.println("Type start to start judging a player or read to read from memory");
-            String choice;
-            String firstName;
-            String routineType;
-            choice = scanner.nextLine();
-            if (choice.equals("start")) {
-                yyjh.start(yyjh.retrieveRoutineType(choice));
-            } else if (choice.equals("read")) {
-                System.out.println("Type in the name of a player who has already been judged");
-                firstName = scanner.nextLine();
-                routineType = yyjh.retrieveRoutineType(choice);
-                boolean readFromMem = true;
-                while (readFromMem) {
-                    try {
-                        yyjh.readFromMemory(firstName, routineType);
-                    } catch (IOException e) {
-                        readFromMem = false;
-                    }
-                    System.out.println("Player name and routine type combination inputted is not saved in memory");
-                }
-            }
-        }
-
-
-        public static void main (String[]args) throws IOException {
+    public static void competitionMode(YoYoJudge yyjh, String choice) throws IOException {
             Scanner scanner = new Scanner(System.in);
-            YoYoJudge yyjh = new YoYoJudge();
-            System.out.println("Welcome to the yo-yo judging application");
-            System.out.println("Type competition to begin competition mode and individual to begin individual player mode");
-            String competitionOrPlayerMode;
-            competitionOrPlayerMode = scanner.nextLine();
-            if (competitionOrPlayerMode.equals("competition")) {
-                //yyjh.competitionMode(yyjh,competitionOrPlayerMode);
-                String routineType = yyjh.retrieveRoutineType(competitionOrPlayerMode);
-                Competition c = new Competition();
+            Competition c = new Competition();
+            System.out.println("Type start to start judging a competition or read to read competition data from memory");
+            String startOrRead = scanner.nextLine();
+            if (startOrRead.equals("start")) {
+                String routineType = yyjh.retrieveRoutineType(choice);
                 while (true) {
                     Player p = yyjh.start(routineType);
                     c.addPlayer(p);
@@ -374,33 +330,80 @@ public class YoYoJudge {
                         break;
                     }
                 }
-
             }
-            else if (competitionOrPlayerMode.equals("individual")) {
-                //yyjh.individualMode(yyjh);
-                System.out.println("Type start to start judging a player or read to read from memory");
-                String choice;
-                String firstName;
-                String routineType;
-                choice = scanner.nextLine();
-                if (choice.equals("start")) {
-                    yyjh.start(yyjh.retrieveRoutineType(choice));
-                } else if (choice.equals("read")) {
-                    System.out.println("Type in the name of a player who has already been judged");
-                    firstName = scanner.nextLine();
-                    routineType = yyjh.retrieveRoutineType(choice);
-                    boolean readFromMem = true;
-                    while (readFromMem) {
-                        try {
-                            yyjh.readFromMemory(firstName, routineType);
-                        } catch (IOException e) {
-                            readFromMem = false;
-                        }
-                        System.out.println("Player name and routine type combination inputted is not saved in memory");
-                    }
+//            else if (startOrRead.equals("read")) {
+//                c.read("Test_competition");
+//            }
+        }
+
+        public void individualMode(YoYoJudge yyjh){
+
+            System.out.println("Type start to start judging a player or read to read from memory");
+            String choice = scanner.nextLine();
+            if (choice.equals("start")) {
+                try {
+                    start(yyjh.retrieveRoutineType(choice));
+                } catch (IOException e) {
+                    System.out.println("Data save problem");
+                }
+            } else if (choice.equals("read")) {
+                System.out.println("Type in the name of a player who has already been judged");
+                String firstName = scanner.nextLine();
+                String routineType = retrieveRoutineType(choice);
+                try {
+                    readFromMemory(firstName, routineType);
+                }
+                catch (IOException e) {
+                    System.out.println("Player name and routine type combination inputted is not saved in memory");
                 }
             }
         }
+
+        public static void main (String[]args) throws IOException {
+            Scanner scanner = new Scanner(System.in);
+            YoYoJudge yyjh = new YoYoJudge();
+            System.out.println("Welcome to the yo-yo judging application");
+            System.out.println("Type competition to begin competition mode and individual to begin individual player mode");
+            String competitionOrPlayerMode;
+            competitionOrPlayerMode = scanner.nextLine();
+            if (competitionOrPlayerMode.equals("competition")) {
+                competitionMode(yyjh,competitionOrPlayerMode);
+            }
+            else if (competitionOrPlayerMode.equals("individual")) {
+                yyjh.individualMode(yyjh);
+
+            }
+        }
     }
+
+           /*
+                    if (routineType.equals("Wildcard")){
+                        PlayerDataAnalysis data = new WildcardPlayerDataAnalysis(p);
+                        data.callAllDataAnalysis();
+                        c.addPlayerDataAnalysis(data);
+                    }
+                    if (routineType.equals("Prelim")) {
+                        PrelimPlayerDataAnalysis data = new PrelimPlayerDataAnalysis((p);
+                        data.callAllDataAnalysis();
+                        c.addPlayerDataAnalysis(data);
+                    }
+                    if (routineType.equals("Semi")){
+                        SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(p);
+                        data.callAllDataAnalysis();
+                        c.addPlayerDataAnalysis(data);
+                    }
+                    if (routineType.equals("Two Minute Final")){
+                        TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(p);
+                        data.callAllDataAnalysis();
+                        c.addPlayerDataAnalysis(data);
+                    }
+                    if (routineType.equals("Final")){
+                        WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(p);
+                        data.callAllDataAnalysis();
+                        c.addPlayerDataAnalysis(data);
+                    }
+                    */
+
+
 
 

@@ -1,5 +1,6 @@
 package test;
 
+import Exceptions.DataCalculationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import player.PrelimPlayer;
@@ -208,7 +209,7 @@ public class TestPlayerDataAnalysis {
     //TODO: Create tests for clickRatio method
 
     @Test
-    public void testNoClicksCR(){
+    public void testNoClicksCR() throws DataCalculationException {
         int positiveClicks = 0;
         int negativeClicks = 0;
         player.setPositiveClicks(positiveClicks);
@@ -219,7 +220,7 @@ public class TestPlayerDataAnalysis {
     }
 
     @Test
-    public void testJustPositiveCR(){
+    public void testJustPositiveCR() throws DataCalculationException {
         int positiveClicks = 10;
         int negativeClicks = 0;
         player.setPositiveClicks(positiveClicks);
@@ -237,12 +238,16 @@ public class TestPlayerDataAnalysis {
         player.setPositiveClicks(positiveClicks);
         player.setNegativeClicks(negativeClicks);
         player.produceClickerScore();
-        data.clickRatio();
+        try {
+            data.clickRatio();
+        } catch (DataCalculationException e) {
+            System.out.println("Player just had negative clicks");
+        }
         assertEquals(0,data.getCR());
     }
 
     @Test
-    public void testSamePositiveNegativeCR(){
+    public void testSamePositiveNegativeCR() throws DataCalculationException {
         int positiveClicks = 10;
         int negativeClicks = 10;
         player.setPositiveClicks(positiveClicks);
@@ -253,7 +258,7 @@ public class TestPlayerDataAnalysis {
     }
 
     @Test
-    public void testMoreNegativePositiveCR(){
+    public void testMoreNegativePositiveCR() throws DataCalculationException {
         int positiveClicks = 5;
         int negativeClicks = 10;
         player.setPositiveClicks(positiveClicks);
@@ -265,7 +270,7 @@ public class TestPlayerDataAnalysis {
 
 
     @Test
-    public void testMorePositiveNegativeCR(){
+    public void testMorePositiveNegativeCR() throws DataCalculationException {
         int positiveClicks = 10;
         int negativeClicks = 5;
         player.setPositiveClicks(positiveClicks);

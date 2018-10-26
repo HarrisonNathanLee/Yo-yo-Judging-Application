@@ -6,10 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 
-public abstract class Player implements Saveable, Readable {
+public abstract class Player extends Readable implements Saveable{
     protected String firstName = "";
     protected String lastName = "";
     protected String division = "";
@@ -59,26 +58,6 @@ public abstract class Player implements Saveable, Readable {
     public void setRoutineType(String routineType) { this.routineType = routineType; }
 
     //MODIFIES: This
-    //EFFECTS: Sets the routineLength of the player based of the routineType
-    public void setRoutineLength(String routineType) {
-        if (routineType.equals("Wildcard")){
-            routineLength = 30;
-        }
-        if (routineType.equals("Prelim")){
-            routineLength = 60;
-        }
-        if (routineType.equals("Semi")){
-            routineLength = 90;
-        }
-        if (routineType.equals("Two Minute Final")){
-            routineLength = 120;
-        }
-        if (routineType.equals("World Final")){
-            routineLength = 180;
-        }
-    }
-
-    //MODIFIES: This
     //EFFECTS: Retrieves the execution score of the player
     public void setExecution(int execution) {
         this.execution = execution;
@@ -126,33 +105,6 @@ public abstract class Player implements Saveable, Readable {
         this.showmanship = showmanship;
     }
 
-    public void setEvaluation(int score, String evalParameter){
-        if (evalParameter.equals("execution")){
-            this.execution = score;
-        }
-        if (evalParameter.equals("control")){
-            this.control = score;
-        }
-        if (evalParameter.equals("trickDiversity")){
-            this.trickDiversity = score;
-        }
-        if (evalParameter.equals("spaceUseAndEmphasis")){
-            this.spaceUseAndEmphasis = score;
-        }
-        if (evalParameter.equals("choreography")){
-            this.choreography = score;
-        }
-        if (evalParameter.equals("construction")){
-            this.construction = score;
-        }
-        if (evalParameter.equals("bodyControl")){
-            this.bodyControl= score;
-        }
-        if (evalParameter.equals("showmanship")){
-            this.showmanship = score;
-        }
-    }
-
     //MODIFIES: This
     //EFFECTS: Sets the positive clicks of the player
     public void setPositiveClicks(int positiveClicks) { this.positiveClicks = positiveClicks; }
@@ -181,6 +133,55 @@ public abstract class Player implements Saveable, Readable {
     //EFFECTS: Sets the save location to a different location from default
     public void setSaveLocation(String saveLocation) {
         this.saveLocation = saveLocation;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the routineLength of the player based of the routineType
+    public void setRoutineLength(String routineType) {
+        if (routineType.equals("Wildcard")){
+            routineLength = 30;
+        }
+        if (routineType.equals("Prelim")){
+            routineLength = 60;
+        }
+        if (routineType.equals("Semi")){
+            routineLength = 90;
+        }
+        if (routineType.equals("Two Minute Final")){
+            routineLength = 120;
+        }
+        if (routineType.equals("World Final")){
+            routineLength = 180;
+        }
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the evaluation paramter of a player depending
+    public void setEvaluation(int score, String evalParameter){
+        if (evalParameter.equals("execution")){
+            this.execution = score;
+        }
+        if (evalParameter.equals("control")){
+            this.control = score;
+        }
+        if (evalParameter.equals("trickDiversity")){
+            this.trickDiversity = score;
+        }
+        if (evalParameter.equals("spaceUseAndEmphasis")){
+            this.spaceUseAndEmphasis = score;
+        }
+        if (evalParameter.equals("choreography")){
+            this.choreography = score;
+        }
+        if (evalParameter.equals("construction")){
+            this.construction = score;
+        }
+        if (evalParameter.equals("bodyControl")){
+            this.bodyControl= score;
+        }
+        if (evalParameter.equals("showmanship")){
+            this.showmanship = score;
+        }
     }
 
     //EFFECTS: Returns the first name of the player
@@ -266,17 +267,6 @@ public abstract class Player implements Saveable, Readable {
     //EFFECTS: Returns the routine type
     public String getRoutineType() { return routineType; }
 
-    //EFFECTS: Returns the restart multiplier
-    public int getRestartMultiplier() { return restartMultiplier; }
-
-    //EFFECTS: Returns the change multiplier
-    public int getChangeMultiplier() {
-        return changeMultiplier;
-    }
-
-    //EFFECTS: Returns the discard multiplier
-    public int getDiscardMultiplier() { return discardMultiplier; }
-
     //EFFECTS: Returns the save location
     public String getSaveLocation() {
         return saveLocation;
@@ -305,9 +295,7 @@ public abstract class Player implements Saveable, Readable {
     //EFFECTS: Produces and returns the final clickerScore from the positive clicks awarded and the negative clicks deducted
     public void produceClickerScore(){
         clickerScore = this.positiveClicks - this.negativeClicks;
-        System.out.println(this.firstName + " " + this.lastName + "'s" + " final clickerscore is: " + this.clickerScore);
     }
-
 
     //MODIFIES: This
     //EFFECTS: Adds one to number of restarts
@@ -408,32 +396,8 @@ public abstract class Player implements Saveable, Readable {
         List<String> lines = Files.readAllLines(Paths.get(saveLocation));
         String line = lines.get(0);
         ArrayList<String> partsOfLine = splitOnComma(line);
-        System.out.println("Player information and raw scores from memory");
-        System.out.println("---------------------------------------");
-        System.out.println("firstName: " + partsOfLine.get(0) + " ");
-        System.out.println("lastName: " + partsOfLine.get(1) + " ");
-        System.out.println("division: " + partsOfLine.get(2) + " ");
-        System.out.println("routineType: " + partsOfLine.get(3) + " ");
-        System.out.println("positiveClicks: " + partsOfLine.get(4) + " ");
-        System.out.println("negativeClicks: " + partsOfLine.get(5) + " ");
-        System.out.println("clickerScore: " + partsOfLine.get(6) + " ");
-        System.out.println("numberOfRestarts: " + partsOfLine.get(7) + " ");
-        System.out.println("numberOfChanges: " + partsOfLine.get(8) + " ");
-        System.out.println("numberOfDiscards: " + partsOfLine.get(9) + " ");
-        System.out.println("restartFinal: " + partsOfLine.get(10) + " ");
-        System.out.println("changeFinal: " + partsOfLine.get(11) + " ");
-        System.out.println("discardFinal: " + partsOfLine.get(12) + " ");
-        System.out.println("execution: " + partsOfLine.get(13) + " ");
-        System.out.println("control: " + partsOfLine.get(14) + " ");
-        System.out.println("choreography: " + partsOfLine.get(15) + " ");
-        System.out.println("bodyControl: " + partsOfLine.get(16) + " ");
+        playerPrintReadOutput(partsOfLine);
         playerReadOutput(partsOfLine);
-        System.out.println("---------------------------------------");
-    }
-
-    public static ArrayList<String> splitOnComma(String line) {
-        String[] splits = line.split(",");
-        return new ArrayList<>(Arrays.asList(splits));
     }
 
     public String playerToSaveString(){
@@ -493,6 +457,29 @@ public abstract class Player implements Saveable, Readable {
         this.control = Integer.parseInt(partsOfLine.get(14));
         this.choreography = Integer.parseInt(partsOfLine.get(15));
         this.bodyControl = Integer.parseInt(partsOfLine.get(16));
+    }
+
+    public void playerPrintReadOutput(ArrayList<String> partsOfLine){
+        System.out.println("Player information and raw scores from memory");
+        System.out.println("---------------------------------------");
+        System.out.println("firstName: " + partsOfLine.get(0) + " ");
+        System.out.println("lastName: " + partsOfLine.get(1) + " ");
+        System.out.println("division: " + partsOfLine.get(2) + " ");
+        System.out.println("routineType: " + partsOfLine.get(3) + " ");
+        System.out.println("positiveClicks: " + partsOfLine.get(4) + " ");
+        System.out.println("negativeClicks: " + partsOfLine.get(5) + " ");
+        System.out.println("clickerScore: " + partsOfLine.get(6) + " ");
+        System.out.println("numberOfRestarts: " + partsOfLine.get(7) + " ");
+        System.out.println("numberOfChanges: " + partsOfLine.get(8) + " ");
+        System.out.println("numberOfDiscards: " + partsOfLine.get(9) + " ");
+        System.out.println("restartFinal: " + partsOfLine.get(10) + " ");
+        System.out.println("changeFinal: " + partsOfLine.get(11) + " ");
+        System.out.println("discardFinal: " + partsOfLine.get(12) + " ");
+        System.out.println("execution: " + partsOfLine.get(13) + " ");
+        System.out.println("control: " + partsOfLine.get(14) + " ");
+        System.out.println("choreography: " + partsOfLine.get(15) + " ");
+        System.out.println("bodyControl: " + partsOfLine.get(16) + " ");
+        System.out.println("---------------------------------------");
     }
 
 }

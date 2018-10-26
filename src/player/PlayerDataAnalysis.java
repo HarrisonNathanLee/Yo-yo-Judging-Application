@@ -1,16 +1,21 @@
 package player;
 
+import Exceptions.DataCalculationException;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
-public abstract class PlayerDataAnalysis implements Saveable, Readable{
+public abstract class PlayerDataAnalysis extends Readable implements Saveable{
+    public Player getPlayer() {
+        return player;
+    }
+
     protected Player player;
     protected static final int TILTED = 10; //an arbitrary number for now -> will vary depending on the routine length in the future
     protected static final int FIRE = 10; //an arbitrary number for now
@@ -113,10 +118,10 @@ public abstract class PlayerDataAnalysis implements Saveable, Readable{
 
     //MODIFIES: This
     //EFFECTS: Returns the click ratio (negative to positive clicks) of the player
-    public void clickRatio() {
+    public void clickRatio() throws DataCalculationException {
         if (player.getPositiveClicks() == 0 & player.getNegativeClicks() > 0) {
             CR = 0;
-            System.out.println(player.getFirstName() + " just had negative clicks, cannot produce a click ratio score");
+            throw new DataCalculationException(player.getFirstName() + " just had negative clicks, cannot produce a click ratio score");
         } else if (player.getPositiveClicks() == 0 & player.getNegativeClicks() == 0) {
             CR = 0;
         } else {
@@ -143,7 +148,11 @@ public abstract class PlayerDataAnalysis implements Saveable, Readable{
         this.clicksOnFire();
         this.clicksOnTilt();
         this.clicksPerSecond();
-        this.clickRatio();
+        try {
+            this.clickRatio();
+        } catch (DataCalculationException e) {
+            System.out.println(e.getMessage());
+        }
         this.clicksIfPerfect();
         this.clicksIfPerfectPerSecond();
     }
@@ -164,23 +173,10 @@ public abstract class PlayerDataAnalysis implements Saveable, Readable{
         List<String> lines = Files.readAllLines(Paths.get(saveLocation));
         String line  = lines.get(0);
         ArrayList<String> partsOfLine = splitOnComma(line);
-        System.out.println("Player data analysis information from memory");
-        System.out.println("---------------------------------------");
-        System.out.println("firstName: " + partsOfLine.get(0) + " ");
-        System.out.println("lastName: " + partsOfLine.get(1) + " ");
-        System.out.println("numberOfFireSectionsInRoutine: " + partsOfLine.get(2) + " ");
-        System.out.println("numberOfTiltedSectionsInRoutine: " + partsOfLine.get(3) + " ");
-        System.out.println("CPS: " + partsOfLine.get(4) + " ");
-        System.out.println("CR: " + partsOfLine.get(5) + " ");
-        System.out.println("numberIfPerfect: " + partsOfLine.get(6) + " ");
+        playerDataAnalysisPrintReadOutput(partsOfLine);
         playerDataAnalysisReadOutput(partsOfLine);
         System.out.println("---------------------------------------");
         }
-
-    public static ArrayList<String> splitOnComma(String line) {
-        String[] splits = line.split(",");
-        return new ArrayList<>(Arrays.asList(splits));
-    }
 
     public String playerDataAnalysisToSaveString(){
         StringBuilder sb = new StringBuilder();
@@ -201,6 +197,18 @@ public abstract class PlayerDataAnalysis implements Saveable, Readable{
         sb.append(this.CIPPS);
         sb.append("\n");
         return sb.toString();
+    }
+
+    public void playerDataAnalysisPrintReadOutput(ArrayList<String> partsOfLine){
+        System.out.println("Player data analysis information from memory");
+        System.out.println("---------------------------------------");
+        System.out.println("firstName: " + partsOfLine.get(0) + " ");
+        System.out.println("lastName: " + partsOfLine.get(1) + " ");
+        System.out.println("numberOfFireSectionsInRoutine: " + partsOfLine.get(2) + " ");
+        System.out.println("numberOfTiltedSectionsInRoutine: " + partsOfLine.get(3) + " ");
+        System.out.println("CPS: " + partsOfLine.get(4) + " ");
+        System.out.println("CR: " + partsOfLine.get(5) + " ");
+        System.out.println("numberIfPerfect: " + partsOfLine.get(6) + " ");
     }
 
     public void playerDataAnalysisReadOutput(ArrayList<String> partsOfLine){

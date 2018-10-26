@@ -61,3 +61,14 @@
     - Adding exceptions for everything
     - Creating a list of player's/competition
     - Aggregate and database functions
+
+6: Robustness
+- Added exceptions
+- Created competition class which allows the user(judge) to score multiple players sequentially
+- Refractored getters and setters and overall codebase to make it more streamline - more helper functiosn!
+- What still need to be done:
+    - Debug competiton class, add read functionality
+    - Inter player data analysis/ competition analysis class
+    - Double click
+    - Tests for exceptions
+    - Fill in test gaps - get a code coverage report somehow

@@ -1,8 +1,8 @@
 package Competition;
 
+import Exceptions.NullPlayerException;
 import player.Player;
 import player.PlayerDataAnalysis;
-import player.Readable;
 import player.Saveable;
 
 import java.io.FileOutputStream;
@@ -13,8 +13,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static player.Player.splitOnComma;
 
-public class Competition implements Saveable {
+
+public class Competition implements Saveable{
     protected Player player;
     private String competitionName = "";
     private String competitionDivision = "";
@@ -26,13 +28,12 @@ public class Competition implements Saveable {
     public void addPlayer(Player p){
         players.add(p);
     }
-
     public void addPlayerDataAnalysis(PlayerDataAnalysis data){
         dataAnalyses.add(data);
     }
 
 
-    public void save(String saveLocation) throws IOException {
+    public void save(String saveLocation) throws IOException{
         PrintWriter pw1 = new PrintWriter(new FileOutputStream(saveLocation + "Player.csv", true));
         for (Player p: players) {
             if (p == null){
@@ -57,6 +58,17 @@ public class Competition implements Saveable {
         pw2.close();
 
     }
+
+//    public void read(String saveLocation) throws IOException {
+//        List<String> lines = Files.readAllLines(Paths.get(saveLocation + "Player.csv"));
+//        for (Player p : players) {
+//            for (String line : lines) {
+//                ArrayList<String> partsOfLine = splitOnComma(line);
+//                p.playerPrintReadOutput(partsOfLine);
+//            }
+//        }
+//    }
+
 
     /*
     @Override
