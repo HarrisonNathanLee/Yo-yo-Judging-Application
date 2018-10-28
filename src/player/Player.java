@@ -284,6 +284,13 @@ public abstract class Player extends Readable implements Saveable{
         clicksLog.add("positive");
     }
 
+    public void doubleClick() {
+        for (int i = 0; i<2; i++){
+            positiveClicks++;
+            clicksLog.add("positive");
+        }
+    }
+
     //MODIFIES: This
     //EFFECTS: Adds one to negative clicks and logs the click to clicksLog
     public void removeClick() {

@@ -1,22 +1,19 @@
 package Competition;
 
-import Exceptions.NullPlayerException;
-import player.Player;
-import player.PlayerDataAnalysis;
-import player.Saveable;
+import player.*;
+import player.Readable;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static player.Player.splitOnComma;
 
-
-public class Competition implements Saveable{
+public class Competition extends Readable implements Saveable {
     protected Player player;
     private String competitionName = "";
     private String competitionDivision = "";
@@ -59,15 +56,44 @@ public class Competition implements Saveable{
 
     }
 
-//    public void read(String saveLocation) throws IOException {
-//        List<String> lines = Files.readAllLines(Paths.get(saveLocation + "Player.csv"));
-//        for (Player p : players) {
-//            for (String line : lines) {
-//                ArrayList<String> partsOfLine = splitOnComma(line);
-//                p.playerPrintReadOutput(partsOfLine);
-//            }
-//        }
-//    }
+    public void read(String saveLocation) throws IOException {
+        List<String> playerLines = Files.readAllLines(Paths.get(saveLocation + "Player.csv"));
+        List<String> playerDataAnalysisLines = Files.readAllLines(Paths.get(saveLocation + "PlayerDataAnalysis.csv"))
+        for (String playerLine : playerLines) {
+            ArrayList<String> playerPartsOfLine = splitOnComma();
+            ArrayList<String> playerDataAnalysisPartsOfLine = splitOnComma();
+            if (partsOfLine.contains("Wildcard")){
+                WildcardPlayer p = new WildcardPlayer();
+                WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(p);
+                p.playerPrintReadOutput(partsOfLine);
+                data.playerDataAnalysisPrintReadOutput(partsOfLine);
+            }
+            if (partsOfLine.contains("Prelim")){
+                PrelimPlayer p = new PrelimPlayer();
+                PrelimPlayerDataAnalysis data = new PrelimPlayerDataAnalysis(p);
+                p.playerPrintReadOutput(partsOfLine);
+                data.playerDataAnalysisPrintReadOutput(partsOfLine);
+            }
+            if (partsOfLine.contains("Semi")){
+                SemiPlayer p = new SemiPlayer();
+                SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(p);
+                p.playerPrintReadOutput(partsOfLine);
+            }
+            if (partsOfLine.contains("Two Minute Final")){
+                TwoMinuteFinalPlayer p = new TwoMinuteFinalPlayer();
+                TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(p);
+                p.playerPrintReadOutput(partsOfLine);
+            }
+            if (partsOfLine.contains("World Final")){
+                WorldFinalPlayer p = new WorldFinalPlayer();
+                WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(p);
+                p.playerPrintReadOutput(partsOfLine);
+            }
+
+            }
+        }
+    }
+
 
 
     /*
@@ -136,7 +162,6 @@ public class Competition implements Saveable{
 */
     // // for save location
 
-}
 
 /*
             sb.append(player.getFirstName());
