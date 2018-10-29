@@ -271,32 +271,60 @@ public class YoYoJudge {
 
     //EFFECTS: Reads from memory
     public void readFromMemory(String firstName, String routineType) throws IOException {
-        if (routineType.equals("Wildcard")) {
-            WildcardPlayer w = new WildcardPlayer();
-            WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(w);
-            CallAllRead(w, data, firstName, routineType);
-        }
-        else if (routineType.equals("Prelim")) {
-            PrelimPlayer pp = new PrelimPlayer();
-            PrelimPlayerDataAnalysis data = new PrelimPlayerDataAnalysis(pp);
-            CallAllRead(pp, data, firstName, routineType);
-        }
-        else if (routineType.equals("Semi")) {
-            SemiPlayer s = new SemiPlayer();
-            SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(s);
-            CallAllRead(s, data, firstName, routineType);
-        }
-        else if (routineType.equals("Two Minute Final")) {
-            TwoMinuteFinalPlayer t = new TwoMinuteFinalPlayer();
-            TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(t);
-            CallAllRead(t, data, firstName, routineType);
+        PlayerDataAnalysis data = createPlayerSubtype(routineType);
+        Player p = data.getPlayer();
+        CallAllRead(p, data, firstName, routineType);
+//        if (routineType.equals("Wildcard")) {
+//            WildcardPlayer w = new WildcardPlayer();
+//            WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(w);
+//            CallAllRead(w, data, firstName, routineType);
+//        }
+//        else if (routineType.equals("Prelim")) {
+//            PrelimPlayer pp = new PrelimPlayer();
+//            PrelimPlayerDataAnalysis data = new PrelimPlayerDataAnalysis(pp);
+//            CallAllRead(pp, data, firstName, routineType);
+//        }
+//        else if (routineType.equals("Semi")) {
+//            SemiPlayer s = new SemiPlayer();
+//            SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(s);
+//            CallAllRead(s, data, firstName, routineType);
+//        }
+//        else if (routineType.equals("Two Minute Final")) {
+//            TwoMinuteFinalPlayer t = new TwoMinuteFinalPlayer();
+//            TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(t);
+//            CallAllRead(t, data, firstName, routineType);
+//
+//        }
+//        else if (routineType.equals("World Final")) {
+//            WorldFinalPlayer f = new WorldFinalPlayer();
+//            WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(f);
+//            CallAllRead(f, data, firstName, routineType);
+//        }
+    }
 
+    public PlayerDataAnalysis createPlayerSubtype(String routineType) {
+        if (routineType.equals("Wildcard")) {
+            WildcardPlayer p = new WildcardPlayer();
+            WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(p);
+            return data;
+        } else if (routineType.equals("Prelim")) {
+            PrelimPlayer p = new PrelimPlayer();
+            PrelimPlayerDataAnalysis data = new PrelimPlayerDataAnalysis(p);
+            return data;
+        } else if (routineType.equals("Semi")) {
+            SemiPlayer p = new SemiPlayer();
+            SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(p);
+            return data;
+        } else if (routineType.equals("Two Minute Final")) {
+            TwoMinuteFinalPlayer p = new TwoMinuteFinalPlayer();
+            TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(p);
+            return data;
+        } else if (routineType.equals("World Final")) {
+            WorldFinalPlayer p = new WorldFinalPlayer();
+            WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(p);
+            return data;
         }
-        else if (routineType.equals("World Final")) {
-            WorldFinalPlayer f = new WorldFinalPlayer();
-            WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(f);
-            CallAllRead(f, data, firstName, routineType);
-        }
+        return null;
     }
 
     //EFFECTS: Calls the read methods of player and playerDataAnalysis
@@ -330,6 +358,7 @@ public class YoYoJudge {
             throw new IncorrectUserInputException("You inputted an invalid routine type");
         }
     }
+
 
     public static void competitionMode(YoYoJudge yyjh, String choice) throws IOException {
             Scanner scanner = new Scanner(System.in);

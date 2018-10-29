@@ -12,9 +12,6 @@ import java.util.List;
 
 
 public abstract class PlayerDataAnalysis extends Readable implements Saveable{
-    public Player getPlayer() {
-        return player;
-    }
 
     protected Player player;
     protected static final int TILTED = 10; //an arbitrary number for now -> will vary depending on the routine length in the future
@@ -37,6 +34,10 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable{
         this.saveLocation = saveLocation;
     }
 
+    //EFFECTS: Returns the player
+    public Player getPlayer() {
+        return player;
+    }
     //EFFECTS: Returns the save location
     public String getSaveLocation() {
         return saveLocation;
@@ -209,6 +210,7 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable{
         System.out.println("CPS: " + partsOfLine.get(4) + " ");
         System.out.println("CR: " + partsOfLine.get(5) + " ");
         System.out.println("numberIfPerfect: " + partsOfLine.get(6) + " ");
+        System.out.println("---------------------------------------");
     }
 
     public void playerDataAnalysisReadOutput(ArrayList<String> partsOfLine){

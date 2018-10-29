@@ -10,9 +10,58 @@ public class TestPlayer {
 
     PrelimPlayer player;
 
+
     @BeforeEach
     public void setUp(){
         player = new PrelimPlayer();
+    }
+
+    @Test
+    public void testSetExecution(){
+        player.setEvaluation(10, "execution");
+        assertEquals(10, player.getExecution());
+    }
+
+    @Test
+    public void testSetControl(){
+        player.setEvaluation(10, "control");
+        assertEquals(10, player.getControl());
+    }
+
+    @Test
+    public void testTrickDiversity(){
+        player.setEvaluation(10, "trickDiversity");
+        assertEquals(10, player.getTrickDiversity());
+    }
+
+    @Test
+    public void testSetSpaceUseAndEmphasis(){
+        player.setEvaluation(10, "spaceUseAndEmphasis");
+        assertEquals(10, player.getSpaceUseAndEmphasis());
+    }
+
+    @Test
+    public void testSetChoreograhpy(){
+        player.setEvaluation(10, "choreography");
+        assertEquals(10, player.getChoreography());
+    }
+
+    @Test
+    public void testSetConstruction(){
+        player.setEvaluation(10, "construction");
+        assertEquals(10, player.getConstruction());
+    }
+
+    @Test
+    public void testSetBodyControl(){
+        player.setEvaluation(10, "bodyControl");
+        assertEquals(10, player.getBodyControl());
+    }
+
+    @Test
+    public void testSetShowmanship(){
+        player.setEvaluation(10, "showmanship");
+        assertEquals(10, player.getShowmanship());
     }
 
     @Test
@@ -32,6 +81,16 @@ public class TestPlayer {
         assertEquals(0, player.getNegativeClicks());
         assertEquals(1, player.getClickerScore());
         assertEquals(1, player.getClicksLog().size());
+    }
+
+    @Test
+    public void testDoubleClick(){
+        player.doubleClick();
+        player.produceClickerScore();
+        assertEquals(2,player.getPositiveClicks());
+        assertEquals(0,player.getNegativeClicks());
+        assertEquals(2,player.getClickerScore());
+        assertEquals(2, player.getClicksLog().size());
     }
 
     @Test
@@ -217,6 +276,8 @@ public class TestPlayer {
         assertEquals(0, player.getNumberOfChanges());
         assertEquals(0, player.getNumberOfDiscards());
     }
+
+
     @Test
     public void testResetMajors(){
         player.restart();
@@ -229,6 +290,38 @@ public class TestPlayer {
         assertEquals(2, player.getNumberOfChanges());
         assertEquals(2, player.getNumberOfDiscards());
         player.resetMajorDeducts();
+        assertEquals(0, player.getNumberOfRestarts());
+        assertEquals(0, player.getNumberOfChanges());
+        assertEquals(0, player.getNumberOfDiscards());
+    }
+
+
+    @Test
+    public void testResetEverything(){
+        player.removeClick();
+        player.removeClick();
+        player.removeClick();
+        player.removeClick();
+        player.removeClick();
+        player.awardClick();
+        player.restart();
+        player.restart();
+        player.discard();
+        player.discard();
+        player.change();
+        player.change();
+        player.produceClickerScore();
+        assertEquals(1, player.getPositiveClicks());
+        assertEquals(5, player.getNegativeClicks());
+        assertEquals(-4, player.getClickerScore());
+        assertEquals(2, player.getNumberOfRestarts());
+        assertEquals(2, player.getNumberOfChanges());
+        assertEquals(2, player.getNumberOfDiscards());
+        player.resetEverything();
+        player.produceClickerScore();
+        assertEquals(0, player.getPositiveClicks());
+        assertEquals(0, player.getNegativeClicks());
+        assertEquals(0, player.getClickerScore());
         assertEquals(0, player.getNumberOfRestarts());
         assertEquals(0, player.getNumberOfChanges());
         assertEquals(0, player.getNumberOfDiscards());

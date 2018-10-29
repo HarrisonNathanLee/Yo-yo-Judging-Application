@@ -7,6 +7,7 @@ import player.PrelimPlayer;
 import player.PrelimPlayerDataAnalysis;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestPlayerDataAnalysis {
 
@@ -240,6 +241,7 @@ public class TestPlayerDataAnalysis {
         player.produceClickerScore();
         try {
             data.clickRatio();
+            fail("I was not expecting to reach this line of code!");
         } catch (DataCalculationException e) {
             System.out.println("Player just had negative clicks");
         }
@@ -247,41 +249,51 @@ public class TestPlayerDataAnalysis {
     }
 
     @Test
-    public void testSamePositiveNegativeCR() throws DataCalculationException {
+    public void testSamePositiveNegativeCR() {
         int positiveClicks = 10;
         int negativeClicks = 10;
         player.setPositiveClicks(positiveClicks);
         player.setNegativeClicks(negativeClicks);
         player.produceClickerScore();
-        data.clickRatio();
+        try {
+            data.clickRatio();
+        } catch (DataCalculationException e) {
+            fail("I was not expecting to catch a DataCalculationException");
+        }
         assertEquals(1,data.getCR());
     }
 
     @Test
-    public void testMoreNegativePositiveCR() throws DataCalculationException {
+    public void testMoreNegativePositiveCR() {
         int positiveClicks = 5;
         int negativeClicks = 10;
         player.setPositiveClicks(positiveClicks);
         player.setNegativeClicks(negativeClicks);
         player.produceClickerScore();
-        data.clickRatio();
+        try {
+            data.clickRatio();
+        } catch (DataCalculationException e) {
+            fail("I was not expecting to catch a DataCalculationException");
+        }
         assertEquals(2,data.getCR());
     }
 
 
     @Test
-    public void testMorePositiveNegativeCR() throws DataCalculationException {
+    public void testMorePositiveNegativeCR() {
         int positiveClicks = 10;
         int negativeClicks = 5;
         player.setPositiveClicks(positiveClicks);
         player.setNegativeClicks(negativeClicks);
         player.produceClickerScore();
-        data.clickRatio();
+        try {
+            data.clickRatio();
+        } catch (DataCalculationException e) {
+            fail("I was not expecting to catch a DataCalculationException");
+        }
         assertEquals(0.5,data.getCR());
     }
 
-
-    //TODO: write tests for clicks if perfect
 
     @Test
     public void testZeroClicksIfPerfect(){

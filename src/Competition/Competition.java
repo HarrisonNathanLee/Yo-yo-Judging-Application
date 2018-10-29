@@ -6,7 +6,6 @@ import player.Readable;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -22,6 +21,14 @@ public class Competition extends Readable implements Saveable {
     private ArrayList<PlayerDataAnalysis> dataAnalyses = new ArrayList<>();
 
 
+    public void setCompetitionName(String competitionName) {
+        this.competitionName = competitionName;
+    }
+
+    public String getCompetitionName() {
+        return competitionName;
+    }
+
     public void addPlayer(Player p){
         players.add(p);
     }
@@ -30,6 +37,7 @@ public class Competition extends Readable implements Saveable {
     }
 
 
+    //EFFECTS: Saves the data for all players in a competition to two CSV files
     public void save(String saveLocation) throws IOException{
         PrintWriter pw1 = new PrintWriter(new FileOutputStream(saveLocation + "Player.csv", true));
         for (Player p: players) {
@@ -56,192 +64,61 @@ public class Competition extends Readable implements Saveable {
 
     }
 
+
+    //EFFECTS: Reads data from competition files
     public void read(String saveLocation) throws IOException {
         List<String> playerLines = Files.readAllLines(Paths.get(saveLocation + "Player.csv"));
-        List<String> playerDataAnalysisLines = Files.readAllLines(Paths.get(saveLocation + "PlayerDataAnalysis.csv"))
+        List<String> playerDataAnalysisLines = Files.readAllLines(Paths.get(saveLocation + "PlayerDataAnalysis.csv"));
+        int i = 0;
         for (String playerLine : playerLines) {
-            ArrayList<String> playerPartsOfLine = splitOnComma();
-            ArrayList<String> playerDataAnalysisPartsOfLine = splitOnComma();
-            if (partsOfLine.contains("Wildcard")){
+            ArrayList<String> playerPartsOfLine = splitOnComma(playerLine);
+            if (playerPartsOfLine.contains("Wildcard")){
                 WildcardPlayer p = new WildcardPlayer();
                 WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(p);
-                p.playerPrintReadOutput(partsOfLine);
-                data.playerDataAnalysisPrintReadOutput(partsOfLine);
+                p.playerPrintReadOutput(playerPartsOfLine);
+                readPlayerDataAnalysisLines(playerDataAnalysisLines, data, i);
+                i++;
             }
-            if (partsOfLine.contains("Prelim")){
+            if (playerPartsOfLine.contains("Prelim")){
                 PrelimPlayer p = new PrelimPlayer();
                 PrelimPlayerDataAnalysis data = new PrelimPlayerDataAnalysis(p);
-                p.playerPrintReadOutput(partsOfLine);
-                data.playerDataAnalysisPrintReadOutput(partsOfLine);
+                p.playerPrintReadOutput(playerPartsOfLine);
+                readPlayerDataAnalysisLines(playerDataAnalysisLines, data, i);
+                i++;
             }
-            if (partsOfLine.contains("Semi")){
+            if (playerPartsOfLine.contains("Semi")){
                 SemiPlayer p = new SemiPlayer();
                 SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(p);
-                p.playerPrintReadOutput(partsOfLine);
+                p.playerPrintReadOutput(playerPartsOfLine);
+                readPlayerDataAnalysisLines(playerDataAnalysisLines, data, i);
+                i++;
             }
-            if (partsOfLine.contains("Two Minute Final")){
+            if (playerPartsOfLine.contains("Two Minute Final")){
                 TwoMinuteFinalPlayer p = new TwoMinuteFinalPlayer();
                 TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(p);
-                p.playerPrintReadOutput(partsOfLine);
+                p.playerPrintReadOutput(playerPartsOfLine);
+                readPlayerDataAnalysisLines(playerDataAnalysisLines, data, i);
+                i++;
             }
-            if (partsOfLine.contains("World Final")){
+            if (playerPartsOfLine.contains("World Final")){
                 WorldFinalPlayer p = new WorldFinalPlayer();
                 WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(p);
-                p.playerPrintReadOutput(partsOfLine);
+                p.playerPrintReadOutput(playerPartsOfLine);
+                readPlayerDataAnalysisLines(playerDataAnalysisLines, data, i);
+                i++;
             }
+
 
             }
         }
-    }
 
 
-
-    /*
-    @Override
-    public void read(String saveLocation throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(saveLocation));
-        if (actual type of player is  wildcard){
-            for (String line: lines){
-                ArrayList<String> partsOfLine = splitOnComma(line);
-                this.firstName = partsOfLine.get(0);
-                this.lastName = partsOfLine.get(1);
-                this.division = partsOfLine.get(2);
-                this.routineType = partsOfLine.get(3);
-                this.positiveClicks = Double.parseDouble(partsOfLine.get(4));
-                this.clickerScore = Double.parseDouble(partsOfLine.get(5));
+    //EFFECTS: Reads and prints an individual line of a competiton playerDataAnalysis file based on index
+    private void readPlayerDataAnalysisLines(List<String> playerDataAnalysisLines, PlayerDataAnalysis data, Integer i) {
+        String playerDataAnalysisLine = playerDataAnalysisLines.get(i);
+        ArrayList<String> playerDataAnalysisPartsOfLine = splitOnComma(playerDataAnalysisLine);
+        data.playerDataAnalysisPrintReadOutput(playerDataAnalysisPartsOfLine);
         }
-        else if ( actual type of player is prelim, semi or two minute){
-            for (String line: lines){
-                ArrayList<String> partsOfLine = splitOnComma(line);
-                this.firstName = partsOfLine.get(0);
-                this.lastName = partsOfLine.get(1);
-                this.division = partsOfLine.get(2);
-                this.routineType = partsOfLine.get(3);
-                this.positiveClicks = Double.parseDouble(partsOfLine.get(4));
-                this.negativeClicks = Double.parseDouble(partsOfLine.get(5));
-                this.clickerScore = Double.parseDouble(partsOfLine.get(6));
-                this.numberOfRestarts = Integer.parseInt(partsOfLine.get(7));
-                this.numberOfChanges = Integer.parseInt(partsOfLine.get(8));
-                this.numberOfDiscards = Integer.parseInt(partsOfLine.get(9));
-                this.restartFinal = Integer.parseInt(partsOfLine.get(10));
-                this.changeFinal = Integer.parseInt(partsOfLine.get(11));
-                this.discardFinal = Integer.parseInt(partsOfLine.get(12));
-                this.execution = Integer.parseInt(partsOfLine.get(13));
-                this.control = Integer.parseInt(partsOfLine.get(14));
-                this.choreography = Integer.parseInt(partsOfLine.get(15));
-                this.bodyControl = Integer.parseInt(partsOfLine.get(16));
-            }
-        else if (actual type of player is world final )   {
-            for (String line: lines){
-                    ArrayList<String> partsOfLine = splitOnComma(line);
-                    this.firstName = partsOfLine.get(0);
-                    this.lastName = partsOfLine.get(1);
-                    this.division = partsOfLine.get(2);
-                    this.routineType = partsOfLine.get(3);
-                    this.positiveClicks = Double.parseDouble(partsOfLine.get(4));
-                    this.negativeClicks = Double.parseDouble(partsOfLine.get(5));
-                    this.clickerScore = Double.parseDouble(partsOfLine.get(6));
-                    this.numberOfRestarts = Integer.parseInt(partsOfLine.get(7));
-                    this.numberOfChanges = Integer.parseInt(partsOfLine.get(8));
-                    this.numberOfDiscards = Integer.parseInt(partsOfLine.get(9));
-                    this.restartFinal = Integer.parseInt(partsOfLine.get(10));
-                    this.changeFinal = Integer.parseInt(partsOfLine.get(11));
-                    this.discardFinal = Integer.parseInt(partsOfLine.get(12));
-                    this.execution = Integer.parseInt(partsOfLine.get(13));
-                    this.control = Integer.parseInt(partsOfLine.get(14));
-                    this.trickDiversity = Integer.parseInt(partsOfLine.get(15));
-                    this.spaceUseAndEmphasis = Integer.parseInt(partsOfLine.get(16));
-                    this.choreography = Integer.parseInt(partsOfLine.get(17));
-                    this.construction = Integer.parseInt(partsOfLine.get(18));
-                    this.bodyControl = Integer.parseInt(partsOfLine.get(19));
-                    this.showmanship = Integer.parseInt(partsOfLine.get(20));
-            }
 
-    }
+}
 
-*/
-    // // for save location
-
-
-/*
-            sb.append(player.getFirstName());
-            sb.append(",");
-            sb.append(player.getLastName());
-            sb.append(",");
-            sb.append(player.getDivision());
-            sb.append(",");
-            sb.append(player.getRoutineType());
-            sb.append(",");
-
-            if (actual type of player == wildcard){
-                sb.append(player.getPositiveClicks());
-                sb.append(",");
-                sb.append(player.getClickerScore());
-                sb.append("\n");
-            }
-        else if (actual type of player == prelim or semi or two minute){
-                sb.append(player.getPositiveClicks());
-                sb.append(",");
-                sb.append(player.getNegativeClicks());
-                sb.append(",");
-                sb.append(player.getClickerScore());
-                sb.append(",");
-                sb.append(player.getNumberOfRestarts();
-                sb.append(",");
-                sb.append(player.getNumberOfChanges());
-                sb.append(",");
-                sb.append(player.getNumberOfDiscards());
-                sb.append(",");
-                sb.append(player.getRestartFinal());
-                sb.append(",");
-                sb.append(player.getChangeFinal());
-                sb.append(",");
-                sb.append(player.getDiscardFinal());
-                sb.append(",");
-                sb.append(player.getExecution());
-                sb.append(",");
-                sb.append(player.getControl());
-                sb.append(",");
-                sb.append(player.getChoreography());
-                sb.append(",");
-                sb.append(player.getBodyControl());
-                sb.append("\n");
-            }
-        else if (actual type of player == world final ){
-                sb.append(player.getPositiveClicks());
-                sb.append(",");
-                sb.append(player.getNegativeClicks());
-                sb.append(",");
-                sb.append(player.getClickerScore());
-                sb.append(",");
-                sb.append(player.getNumberOfRestarts();
-                sb.append(",");
-                sb.append(player.getNumberOfChanges());
-                sb.append(",");
-                sb.append(player.getNumberOfDiscards());
-                sb.append(",");
-                sb.append(player.getRestartFinal());
-                sb.append(",");
-                sb.append(player.getChangeFinal());
-                sb.append(",");
-                sb.append(player.getDiscardFinal());
-                sb.append(",");
-                sb.append(player.getExecution());
-                sb.append(",");
-                sb.append(player.getControl());
-                sb.append(",");
-                sb.append(player.getTrickDiversity());
-                sb.append(",");
-                sb.append(player.getSpaceUseAndEmphasis());
-                sb.append(",");
-                sb.append(player.getChoreography());
-                sb.append(",");
-                sb.append(player.getConstruction());
-                sb.append(",");
-                sb.append(player.getBodyControl());
-                sb.append(",");
-                sb.append(player.getShowmanship());
-                sb.append("\n");
-            }
-
-            */

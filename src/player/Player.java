@@ -381,11 +381,8 @@ public abstract class Player extends Readable implements Saveable{
     //MODIFIES: This
     //EFFECTS: Sets positive clicks, negative clicks, change, discard, and restart to zero
     public void resetEverything() {
-        positiveClicks = 0;
-        negativeClicks = 0;
-        numberOfRestarts = 0;
-        numberOfChanges = 0;
-        numberOfDiscards = 0;
+       resetClicks();
+       resetMajorDeducts();
     }
 
     //EFFECTS: Will save judge inputted information to csv file
