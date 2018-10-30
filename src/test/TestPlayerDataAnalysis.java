@@ -207,8 +207,6 @@ public class TestPlayerDataAnalysis {
     }
 
 
-    //TODO: Create tests for clickRatio method
-
     @Test
     public void testNoClicksCR() throws DataCalculationException {
         int positiveClicks = 0;

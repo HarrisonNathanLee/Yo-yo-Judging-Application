@@ -1,8 +1,9 @@
 package ui;
 
-import Competition.Competition;
+import Competition.*;
 import Exceptions.IncorrectUserInputException;
 import player.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -31,9 +32,9 @@ public class YoYoJudge {
         evaluationKeywordsWorld.add("trickDiversity");
         evaluationKeywordsWorld.add("spaceUseAndEmphasis");
         evaluationKeywordsWorld.add("choreography");
-        evaluationKeywordsWorld.add("construction ");
+        evaluationKeywordsWorld.add("construction");
         evaluationKeywordsWorld.add("bodyControl");
-        evaluationKeywordsWorld.add("Showmanship");
+        evaluationKeywordsWorld.add("showmanship");
 
         performanceEvaluationQuestions.add("Execution score is: ");
         performanceEvaluationQuestions.add("Control score is: ");
@@ -55,28 +56,30 @@ public class YoYoJudge {
 
     //EFFECTS: Starts the yo-yo judging application
     public PlayerDataAnalysis start(String routineType) throws IOException {
-        if (routineType.equals("Wildcard")) {
-            WildcardPlayer w = new WildcardPlayer();
-            WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(w);
-            return runStartAsWildcardPlayer(w, routineType, data);
-        } else if (routineType.equals("Prelim")) {
-            PrelimPlayer pp = new PrelimPlayer();
-            PrelimPlayerDataAnalysis data = new PrelimPlayerDataAnalysis(pp);
-            return runStartAsPrelimSemiTwoMinutePlayer(pp, routineType, data);
-        } else if (routineType.equals("Semi")) {
-            SemiPlayer s = new SemiPlayer();
-            SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(s);
-            return runStartAsPrelimSemiTwoMinutePlayer(s, routineType, data);
-        } else if (routineType.equals("Two Minute Final")) {
-            TwoMinuteFinalPlayer t = new TwoMinuteFinalPlayer();
-            TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(t);
-            return runStartAsPrelimSemiTwoMinutePlayer(t, routineType, data);
-        } else if (routineType.equals("World Final")) {
-            WorldFinalPlayer f = new WorldFinalPlayer();
-            WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(f);
-            return runStartAsWorldFinalPlayer(f, routineType, data);
+        PlayerDataAnalysis data = createPlayerSubtype(routineType);
+        Player p = data.getPlayer();
+        if (routineType.equals("Wildcard"))
+            return runStartAsWildcardPlayer(p, routineType, data);
+        else if (routineType.equals("Prelim") || routineType.equals("Semi") || routineType.equals("Two Minute Final"))
+            return runStartAsPrelimSemiTwoMinutePlayer(p, routineType, data);
+        else if (routineType.equals("World Final")) {
+            return runStartAsWorldFinalPlayer(p, routineType, data);
         }
         return null;
+    }
+
+
+    public PlayerDataAnalysis runStartAsWildcardPlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
+        setPlayerInformation(p);
+        p.setRoutineLength(routineType);
+        wildcardClicker(p);
+        System.out.println(p.getFirstName() + " " + p.getLastName() + " positive clicks: " + p.getPositiveClicks());
+        data.callAllDataAnalysis();
+        System.out.println("Clicks per second: " + data.getCPS());
+        System.out.println("-------------------------------------------");
+        String firstName = p.getFirstName();
+        callAllSave(p, data, firstName, routineType);
+        return data;
     }
 
     public PlayerDataAnalysis runStartAsPrelimSemiTwoMinutePlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
@@ -107,19 +110,6 @@ public class YoYoJudge {
         return data;
     }
 
-    public PlayerDataAnalysis runStartAsWildcardPlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
-        setPlayerInformation(p);
-        p.setRoutineLength(routineType);
-        wildcardClicker(p);
-        System.out.println(p.getFirstName() + " " + p.getLastName() + " positive clicks: " + p.getPositiveClicks());
-        data.callAllDataAnalysis();
-        System.out.println("Clicks per second: " + data.getCPS());
-        System.out.println("-------------------------------------------");
-        String firstName = p.getFirstName();
-        callAllSave(p, data, firstName, routineType);
-        return data;
-    }
-
     //EFFECTS: Prints various post performance information
     public void printRawRoutineInformation(Player p) {
         System.out.println(p.getFirstName() + " " + p.getLastName() + " positive clicks: " + p.getPositiveClicks());
@@ -138,7 +128,20 @@ public class YoYoJudge {
         System.out.println("The player's clicks if perfect: " + data.getNumberIfPerfect());
         System.out.println("The player's clicks if perfect per second:" + data.getCIPPS());
         System.out.println("-------------------------------------------");
+    }
 
+    public void printAnalyzedCompetitionInformation(CompetitionDataAnalysis cdata){
+        System.out.println("Mean positive clicks amongst routines: " + cdata.getMeanPositiveClicks());
+        System.out.println("Mean negative clicks amongst routines: " +cdata.getMeanNegativeClicks());
+        System.out.println("Mean clickerscore amongst routines: " + cdata.getMeanClickerscore());
+        System.out.println("Mean execution score amongst routines: " + cdata.getMeanExecution());
+        System.out.println("Mean control score amongst routines: " + cdata.getMeanControl());
+        System.out.println("Mean trick diversity score amongst routines: " + cdata.getMeanTrickDiversity());
+        System.out.println("Mean space use & emphasis score amongst routines: " + cdata.getMeanSpaceUseAndEmphasis());
+        System.out.println("Mean music use 1: choreography score amongst routines: " + cdata.getMeanChoreography());
+        System.out.println("Mean music use 2: construction score amongst routines: " + cdata.getMeanConstruction());
+        System.out.println("Mean body control score amongst routines: " + cdata.getMeanBodyControl());
+        System.out.println("Mean showmanship score amongst routines: " + cdata.getMeanShowmanship());
     }
 
     //MODIFIES: This, player
@@ -234,6 +237,8 @@ public class YoYoJudge {
     }
 
 
+
+
     //MODIFIES: This, player
     //EFFECTS: Records judge's performance evaluation scores for a given player
     public void setAllPerformanceEvals(Player p, ArrayList<String> evaluationQuestionList, ArrayList<String> evaluationKeywordsList) {
@@ -274,32 +279,6 @@ public class YoYoJudge {
         PlayerDataAnalysis data = createPlayerSubtype(routineType);
         Player p = data.getPlayer();
         CallAllRead(p, data, firstName, routineType);
-//        if (routineType.equals("Wildcard")) {
-//            WildcardPlayer w = new WildcardPlayer();
-//            WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(w);
-//            CallAllRead(w, data, firstName, routineType);
-//        }
-//        else if (routineType.equals("Prelim")) {
-//            PrelimPlayer pp = new PrelimPlayer();
-//            PrelimPlayerDataAnalysis data = new PrelimPlayerDataAnalysis(pp);
-//            CallAllRead(pp, data, firstName, routineType);
-//        }
-//        else if (routineType.equals("Semi")) {
-//            SemiPlayer s = new SemiPlayer();
-//            SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(s);
-//            CallAllRead(s, data, firstName, routineType);
-//        }
-//        else if (routineType.equals("Two Minute Final")) {
-//            TwoMinuteFinalPlayer t = new TwoMinuteFinalPlayer();
-//            TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(t);
-//            CallAllRead(t, data, firstName, routineType);
-//
-//        }
-//        else if (routineType.equals("World Final")) {
-//            WorldFinalPlayer f = new WorldFinalPlayer();
-//            WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(f);
-//            CallAllRead(f, data, firstName, routineType);
-//        }
     }
 
     public PlayerDataAnalysis createPlayerSubtype(String routineType) {
@@ -363,6 +342,7 @@ public class YoYoJudge {
     public static void competitionMode(YoYoJudge yyjh, String choice) throws IOException {
             Scanner scanner = new Scanner(System.in);
             Competition c = new Competition();
+            CompetitionDataAnalysis cData = new CompetitionDataAnalysis(c);
             System.out.println("Type start to start judging a competition or read to read competition data from memory");
             String startOrRead = scanner.nextLine();
             if (startOrRead.equals("start")) {
@@ -384,6 +364,8 @@ public class YoYoJudge {
                     String space = scanner.nextLine();
                     if (anotherPlayer.equals("no")) {
                         c.save(competitionName);
+                        cData.callAllDataAnalysis();
+                        yyjh.printAnalyzedCompetitionInformation(cData);
                         break;
                     }
                 }
@@ -392,6 +374,7 @@ public class YoYoJudge {
                 System.out.println("What competition would you like to read from memory?");
                 String competitionName = scanner.next();
                 c.read(competitionName);
+                cData.read(competitionName);
             }
         }
 

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class PlayerDataAnalysis extends Readable implements Saveable{
+public abstract class PlayerDataAnalysis extends Readable implements Saveable, DataAnalysis{
 
     protected Player player;
     protected static final int TILTED = 10; //an arbitrary number for now -> will vary depending on the routine length in the future
@@ -146,16 +146,16 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable{
     //MODIFIES: This
     //EFFECTS: Performs all player data analysis methods
     public void callAllDataAnalysis() {
-        this.clicksOnFire();
-        this.clicksOnTilt();
-        this.clicksPerSecond();
+        clicksOnFire();
+        clicksOnTilt();
+        clicksPerSecond();
         try {
-            this.clickRatio();
+            clickRatio();
         } catch (DataCalculationException e) {
             System.out.println(e.getMessage());
         }
-        this.clicksIfPerfect();
-        this.clicksIfPerfectPerSecond();
+        clicksIfPerfect();
+        clicksIfPerfectPerSecond();
     }
 
     //EFFECTS: Will save data analysis information to csv file

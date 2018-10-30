@@ -20,13 +20,16 @@ public class Competition extends Readable implements Saveable {
     private ArrayList<Player> players = new ArrayList<>();
     private ArrayList<PlayerDataAnalysis> dataAnalyses = new ArrayList<>();
 
-
     public void setCompetitionName(String competitionName) {
         this.competitionName = competitionName;
     }
 
     public String getCompetitionName() {
         return competitionName;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     public void addPlayer(Player p){
@@ -111,7 +114,6 @@ public class Competition extends Readable implements Saveable {
 
             }
         }
-
 
     //EFFECTS: Reads and prints an individual line of a competiton playerDataAnalysis file based on index
     private void readPlayerDataAnalysisLines(List<String> playerDataAnalysisLines, PlayerDataAnalysis data, Integer i) {
