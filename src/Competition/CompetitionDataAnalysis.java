@@ -15,53 +15,57 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static player.Readable.splitOnComma;
-
 public class CompetitionDataAnalysis extends Readable implements DataAnalysis, Saveable {
     private ArrayList<Player> players;
     private Competition competition;
-    private PlayerDataAnalysis data = null;
 
+    //EFFECTS: Returns the mean execution
     public double getMeanExecution() {
         return meanExecution;
     }
 
+    //EFFECTS: Returns the mean control
     public double getMeanControl() {
         return meanControl;
     }
 
-    public double getMeanTrickDiversity() {
-        return meanTrickDiversity;
-    }
+    //EFFECTS: Returns the mean trick diversity
+    public double getMeanTrickDiversity() { return meanTrickDiversity; }
 
+    //EFFECTS: Returns the mean space use and emphasis
     public double getMeanSpaceUseAndEmphasis() {
         return meanSpaceUseAndEmphasis;
     }
 
+    //EFFECTS: Returns the mean choreography
     public double getMeanChoreography() {
         return meanChoreography;
     }
 
+    //EFFECTS: Returns the mean construction
     public double getMeanConstruction() {
         return meanConstruction;
     }
 
-    public double getMeanBodyControl() {
-        return meanBodyControl;
-    }
+    //EFFECTS: Returns the mean body control
+    public double getMeanBodyControl() { return meanBodyControl; }
 
+    //EFFECTS: Returns the mean showmanship
     public double getMeanShowmanship() {
         return meanShowmanship;
     }
 
+    //EFFECTS: Returns the mean clickerscore
     public double getMeanClickerscore() {
         return meanClickerscore;
     }
 
+    //EFFECTS: Returns the mean positive clicks
     public double getMeanPositiveClicks() {
         return meanPositiveClicks;
     }
 
+    //EFFECTS: Returns the mean negative clicks
     public double getMeanNegativeClicks() {
         return meanNegativeClicks;
     }
@@ -78,46 +82,69 @@ public class CompetitionDataAnalysis extends Readable implements DataAnalysis, S
     private double meanPositiveClicks = 0;
     private double meanNegativeClicks = 0;
 
+
+    //MODIFIES: This
+    //EFFECTS: Sets the mean of execution scores in a competition
     public void setMeanExecution(double meanExecution) {
         this.meanExecution = meanExecution;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the mean of control scores in a competition
     public void setMeanControl(double meanControl) {
         this.meanControl = meanControl;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the mean of trick diversity scores in a competition
     public void setMeanTrickDiversity(double meanTrickDiversity) {
         this.meanTrickDiversity = meanTrickDiversity;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the mean of space use and emphasis scores in a competition
     public void setMeanSpaceUseAndEmphasis(double meanSpaceUseAndEmphasis) {
         this.meanSpaceUseAndEmphasis = meanSpaceUseAndEmphasis;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the mean of choreography scores in a competition
     public void setMeanChoreography(double meanChoreography) {
         this.meanChoreography = meanChoreography;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the mean of construction scores in a competition
     public void setMeanConstruction(double meanConstruction) {
         this.meanConstruction = meanConstruction;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the mean of body control scores in a competition
     public void setMeanBodyControl(double meanBodyControl) {
         this.meanBodyControl = meanBodyControl;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the mean of showmanship scores in a competition
     public void setMeanShowmanship(double meanShowmanship) {
         this.meanShowmanship = meanShowmanship;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the mean of clickerscore in a competition
     public void setMeanClickerscore(double meanClickerscore) {
         this.meanClickerscore = meanClickerscore;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the mean of positiveclicks in a competition
     public void setMeanPositiveClicks(double meanPositiveClicks) {
         this.meanPositiveClicks = meanPositiveClicks;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the mean of negativeclicks in a competition
     public void setMeanNegativeClicks(double meanNegativeClicks) {
         this.meanNegativeClicks = meanNegativeClicks;
     }
@@ -126,6 +153,7 @@ public class CompetitionDataAnalysis extends Readable implements DataAnalysis, S
         this.competition = competition;
     }
 
+    //EFFECTS: Will get the value for a single parameter for all players in a competition
     public ArrayList<Double> getValuesForParameter(ArrayList<Player> players, String parameter) {
         ArrayList<Double> listOfParameters = new ArrayList<>();
         if (parameter.equals("execution")){
@@ -202,7 +230,7 @@ public class CompetitionDataAnalysis extends Readable implements DataAnalysis, S
     }
 
 
-
+    //EFFECTS: Returns the sum of the elements in a list
     public Double getSum(ArrayList<Double> evalValues){
         Double sum = 0.0;
         for(Double eval: evalValues){
@@ -211,10 +239,14 @@ public class CompetitionDataAnalysis extends Readable implements DataAnalysis, S
         return sum;
     }
 
+    //EFFFECTS: Returns the number of elements in a list
     public Integer getCount(ArrayList<Player> players){
         return players.size();
     }
 
+
+    //MODIFIES: This
+    //EFFECTS: Produces the mean for a single eval parameters
     public Double produceMean(ArrayList<Player> players, String parameter){
         ArrayList<Double> listOfParameter = getValuesForParameter(players,parameter);
         Double sum = getSum(listOfParameter);
@@ -223,7 +255,9 @@ public class CompetitionDataAnalysis extends Readable implements DataAnalysis, S
         return mean;
     }
 
-    public void produceAllEvalMean(){
+    //MODIFIES: This
+    //EFFECTS: Sets the mean for all eval parameters
+    public void produceAllMean(){
        players = competition.getPlayers();
        setMeanExecution(produceMean(players, "execution"));
        setMeanControl(produceMean(players, "control"));
@@ -239,7 +273,7 @@ public class CompetitionDataAnalysis extends Readable implements DataAnalysis, S
     }
 
     public void callAllDataAnalysis(){
-        produceAllEvalMean();
+        produceAllMean();
     }
 
     public void save(String saveLocation) throws FileNotFoundException {
@@ -283,7 +317,6 @@ public class CompetitionDataAnalysis extends Readable implements DataAnalysis, S
         return sb.toString();
     }
 
-
     public void readOutput (ArrayList<String> partsOfLine){
         this.meanPositiveClicks = Double.parseDouble(partsOfLine.get(0));
         this.meanNegativeClicks = Double.parseDouble(partsOfLine.get(1));
@@ -300,18 +333,18 @@ public class CompetitionDataAnalysis extends Readable implements DataAnalysis, S
     }
 
     public void printReadOutput(ArrayList<String> partsOfLine){
-        System.out.println("Analyzed competition indformation from memory");
+        System.out.println("Analyzed competition information from memory");
         System.out.println("---------------------------------------");
-        System.out.println("Mean positive clicks amongst routines: System.out.println(" + partsOfLine.get(0));
-        System.out.println("Mean negative clicks amongst routines: System.out.println(" +partsOfLine.get(1));
-        System.out.println("Mean clickerscore amongst routines: System.out.println(" + partsOfLine.get(2));
-        System.out.println("Mean execution score amongst routines: System.out.println(" + partsOfLine.get(3));
-        System.out.println("Mean control score amongst routines: System.out.println(" + partsOfLine.get(4));
-        System.out.println("Mean trick diversity score amongst routines: System.out.println(" + partsOfLine.get(5));
-        System.out.println("Mean space use & emphasis score amongst routines: System.out.println(" + partsOfLine.get(6));
-        System.out.println("Mean music use 1: choreography score amongst routines: System.out.println(" + partsOfLine.get(7));
-        System.out.println("Mean music use 2: construction score amongst routines: System.out.println(" + partsOfLine.get(8));
-        System.out.println("Mean body control score amongst routines: System.out.println(" + partsOfLine.get(9));
+        System.out.println("Mean positive clicks amongst routines: " + partsOfLine.get(0));
+        System.out.println("Mean negative clicks amongst routines: " +partsOfLine.get(1));
+        System.out.println("Mean clickerscore amongst routines: " + partsOfLine.get(2));
+        System.out.println("Mean execution score amongst routines: " + partsOfLine.get(3));
+        System.out.println("Mean control score amongst routines: " + partsOfLine.get(4));
+        System.out.println("Mean trick diversity score amongst routines: " + partsOfLine.get(5));
+        System.out.println("Mean space use & emphasis score amongst routines: " + partsOfLine.get(6));
+        System.out.println("Mean music use 1: choreography score amongst routines: " + partsOfLine.get(7));
+        System.out.println("Mean music use 2: construction score amongst routines: " + partsOfLine.get(8));
+        System.out.println("Mean body control score amongst routines: " + partsOfLine.get(9));
         System.out.println("Mean showmanship score amongst routines: " + partsOfLine.get(10));
 
     }

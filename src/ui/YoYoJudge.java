@@ -17,6 +17,9 @@ public class YoYoJudge {
     ArrayList<String> routineTypes = new ArrayList<>();
 
 
+    // Constructor
+    //MODIFIES: This
+    //EFFECTS: Adds eval parameter questions and eval parameters to lists
     public YoYoJudge() {
         performanceEvaluationQuestionsWorld.add("Execution score is: ");
         performanceEvaluationQuestionsWorld.add("Control score is: ");
@@ -54,6 +57,7 @@ public class YoYoJudge {
 
     }
 
+    //MODIFIES: This, Player
     //EFFECTS: Starts the yo-yo judging application
     public PlayerDataAnalysis start(String routineType) throws IOException {
         PlayerDataAnalysis data = createPlayerSubtype(routineType);
@@ -69,6 +73,8 @@ public class YoYoJudge {
     }
 
 
+    //MODIFIES: This, Player, PlayerDataAnalysis
+    //EFFECTS: progresses through judging a routine for a Wildcard player
     public PlayerDataAnalysis runStartAsWildcardPlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
         setPlayerInformation(p);
         p.setRoutineLength(routineType);
@@ -82,6 +88,8 @@ public class YoYoJudge {
         return data;
     }
 
+    //MODIFIES: This, Player, PlayerDataAnalysis
+    //EFFECTS: progresses through judging a routine for a prelim,semi or two minute final player
     public PlayerDataAnalysis runStartAsPrelimSemiTwoMinutePlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
         setPlayerInformation(p);
         p.setRoutineLength(routineType);
@@ -96,6 +104,9 @@ public class YoYoJudge {
         return data;
     }
 
+
+    //MODIFIES: This, Player, PlayerDataAnalysis
+    //EFFECTS: progresses through judging a routine for a world final player
     public PlayerDataAnalysis runStartAsWorldFinalPlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
         setPlayerInformation(p);
         p.setRoutineLength(routineType);
@@ -121,6 +132,8 @@ public class YoYoJudge {
 
     //EFFECTS: Prints analyzed routine information of a player
     public void printAnalyzedRoutineInformation(PlayerDataAnalysis data) {
+        System.out.println("Total majors: " + data.getTotalMajors());
+        System.out.println("Total weighted score: " + data.getTotalWeightedScore());
         System.out.println("Fire sections in routine: " + data.getNumberOfFireSectionsInRoutine());
         System.out.println("Tilted sections in routine: " + data.getNumberOfTiltedSectionsInRoutine());
         System.out.println("Clicks per second: " + data.getCPS());
@@ -130,6 +143,7 @@ public class YoYoJudge {
         System.out.println("-------------------------------------------");
     }
 
+    //EFFECTS: Prints analyzed competition information
     public void printAnalyzedCompetitionInformation(CompetitionDataAnalysis cdata){
         System.out.println("Mean positive clicks amongst routines: " + cdata.getMeanPositiveClicks());
         System.out.println("Mean negative clicks amongst routines: " +cdata.getMeanNegativeClicks());
@@ -183,6 +197,11 @@ public class YoYoJudge {
         }
     }
 
+    //own judging algorithm, necessary fields and methods. One per style of judging. Have a field inside of a judge which insantiates the algorithm. state something - 310 
+    // judge algorithm interface. if novice - insantiate novice judging rules...
+    // competition and individual
+    // declare mode into one class - instantiate
+
     //MODIFIES: This, player
     //EFFECTS: Will increase/decrease the clicker score of a player and then return the clicker score after the routine is over
     public void clicker(Player p, PlayerDataAnalysis data) {
@@ -227,18 +246,6 @@ public class YoYoJudge {
     }
 
 
-    //EFFECTS: Prints judge inputted performance evaluations
-    public void getPerformanceEvals(Player p) {
-        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s performance evaluation scores are: ");
-        System.out.println("Execution: " + p.getExecution());
-        System.out.println("Control: " + p.getControl());
-        System.out.println("Choreography: " + p.getChoreography());
-        System.out.println("Body control: " + p.getBodyControl());
-    }
-
-
-
-
     //MODIFIES: This, player
     //EFFECTS: Records judge's performance evaluation scores for a given player
     public void setAllPerformanceEvals(Player p, ArrayList<String> evaluationQuestionList, ArrayList<String> evaluationKeywordsList) {
@@ -252,6 +259,8 @@ public class YoYoJudge {
         }
     }
 
+    //MODIFIES: This, player
+    //EFFECTS: Will set a single performance eval for a given player
     public void setIndividualPerformanceEval(int i, Player p, ArrayList<String> evaluationQuestionList, ArrayList<String> evaluationKeywordsList) throws IncorrectUserInputException {
         System.out.println(evaluationQuestionList.get(i));
         int score = scanner.nextInt();
@@ -259,6 +268,17 @@ public class YoYoJudge {
             throw new IncorrectUserInputException("Please input an integer greater than 0 but less than 10");
         }
         p.setEvaluation(score, evaluationKeywordsList.get(i));
+    }
+
+
+
+    //EFFECTS: Prints judge inputted performance evaluations
+    public void getPerformanceEvals(Player p) {
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s performance evaluation scores are: ");
+        System.out.println("Execution: " + p.getExecution());
+        System.out.println("Control: " + p.getControl());
+        System.out.println("Choreography: " + p.getChoreography());
+        System.out.println("Body control: " + p.getBodyControl());
     }
 
     //EFFECTS: Prints judge inputted performance evaluations
@@ -281,6 +301,8 @@ public class YoYoJudge {
         CallAllRead(p, data, firstName, routineType);
     }
 
+    //MODIFIES: This, Player
+    //EFFECTS: Creates player and playerDataAnalysis subtypes depending on user-inputted routineType
     public PlayerDataAnalysis createPlayerSubtype(String routineType) {
         if (routineType.equals("Wildcard")) {
             WildcardPlayer p = new WildcardPlayer();
@@ -319,6 +341,7 @@ public class YoYoJudge {
         data.save(firstName + "_" + routineType + "_playerDataAnalysis.csv");
     }
 
+    //EFFECTS: Will gather the routineType of the player from user input
     public String retrieveRoutineType(String choice) throws IncorrectUserInputException {
         if (choice.equals("start")) {
             System.out.println("Input the routine type (Wildcard, Prelim, Semi, Two Minute Final, World Final): ");
@@ -339,7 +362,9 @@ public class YoYoJudge {
     }
 
 
-    public static void competitionMode(YoYoJudge yyjh, String choice) throws IOException {
+        //MODIFIES: This, Player, PlayerDataAnalysis, Competition, CompetitionDataAnalysis
+        //EFFECTS: Runs the application in competition mode (judge multiple players sequentially)
+        public static void competitionMode(YoYoJudge yyjh, String choice) throws IOException {
             Scanner scanner = new Scanner(System.in);
             Competition c = new Competition();
             CompetitionDataAnalysis cData = new CompetitionDataAnalysis(c);
@@ -365,6 +390,7 @@ public class YoYoJudge {
                     if (anotherPlayer.equals("no")) {
                         c.save(competitionName);
                         cData.callAllDataAnalysis();
+                        cData.save(competitionName);
                         yyjh.printAnalyzedCompetitionInformation(cData);
                         break;
                     }
@@ -378,6 +404,8 @@ public class YoYoJudge {
             }
         }
 
+        //MODIFIES: This, Player, PlayerDataAnalysis, Competition, CompetitionDataAnalysis
+        //EFFECTS: Runs the application in individual mode (judge an individual player)
         public void individualMode(YoYoJudge yyjh){
             System.out.println("Type start to start judging a player or read to read from memory");
             String choice = scanner.nextLine();
@@ -411,13 +439,18 @@ public class YoYoJudge {
             }
         }
 
-        public static void main (String[]args) throws IOException {
-            Scanner scanner = new Scanner(System.in);
-            YoYoJudge yyjh = new YoYoJudge();
-            System.out.println("Welcome to the yo-yo judging application");
+        public String competitionOrPlayerMode (){
             System.out.println("Type competition to begin competition mode and individual to begin individual player mode");
             String competitionOrPlayerMode;
             competitionOrPlayerMode = scanner.nextLine();
+            return competitionOrPlayerMode;
+        }
+
+
+        public static void main (String[]args) throws IOException {
+            YoYoJudge yyjh = new YoYoJudge();
+            System.out.println("Welcome to the yo-yo judging application");
+            String competitionOrPlayerMode = yyjh.competitionOrPlayerMode();
             if (competitionOrPlayerMode.equals("competition")) {
                 competitionMode(yyjh,competitionOrPlayerMode);
             }

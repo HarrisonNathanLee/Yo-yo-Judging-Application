@@ -16,12 +16,17 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable, D
     protected Player player;
     protected static final int TILTED = 10; //an arbitrary number for now -> will vary depending on the routine length in the future
     protected static final int FIRE = 10; //an arbitrary number for now
+    protected static final double TECHWEIGHT = 0.6;
+    protected static final double EVALWEIGHT = 0.4;
     protected int numberOfFireSectionsInRoutine = 0;
     protected int numberOfTiltedSectionsInRoutine = 0;
     protected double CPS = 0;
     protected double CR = 0;
     protected int numberIfPerfect = 0;
     protected double CIPPS = 0;
+    protected double totalMajors = 0;
+    protected double totalEvalScore = 0;
+    protected double totalWeightedScore = 0;
     protected String saveLocation = "playerDataAnalysis.csv";
 
     public PlayerDataAnalysis(Player player) {
@@ -35,9 +40,7 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable, D
     }
 
     //EFFECTS: Returns the player
-    public Player getPlayer() {
-        return player;
-    }
+    public Player getPlayer() { return player; }
     //EFFECTS: Returns the save location
     public String getSaveLocation() {
         return saveLocation;
@@ -57,6 +60,12 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable, D
     public int getNumberOfTiltedSectionsInRoutine() {
         return numberOfTiltedSectionsInRoutine;
     }
+
+    //EFFECTS: Returns the total majors of the routine
+    public double getTotalMajors() { return totalMajors; }
+
+    //EFFECTS: Returns the total weighted score fo the routine
+    public double getTotalWeightedScore() { return totalWeightedScore; }
 
     //EFFECTS: Returns the CPS of the player
     public double getCPS() {
@@ -79,7 +88,7 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable, D
                 numberOfPositiveInRow = 0;
             }
             if (numberOfPositiveInRow == FIRE) {
-                this.numberOfFireSectionsInRoutine++;
+                numberOfFireSectionsInRoutine++;
                 numberOfPositiveInRow = 0;
             }
         }
@@ -96,7 +105,7 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable, D
             }
 
             if (numberOfNegativeInRow == TILTED) {
-                this.numberOfTiltedSectionsInRoutine++;
+                numberOfTiltedSectionsInRoutine++;
                 numberOfNegativeInRow = 0;
             }
         }
@@ -130,6 +139,26 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable, D
         }
     }
 
+
+    public void produceTotalEvalScore (){
+        totalEvalScore += player.getExecution();
+        totalEvalScore += player.getBodyControl();
+        totalEvalScore += player.getControl();
+        totalEvalScore += player.getChoreography();
+    }
+
+    public void produceTotalWeightedScore (){
+        produceTotalEvalScore();
+        totalWeightedScore = (totalEvalScore * EVALWEIGHT) + (player.clickerScore * TECHWEIGHT);
+    }
+
+    public void produceTotalMajors (){
+        totalMajors += player.getChangeFinal();
+        totalMajors += player.getDiscardFinal();
+        totalMajors += player.getRestartFinal();
+    }
+
+
     //MODIFIES: This
     //EFFECTS: Returns a predicted clicker score value if the player had zero mistakes
     public void clicksIfPerfect (){
@@ -156,13 +185,15 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable, D
         }
         clicksIfPerfect();
         clicksIfPerfectPerSecond();
+        produceTotalWeightedScore();
+        produceTotalMajors();
     }
 
     //EFFECTS: Will save data analysis information to csv file
     @Override
     public void save(String saveLocation) throws IOException {
         PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation, false));
-        pw.write(playerDataAnalysisToSaveString());
+        pw.write(toSaveString());
         pw.close();
 
     }
@@ -174,12 +205,13 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable, D
         List<String> lines = Files.readAllLines(Paths.get(saveLocation));
         String line  = lines.get(0);
         ArrayList<String> partsOfLine = splitOnComma(line);
-        playerDataAnalysisPrintReadOutput(partsOfLine);
-        playerDataAnalysisReadOutput(partsOfLine);
+        printReadOutput(partsOfLine);
+        readOutput(partsOfLine);
         System.out.println("---------------------------------------");
-        }
+    }
 
-    public String playerDataAnalysisToSaveString(){
+    //EFFECTS: Creates a string of player data analysis information
+    public String toSaveString(){
         StringBuilder sb = new StringBuilder();
         sb.append(player.getFirstName());
         sb.append(",");
@@ -200,7 +232,8 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable, D
         return sb.toString();
     }
 
-    public void playerDataAnalysisPrintReadOutput(ArrayList<String> partsOfLine){
+    //EFFECTS: Prints player data analysis information from memory
+    public void printReadOutput(ArrayList<String> partsOfLine){
         System.out.println("Player data analysis information from memory");
         System.out.println("---------------------------------------");
         System.out.println("firstName: " + partsOfLine.get(0) + " ");
@@ -213,7 +246,8 @@ public abstract class PlayerDataAnalysis extends Readable implements Saveable, D
         System.out.println("---------------------------------------");
     }
 
-    public void playerDataAnalysisReadOutput(ArrayList<String> partsOfLine){
+    //EFFECTS: Reads player data analysis information from memory
+    public void readOutput(ArrayList<String> partsOfLine){
         player.setFirstName(partsOfLine.get(0));
         player.setLastName(partsOfLine.get(1));
         this.numberOfFireSectionsInRoutine = Integer.parseInt(partsOfLine.get(2));

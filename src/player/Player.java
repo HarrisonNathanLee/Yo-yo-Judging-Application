@@ -1,5 +1,7 @@
 package player;
 
+import Competition.Competition;
+
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -36,6 +38,23 @@ public abstract class Player extends Readable implements Saveable{
     protected int discardFinal = 0;
     protected String saveLocation = "player.csv";
     ArrayList<String> clicksLog = new ArrayList<>();
+
+    protected ArrayList<Competition> competitionsParticipatedIn = new ArrayList<Competition>();
+
+    public void addCompetition(Competition c){
+        if(!competitionsParticipatedIn.contains(c)){
+            competitionsParticipatedIn.add(c);
+            c.addPlayer(this);
+        }
+    }
+
+    public ArrayList<String> getCompetitionNames(){
+        ArrayList<String> competitionNames = new ArrayList<>();
+        for (Competition c; competitionsParticipatedIn){
+            competitionNames.add(c.getCompetitionName());
+        }
+        return competitionNames;
+    }
 
     //MODIFIES: This
     //EFFECTS: Retrieves the first name of the player
@@ -209,37 +228,29 @@ public abstract class Player extends Readable implements Saveable{
         return routineLength;
     }
 
-    //REQUIRES: int < 10
     //EFFECTS: Returns the execution score of the player
     public int getExecution() { return execution; }
 
-    //REQUIRES: int < 10
     //EFFECTS: Returns the control score of the player
     public int getControl() { return control; }
 
-    //REQUIRES: int < 10
     //EFFECTS: Returns the trick diversity score of the player
     public int getTrickDiversity() { return trickDiversity; }
 
-    //REQUIRES: int < 10
     //EFFECTS: Returns the space use and emphasis score of the player
     public int getSpaceUseAndEmphasis() { return spaceUseAndEmphasis; }
 
-    //REQUIRES: int < 10
     //EFFECTS: Returns the choreography score of the player
     public int getChoreography() { return choreography; }
 
-    //REQUIRES: int < 10
     //EFFECTS: Returns the construction score of the player
     public int getConstruction() {
         return construction;
     }
 
-    //REQUIRES: int < 10
     //EFFECTS: Returns the body control score of the player
     public int getBodyControl() { return bodyControl; }
 
-    //REQUIRES: int < 10
     //EFFECTS: Returns the showmanship score of the player
     public int getShowmanship() { return showmanship; }
 
@@ -284,6 +295,9 @@ public abstract class Player extends Readable implements Saveable{
         clicksLog.add("positive");
     }
 
+
+    //MODIFIES: This
+    //EFFECTS: Adds two positive clicks and logs the clicks to clicksLog
     public void doubleClick() {
         for (int i = 0; i<2; i++){
             positiveClicks++;
@@ -389,7 +403,7 @@ public abstract class Player extends Readable implements Saveable{
     @Override
     public void save(String saveLocation) throws IOException {
         PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation, false));
-        pw.write(playerToSaveString());
+        pw.write(toSaveString());
         pw.close();
     }
 
@@ -400,11 +414,13 @@ public abstract class Player extends Readable implements Saveable{
         List<String> lines = Files.readAllLines(Paths.get(saveLocation));
         String line = lines.get(0);
         ArrayList<String> partsOfLine = splitOnComma(line);
-        playerPrintReadOutput(partsOfLine);
-        playerReadOutput(partsOfLine);
+        printReadOutput(partsOfLine);
+        readOutput(partsOfLine);
     }
 
-    public String playerToSaveString(){
+
+    //EFFECTS: Creates a string of player information
+    public String toSaveString(){
         StringBuilder sb = new StringBuilder();
         sb.append(this.firstName);
         sb.append(",");
@@ -443,7 +459,8 @@ public abstract class Player extends Readable implements Saveable{
         return sb.toString();
     }
 
-    public void playerReadOutput (ArrayList<String> partsOfLine){
+    //EFFECTS: Reads player information from memory
+    public void readOutput(ArrayList<String> partsOfLine){
         this.firstName = partsOfLine.get(0);
         this.lastName = partsOfLine.get(1);
         this.division = partsOfLine.get(2);
@@ -463,7 +480,8 @@ public abstract class Player extends Readable implements Saveable{
         this.bodyControl = Integer.parseInt(partsOfLine.get(16));
     }
 
-    public void playerPrintReadOutput(ArrayList<String> partsOfLine){
+    //EFFECTS: Prints player information from memory
+    public void printReadOutput(ArrayList<String> partsOfLine){
         System.out.println("Player information and raw scores from memory");
         System.out.println("---------------------------------------");
         System.out.println("firstName: " + partsOfLine.get(0) + " ");
