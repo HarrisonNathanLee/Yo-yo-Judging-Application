@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Player extends Readable implements Saveable{
     protected String firstName = "";
@@ -50,7 +51,7 @@ public abstract class Player extends Readable implements Saveable{
 
     public ArrayList<String> getCompetitionNames(){
         ArrayList<String> competitionNames = new ArrayList<>();
-        for (Competition c; competitionsParticipatedIn){
+        for (Competition c: competitionsParticipatedIn) {
             competitionNames.add(c.getCompetitionName());
         }
         return competitionNames;
@@ -455,6 +456,11 @@ public abstract class Player extends Readable implements Saveable{
         sb.append(this.choreography);
         sb.append(",");
         sb.append(this.bodyControl);
+        sb.append(",");
+        for (String sc: getCompetitionNames()){
+            sb.append(sc);
+            sb.append(",");
+        }
         sb.append("\n");
         return sb.toString();
     }
@@ -502,6 +508,20 @@ public abstract class Player extends Readable implements Saveable{
         System.out.println("choreography: " + partsOfLine.get(15) + " ");
         System.out.println("bodyControl: " + partsOfLine.get(16) + " ");
         System.out.println("---------------------------------------");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(firstName, player.firstName) &&
+                Objects.equals(lastName, player.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName);
     }
 
 }

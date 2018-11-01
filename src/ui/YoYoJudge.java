@@ -1,7 +1,7 @@
 package ui;
 
 import Competition.*;
-import Exceptions.IncorrectUserInputException;
+import Exceptions.*;
 import player.*;
 
 import java.io.IOException;
@@ -364,7 +364,7 @@ public class YoYoJudge {
 
         //MODIFIES: This, Player, PlayerDataAnalysis, Competition, CompetitionDataAnalysis
         //EFFECTS: Runs the application in competition mode (judge multiple players sequentially)
-        public static void competitionMode(YoYoJudge yyjh, String choice) throws IOException {
+        public static void competitionMode(YoYoJudge yyjh, String choice) throws IOException, AlreadyInCompetitionException {
             Scanner scanner = new Scanner(System.in);
             Competition c = new Competition();
             CompetitionDataAnalysis cData = new CompetitionDataAnalysis(c);
@@ -380,10 +380,18 @@ public class YoYoJudge {
                 }
                 System.out.println("What is the name of the competition you are judging");
                 String competitionName = scanner.nextLine();
+                c.setCompetitionName(competitionName);
                 while (true) {
                     PlayerDataAnalysis data = yyjh.start(routineType);
                     c.addPlayerDataAnalysis(data);
-                    c.addPlayer(data.getPlayer());
+                    for (Player p: c.getPlayers()){
+                        if (p.equals(data.getPlayer())){
+                            throw new AlreadyInCompetitionException("Already in competition");
+                        }
+                        else{
+                            c.addPlayer(data.getPlayer());
+                        }
+                    }
                     System.out.println("Is there another player to judge in this competition yes or no");
                     String anotherPlayer = scanner.nextLine();
                     String space = scanner.nextLine();
@@ -392,6 +400,7 @@ public class YoYoJudge {
                         cData.callAllDataAnalysis();
                         cData.save(competitionName);
                         yyjh.printAnalyzedCompetitionInformation(cData);
+                        data.getPlayer().save("Just for this deliverable");
                         break;
                     }
                 }
@@ -452,7 +461,11 @@ public class YoYoJudge {
             System.out.println("Welcome to the yo-yo judging application");
             String competitionOrPlayerMode = yyjh.competitionOrPlayerMode();
             if (competitionOrPlayerMode.equals("competition")) {
-                competitionMode(yyjh,competitionOrPlayerMode);
+                try {
+                    competitionMode(yyjh,competitionOrPlayerMode);
+                } catch (AlreadyInCompetitionException e) {
+                    System.out.println(e.getMessage());
+                }
             }
             else if (competitionOrPlayerMode.equals("individual")) {
                 yyjh.individualMode(yyjh);

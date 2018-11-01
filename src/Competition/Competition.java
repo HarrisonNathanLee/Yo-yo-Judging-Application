@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -19,7 +20,6 @@ public class Competition extends Readable implements Saveable {
     private String competitionRoutineType = "";
     private ArrayList<Player> players = new ArrayList<>();
     private ArrayList<PlayerDataAnalysis> dataAnalyses = new ArrayList<>();
-
 
     //MODIFIES: This
     //EFFECTS: Sets the competitionName of the competition
@@ -54,7 +54,6 @@ public class Competition extends Readable implements Saveable {
     public void addPlayerDataAnalysis(PlayerDataAnalysis data){
         dataAnalyses.add(data);
     }
-
 
     //EFFECTS: Saves the data for all players in a competition to two CSV files
     public void save(String saveLocation) throws IOException{
