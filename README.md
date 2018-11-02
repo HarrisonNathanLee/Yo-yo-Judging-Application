@@ -16,7 +16,7 @@
 
 2: Basic Interaction
 - Added additional functionalities:
-    - Inputting a player's information: first name, last name, division, routine length, etc
+    - Inputting a App.player's information: first name, last name, division, routine length, etc
     - Incrementing and decrementing for an undefined period of time - stop when user tells system to stop; Program returns final clicker score to user
     - Inputting and returning performance evals to user
 - Functionalities that have yet to be added
@@ -29,7 +29,7 @@
 
 3: Abstraction and Testing
 - Cleaned up code and added requires,effects,modifies statements to methods
-- Added data analysis class which analyzes the clicker data for a given player
+- Added data analysis class which analyzes the clicker data for a given App.player
 - Only method in data analysis currently determines fire and tilt sections of routine
 - Was going to add timing element; however cannot implement effectively until I have a UI: would need a-synchronous code
 - Things which have yet to be implemented:
@@ -42,24 +42,24 @@
 4: Types, Interfaces, and Saving
 - Added additional data analysis features (CPS, CR, ClicksIfPerfect, etc)
 - Added save and load feature for individual players:
-    - Everytime you save a new player, a new CSV file will be created
-    - Can overwrite that player by saving on top of it
-    - can read a player from memory if that player is in memory
+    - Everytime you save a new App.player, a new CSV file will be created
+    - Can overwrite that App.player by saving on top of it
+    - can read a App.player from memory if that App.player is in memory
 - Things which have yet to be implemented:
     - Data analysis features:
         - clicks per second if perfect
         - Weighting function for evals and clickers (60%/40%)
     - Adding exceptions for all eval scores (out of 10)/ tell judge to input a different score
-    - Create a list of player's/competition roster class which extends player (add multiple players to a single list)
+    - Create a list of App.player's/competition roster class which extends App.player (add multiple players to a single list)
 
 5: Abstracts and Extends
-- Added wildcard, prelim, semi, two minute, and final classes which extends player and playerDataAnalysis
+- Added wildcard, prelim, semi, two minute, and final classes which extends App.player and playerDataAnalysis
 - Cleaned up code and made everything streamline
 - Added more tests
 - Things which have yet to be implemented
     - Adding exceptions for all eval scores (out of 10)/ tell judge to input a different score
     - Adding exceptions for everything
-    - Creating a list of player's/competition
+    - Creating a list of App.player's/competition
     - Aggregate and database functions
 
 6: Robustness
@@ -68,7 +68,7 @@
 - Refractored getters and setters and overall codebase to make it more streamline - more helper functiosn!
 - What still need to be done:
     - Debug competiton class, add read functionality
-    - Inter player data analysis/ competition analysis class
+    - Inter App.player data analysis/ competition analysis class
     - Double click
     - Tests for exceptions
-    - Fill in test gaps - get a code coverage report somehow
+    - Fill in App.test gaps - get a code coverage report somehow
