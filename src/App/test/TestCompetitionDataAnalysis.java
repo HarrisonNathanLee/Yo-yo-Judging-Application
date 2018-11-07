@@ -2,6 +2,7 @@ package App.test;
 
 import App.Competition.Competition;
 import App.Competition.CompetitionDataAnalysis;
+import App.Competition.WorldFinalCompetitionDataAnalysis;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import App.player.WorldFinalPlayer;
@@ -74,7 +75,7 @@ public class TestCompetitionDataAnalysis {
         competition.addPlayerDataAnalysis(data1);
         competition.addPlayerDataAnalysis(data2);
         competition.setCompetitionName("worlds");
-        cData = new CompetitionDataAnalysis(competition);
+        cData = new WorldFinalCompetitionDataAnalysis(competition);
     }
 
     @Test

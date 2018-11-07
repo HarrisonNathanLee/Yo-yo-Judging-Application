@@ -3,29 +3,28 @@ package App.test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import App.player.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public class TestWorldFinalLoadable {
 
-public class TestReadable {
-
-    PrelimPlayer player;
-    PrelimPlayerDataAnalysis data;
+    WorldFinalPlayer player;
+    WorldFinalPlayerDataAnalysis data;
 
     @BeforeEach
     public void setUp() {
-        player = new PrelimPlayer();
-        data = new PrelimPlayerDataAnalysis(player);
+        player = new WorldFinalPlayer();
+        data = new WorldFinalPlayerDataAnalysis(player);
     }
 
     @Test
     public void testReadForPlayer() throws IOException {
-        player.read("Test_testPlayer.csv");
+        player.load("Test_testWorldFinalPlayer.csv");
         assertEquals("Test",player.getFirstName());
         assertEquals("Test",player.getLastName());
         assertEquals("1a",player.getDivision());
-        assertEquals("Prelim",player.getRoutineType());
+        assertEquals("World Final",player.getRoutineType());
         assertEquals(5.0,player.getPositiveClicks());
         assertEquals(5.0,player.getNegativeClicks());
         assertEquals(0.0,player.getClickerScore());
@@ -37,22 +36,29 @@ public class TestReadable {
         assertEquals(15,player.getDiscardFinal());
         assertEquals(1,player.getExecution());
         assertEquals(2,player.getControl());
-        assertEquals(3,player.getChoreography());
-        assertEquals(4,player.getBodyControl());
+        assertEquals(3,player.getTrickDiversity());
+        assertEquals(4,player.getSpaceUseAndEmphasis());
+        assertEquals(5,player.getChoreography());
+        assertEquals(6,player.getConstruction());
+        assertEquals(7,player.getBodyControl());
+        assertEquals(8,player.getShowmanship());
 
     }
 
     @Test
     public void testReadForPlayerDataAnalysis() throws IOException {
-        data.read("Test_testPlayerDataAnalysis.csv");
+        data.load("Test_testWorldFinalPlayerDataAnalysis.csv");
         assertEquals("Test",player.getFirstName());
         assertEquals("Test",player.getLastName()); //lastName
-        assertEquals(4,data.getNumberOfFireSectionsInRoutine()); //numberOfFireSectionsInRoutine
+        assertEquals(10,data.getNumberOfFireSectionsInRoutine()); //numberOfFireSectionsInRoutine
         assertEquals(1,data.getNumberOfTiltedSectionsInRoutine()); //numberOfTiltedSectionsInRoutine
         assertEquals(0.5,data.getCPS());//CPS
-        assertEquals(0.25,data.getCR());//CR
-        assertEquals(60,data.getNumberIfPerfect());//numberIfPerfect
-        assertEquals(1.0,data.getCIPPS());//CIPPS
+        assertEquals(0.1,data.getCR());//CR
+        assertEquals(120,data.getNumberIfPerfect());//numberIfPerfect
+        assertEquals(0.6666666666666666,data.getCIPPS());//CIPPS
     }
 
+
 }
+
+

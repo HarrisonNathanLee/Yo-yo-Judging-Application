@@ -3,21 +3,21 @@ package App.test;
 import App.Exceptions.DataCalculationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import App.player.PrelimPlayer;
-import App.player.PrelimPlayerDataAnalysis;
+import App.player.PrelimTwoSemiPlayer;
+import App.player.PrelimTwoSemiPlayerDataAnalysis;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestPlayerDataAnalysis {
 
-    PrelimPlayer player;
-    PrelimPlayerDataAnalysis data;
+    PrelimTwoSemiPlayer player;
+    PrelimTwoSemiPlayerDataAnalysis data;
 
     @BeforeEach
     public void setUp() {
-        player = new PrelimPlayer();
-        data = new PrelimPlayerDataAnalysis(player);
+        player = new PrelimTwoSemiPlayer();
+        data = new PrelimTwoSemiPlayerDataAnalysis(player);
     }
 
     //Tests for clicksOnTilt and ClicksOnFire

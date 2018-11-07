@@ -1,36 +1,10 @@
 package App.player;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 
-public class WorldFinalPlayer extends Player {
+public class PrelimTwoSemiPlayer extends Player {
 
-//    //EFFECTS: Will save judge inputted information to csv file
-//    @Override
-//    public void save(String saveLocation) throws IOException {
-//        PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation, false));
-//        pw.write(toSaveString());
-//        pw.close();
-//    }
-//
-//    //REQUIRES: Save location to exist in memory
-//    //EFFECTS: Will load App.player information from csv file
-//    @Override
-//    public void load(String saveLocation) throws IOException {
-//        List<String> lines = Files.readAllLines(Paths.get(saveLocation));
-//        String line = lines.get(0);
-//        ArrayList<String> partsOfLine = splitOnComma(line);
-//        printLoadOutput(partsOfLine);
-//        loadOutput(partsOfLine);
-//
-//    }
-
-    //EFFECTS: Creates a string of world final App.player information
+    //EFFECTS: Creates a string of App.player information
     public String toSaveString(){
         StringBuilder sb = new StringBuilder();
         sb.append(this.firstName);
@@ -63,22 +37,14 @@ public class WorldFinalPlayer extends Player {
         sb.append(",");
         sb.append(this.control);
         sb.append(",");
-        sb.append(this.trickDiversity);
-        sb.append(",");
-        sb.append(this.spaceUseAndEmphasis);
-        sb.append(",");
         sb.append(this.choreography);
-        sb.append(",");
-        sb.append(this.construction);
         sb.append(",");
         sb.append(this.bodyControl);
         sb.append(",");
-        sb.append(this.showmanship);
-        sb.append("\n");
         return sb.toString();
     }
 
-    //EFFECTS: Reads world final App.player information from memory
+    //EFFECTS: Reads App.player information from memory
     public void loadOutput(ArrayList<String> partsOfLine){
         this.firstName = partsOfLine.get(0);
         this.lastName = partsOfLine.get(1);
@@ -95,15 +61,11 @@ public class WorldFinalPlayer extends Player {
         this.discardFinal = Integer.parseInt(partsOfLine.get(12));
         this.execution = Integer.parseInt(partsOfLine.get(13));
         this.control = Integer.parseInt(partsOfLine.get(14));
-        this.trickDiversity = Integer.parseInt(partsOfLine.get(15));
-        this.spaceUseAndEmphasis = Integer.parseInt(partsOfLine.get(16));
-        this.choreography = Integer.parseInt(partsOfLine.get(17));
-        this.construction = Integer.parseInt(partsOfLine.get(18));
-        this.bodyControl = Integer.parseInt(partsOfLine.get(19));
-        this.showmanship = Integer.parseInt(partsOfLine.get(20));
-
+        this.choreography = Integer.parseInt(partsOfLine.get(15));
+        this.bodyControl = Integer.parseInt(partsOfLine.get(16));
     }
 
+    //EFFECTS: Prints App.player information from memory
     public void printLoadOutput(ArrayList<String> partsOfLine){
         System.out.println("Player information and raw scores from memory");
         System.out.println("---------------------------------------");
@@ -122,25 +84,19 @@ public class WorldFinalPlayer extends Player {
         System.out.println("discardFinal: " + partsOfLine.get(12) + " ");
         System.out.println("execution: " + partsOfLine.get(13) + " ");
         System.out.println("control: " + partsOfLine.get(14) + " ");
-        System.out.println("trickDiversity: " + partsOfLine.get(15) + " ");
-        System.out.println("spaceUseAndEmphasis: " + partsOfLine.get(16) + " ");
-        System.out.println("choreography: " + partsOfLine.get(17) + " ");
-        System.out.println("bodyControl: " + partsOfLine.get(18) + " ");
-        System.out.println("showmanship: " + partsOfLine.get(19) + " ");
+        System.out.println("choreography: " + partsOfLine.get(15) + " ");
+        System.out.println("bodyControl: " + partsOfLine.get(16) + " ");
         System.out.println("---------------------------------------");
     }
+
 
     //EFFECTS: Prints judge inputted performance evaluations
     public void getPerformanceEvals(Player p) {
         System.out.println(p.getFirstName() + " " + p.getLastName() + "'s performance evaluation scores are: ");
         System.out.println("Execution: " + p.getExecution());
         System.out.println("Control: " + p.getControl());
-        System.out.println("Trick Diversity: " + p.getTrickDiversity());
-        System.out.println("Space Use and Emphasis: " + p.getSpaceUseAndEmphasis());
         System.out.println("Choreography: " + p.getChoreography());
-        System.out.println("Construction: " + p.getConstruction());
         System.out.println("Body control: " + p.getBodyControl());
-        System.out.println("Showmanship: " + p.getShowmanship());
     }
-}
 
+}

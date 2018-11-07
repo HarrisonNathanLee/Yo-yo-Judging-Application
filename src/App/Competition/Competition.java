@@ -36,25 +36,11 @@ public class Competition extends Loadable implements Saveable {
         return players;
     }
 
-//    //EFFECTS: Adds a App.player to a competition
-//    public void addPlayer(Player p){
-//        players.add(p);
-//    }
-
     //EFFECTS: Adds a App.player to a competition
     public void addPlayer(Player p){
-        if(!players.contains(p)) {
-            players.add(p);
-            p.addCompetition(this);
-        }
+        players.add(p);
     }
 
-    public void removePlayer (Player p){
-        if(players.contains(p)) {
-            players.remove(p);
-            p.removeCompetition(this);
-        }
-    }
     //EFFECTS: Adds a App.player's playerDataAnalysis information to a competition
     public void addPlayerDataAnalysis(PlayerDataAnalysis data){
         dataAnalyses.add(data);
@@ -88,7 +74,7 @@ public class Competition extends Loadable implements Saveable {
     }
 
     //EFFECTS: Reads data from competition files
-    public void read(String saveLocation) throws IOException {
+    public void load(String saveLocation) throws IOException {
         List<String> playerLines = Files.readAllLines(Paths.get(saveLocation + "Player.csv"));
         List<String> playerDataAnalysisLines = Files.readAllLines(Paths.get(saveLocation + "PlayerDataAnalysis.csv"));
         int i = 0;
@@ -97,35 +83,21 @@ public class Competition extends Loadable implements Saveable {
             if (playerPartsOfLine.contains("Wildcard")){
                 WildcardPlayer p = new WildcardPlayer();
                 WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(p);
-                p.printReadOutput(playerPartsOfLine);
+                p.printLoadOutput(playerPartsOfLine);
                 readPlayerDataAnalysisLines(playerDataAnalysisLines, data, i);
                 i++;
             }
-            if (playerPartsOfLine.contains("Prelim")){
-                PrelimPlayer p = new PrelimPlayer();
-                PrelimPlayerDataAnalysis data = new PrelimPlayerDataAnalysis(p);
-                p.printReadOutput(playerPartsOfLine);
-                readPlayerDataAnalysisLines(playerDataAnalysisLines, data, i);
-                i++;
-            }
-            if (playerPartsOfLine.contains("Semi")){
-                SemiPlayer p = new SemiPlayer();
-                SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(p);
-                p.printReadOutput(playerPartsOfLine);
-                readPlayerDataAnalysisLines(playerDataAnalysisLines, data, i);
-                i++;
-            }
-            if (playerPartsOfLine.contains("Two Minute Final")){
-                TwoMinuteFinalPlayer p = new TwoMinuteFinalPlayer();
-                TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(p);
-                p.printReadOutput(playerPartsOfLine);
+            if (playerPartsOfLine.contains("Prelim") || playerPartsOfLine.contains("Semi") || playerPartsOfLine.contains("Two Minute Final")){
+                PrelimTwoSemiPlayer p = new PrelimTwoSemiPlayer();
+                PrelimTwoSemiPlayerDataAnalysis data = new PrelimTwoSemiPlayerDataAnalysis(p);
+                p.printLoadOutput(playerPartsOfLine);
                 readPlayerDataAnalysisLines(playerDataAnalysisLines, data, i);
                 i++;
             }
             if (playerPartsOfLine.contains("World Final")){
                 WorldFinalPlayer p = new WorldFinalPlayer();
                 WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(p);
-                p.printReadOutput(playerPartsOfLine);
+                p.printLoadOutput(playerPartsOfLine);
                 readPlayerDataAnalysisLines(playerDataAnalysisLines, data, i);
                 i++;
             }
@@ -139,18 +111,18 @@ public class Competition extends Loadable implements Saveable {
     private void readPlayerDataAnalysisLines(List<String> playerDataAnalysisLines, PlayerDataAnalysis data, Integer i) {
         String playerDataAnalysisLine = playerDataAnalysisLines.get(i);
         ArrayList<String> playerDataAnalysisPartsOfLine = splitOnComma(playerDataAnalysisLine);
-        data.printReadOutput(playerDataAnalysisPartsOfLine);
+        data.printLoadOutput(playerDataAnalysisPartsOfLine);
     }
 
     //TODO Figure out a way to remove the methods below
 
     @Override
-    public void printReadOutput(ArrayList<String> partsOfLine){
+    public void printLoadOutput(ArrayList<String> partsOfLine){
         System.out.println("nothing");
     }
 
     @Override
-    public void readOutput(ArrayList<String> partsOfLine) {
+    public void loadOutput(ArrayList<String> partsOfLine) {
         System.out.println("nothing");
     }
 

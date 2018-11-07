@@ -201,12 +201,12 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
     //REQUIRES: Save location to exist in memory
     //EFFECTS: Will output App.player analysis information from saved file
     @Override
-    public void read(String saveLocation) throws IOException {
+    public void load(String saveLocation) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(saveLocation));
         String line  = lines.get(0);
         ArrayList<String> partsOfLine = splitOnComma(line);
-        printReadOutput(partsOfLine);
-        readOutput(partsOfLine);
+        printLoadOutput(partsOfLine);
+        loadOutput(partsOfLine);
         System.out.println("---------------------------------------");
     }
 
@@ -233,7 +233,7 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
     }
 
     //EFFECTS: Prints App.player data analysis information from memory
-    public void printReadOutput(ArrayList<String> partsOfLine){
+    public void printLoadOutput(ArrayList<String> partsOfLine){
         System.out.println("Player data analysis information from memory");
         System.out.println("---------------------------------------");
         System.out.println("firstName: " + partsOfLine.get(0) + " ");
@@ -247,7 +247,7 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
     }
 
     //EFFECTS: Reads App.player data analysis information from memory
-    public void readOutput(ArrayList<String> partsOfLine){
+    public void loadOutput(ArrayList<String> partsOfLine){
         player.setFirstName(partsOfLine.get(0));
         player.setLastName(partsOfLine.get(1));
         this.numberOfFireSectionsInRoutine = Integer.parseInt(partsOfLine.get(2));

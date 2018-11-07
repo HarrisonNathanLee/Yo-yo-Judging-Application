@@ -22,24 +22,24 @@ public class WildcardPlayer extends Player {
         positiveClicks = 0;
     }
 
-    //EFFECTS: Will save judge inputted information to csv file
-    @Override
-    public void save(String saveLocation) throws IOException {
-        PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation, false));
-        pw.write(toSaveString());
-        pw.close();
-    }
-
-    //REQUIRES: Save location must exist in memory
-    //EFFECTS: Will read App.player information from csv file
-    @Override
-    public void read(String saveLocation) throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(saveLocation));
-        String line = lines.get(0);
-        ArrayList<String> partsOfLine = splitOnComma(line);
-        printReadOutput(partsOfLine);
-        readOutput(partsOfLine);
-    }
+//    //EFFECTS: Will save judge inputted information to csv file
+//    @Override
+//    public void save(String saveLocation) throws IOException {
+//        PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation, false));
+//        pw.write(toSaveString());
+//        pw.close();
+//    }
+//
+//    //REQUIRES: Save location must exist in memory
+//    //EFFECTS: Will load App.player information from csv file
+//    @Override
+//    public void load(String saveLocation) throws IOException {
+//        List<String> lines = Files.readAllLines(Paths.get(saveLocation));
+//        String line = lines.get(0);
+//        ArrayList<String> partsOfLine = splitOnComma(line);
+//        printLoadOutput(partsOfLine);
+//        loadOutput(partsOfLine);
+//    }
 
 
     //EFFECTS: Creates a string of wildcard App.player information
@@ -61,7 +61,7 @@ public class WildcardPlayer extends Player {
     }
 
     //EFFECTS: Reads wildcard App.player information from memory
-    public void readOutput(ArrayList<String> partsOfLine){
+    public void loadOutput(ArrayList<String> partsOfLine){
         this.firstName = partsOfLine.get(0);
         this.lastName = partsOfLine.get(1);
         this.division = partsOfLine.get(2);
@@ -71,7 +71,7 @@ public class WildcardPlayer extends Player {
     }
 
     //EFFECTS: Prints world final App.player information from memory
-    public void printReadOutput(ArrayList<String> partsOfLine){
+    public void printLoadOutput(ArrayList<String> partsOfLine){
         System.out.println("Player information and raw scores from memory");
         System.out.println("---------------------------------------");
         System.out.println("firstName: " + partsOfLine.get(0) + " ");
@@ -81,6 +81,10 @@ public class WildcardPlayer extends Player {
         System.out.println("positiveClicks: " + partsOfLine.get(4) + " ");
         System.out.println("clickerScore: " + partsOfLine.get(5) + " ");
         System.out.println("---------------------------------------");
+    }
+
+    public void getPerformanceEvals(Player p){
+        System.out.println("return nothing");
     }
 }
 

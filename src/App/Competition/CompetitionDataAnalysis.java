@@ -10,9 +10,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompetitionDataAnalysis extends Loadable implements Saveable, DataAnalysis {
-    private ArrayList<Player> players;
-    private Competition competition;
+public abstract class CompetitionDataAnalysis extends Loadable implements Saveable, DataAnalysis {
+    protected ArrayList<Player> players;
+    protected Competition competition;
 
     //EFFECTS: Returns the mean execution
     public double getMeanExecution() {
@@ -252,20 +252,21 @@ public class CompetitionDataAnalysis extends Loadable implements Saveable, DataA
 
     //MODIFIES: This
     //EFFECTS: Sets the mean for all eval parameters
-    public void produceAllMean(){
-       players = competition.getPlayers();
-       meanExecution = produceMean(players, "execution");
-       meanControl = produceMean(players, "control");
-       meanTrickDiversity = produceMean(players, "trickDiversity");
-       meanSpaceUseAndEmphasis = produceMean(players, "spaceUseAndEmphasis");
-       meanChoreography = produceMean(players, "choreography");
-       meanConstruction = produceMean(players, "construction");
-       meanBodyControl = produceMean(players, "bodyControl");
-       meanShowmanship = produceMean(players, "showmanship");
-       meanPositiveClicks = produceMean(players,"positive clicks");
-       meanNegativeClicks = produceMean(players, "negative clicks");
-       meanClickerscore = produceMean(players, "clickerscore");
-    }
+    public abstract void produceAllMean();
+//    public void produceAllMean(){
+//       players = competition.getPlayers();
+//       meanExecution = produceMean(players, "execution");
+//       meanControl = produceMean(players, "control");
+//       meanTrickDiversity = produceMean(players, "trickDiversity");
+//       meanSpaceUseAndEmphasis = produceMean(players, "spaceUseAndEmphasis");
+//       meanChoreography = produceMean(players, "choreography");
+//       meanConstruction = produceMean(players, "construction");
+//       meanBodyControl = produceMean(players, "bodyControl");
+//       meanShowmanship = produceMean(players, "showmanship");
+//       meanPositiveClicks = produceMean(players,"positive clicks");
+//       meanNegativeClicks = produceMean(players, "negative clicks");
+//       meanClickerscore = produceMean(players, "clickerscore");
+//    }
 
     public void callAllDataAnalysis(){
         produceAllMean();
@@ -275,74 +276,80 @@ public class CompetitionDataAnalysis extends Loadable implements Saveable, DataA
         PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation + "DataAnalysis.csv", false));
         pw.write(toSaveString());
         pw.close();
-        
     }
 
-    public void read(String saveLocation) throws IOException {
+    public void load(String saveLocation) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(saveLocation+ "DataAnalysis.csv"));
         String line = lines.get(0);
         ArrayList<String> partsOfLine = splitOnComma(line);
-        printReadOutput(partsOfLine);
-        readOutput(partsOfLine);
-    }
-    public String toSaveString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(this.meanPositiveClicks);
-        sb.append(",");
-        sb.append(this.meanNegativeClicks);
-        sb.append(",");
-        sb.append(this.meanClickerscore);
-        sb.append(",");
-        sb.append(this.meanExecution);
-        sb.append(",");
-        sb.append(this.meanControl);
-        sb.append(",");
-        sb.append(this.meanTrickDiversity);
-        sb.append(",");
-        sb.append(this.meanSpaceUseAndEmphasis);
-        sb.append(",");
-        sb.append(this.meanChoreography);
-        sb.append(",");
-        sb.append(this.meanConstruction);
-        sb.append(",");
-        sb.append(this.meanBodyControl);
-        sb.append(",");
-        sb.append(this.meanShowmanship);
-        sb.append("\n");
-        return sb.toString();
+        printLoadOutput(partsOfLine);
+        loadOutput(partsOfLine);
     }
 
-    public void readOutput (ArrayList<String> partsOfLine){
-        this.meanPositiveClicks = Double.parseDouble(partsOfLine.get(0));
-        this.meanNegativeClicks = Double.parseDouble(partsOfLine.get(1));
-        this.meanClickerscore = Double.parseDouble(partsOfLine.get(2));
-        this.meanExecution = Double.parseDouble(partsOfLine.get(3));
-        this.meanControl = Double.parseDouble(partsOfLine.get(4));
-        this.meanTrickDiversity = Double.parseDouble(partsOfLine.get(5));
-        this.meanSpaceUseAndEmphasis = Double.parseDouble(partsOfLine.get(6));
-        this.meanChoreography= Double.parseDouble(partsOfLine.get(7));
-        this.meanConstruction = Double.parseDouble(partsOfLine.get(8));
-        this.meanBodyControl = Double.parseDouble(partsOfLine.get(9));
-        this.meanShowmanship = Double.parseDouble(partsOfLine.get(10));
 
-    }
+    public abstract String toSaveString();
+//    public String toSaveString(){
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(this.meanPositiveClicks);
+//        sb.append(",");
+//        sb.append(this.meanNegativeClicks);
+//        sb.append(",");
+//        sb.append(this.meanClickerscore);
+//        sb.append(",");
+//        sb.append(this.meanExecution);
+//        sb.append(",");
+//        sb.append(this.meanControl);
+//        sb.append(",");
+//        sb.append(this.meanTrickDiversity);
+//        sb.append(",");
+//        sb.append(this.meanSpaceUseAndEmphasis);
+//        sb.append(",");
+//        sb.append(this.meanChoreography);
+//        sb.append(",");
+//        sb.append(this.meanConstruction);
+//        sb.append(",");
+//        sb.append(this.meanBodyControl);
+//        sb.append(",");
+//        sb.append(this.meanShowmanship);
+//        sb.append("\n");
+//        return sb.toString();
+//    }
 
-    public void printReadOutput(ArrayList<String> partsOfLine){
-        System.out.println("Analyzed competition information from memory");
-        System.out.println("---------------------------------------");
-        System.out.println("Mean positive clicks amongst routines: " + partsOfLine.get(0));
-        System.out.println("Mean negative clicks amongst routines: " +partsOfLine.get(1));
-        System.out.println("Mean clickerscore amongst routines: " + partsOfLine.get(2));
-        System.out.println("Mean execution score amongst routines: " + partsOfLine.get(3));
-        System.out.println("Mean control score amongst routines: " + partsOfLine.get(4));
-        System.out.println("Mean trick diversity score amongst routines: " + partsOfLine.get(5));
-        System.out.println("Mean space use & emphasis score amongst routines: " + partsOfLine.get(6));
-        System.out.println("Mean music use 1: choreography score amongst routines: " + partsOfLine.get(7));
-        System.out.println("Mean music use 2: construction score amongst routines: " + partsOfLine.get(8));
-        System.out.println("Mean body control score amongst routines: " + partsOfLine.get(9));
-        System.out.println("Mean showmanship score amongst routines: " + partsOfLine.get(10));
+    public abstract void loadOutput(ArrayList<String> partsOfLine);
+//    public void loadOutput(ArrayList<String> partsOfLine){
+//        this.meanPositiveClicks = Double.parseDouble(partsOfLine.get(0));
+//        this.meanNegativeClicks = Double.parseDouble(partsOfLine.get(1));
+//        this.meanClickerscore = Double.parseDouble(partsOfLine.get(2));
+//        this.meanExecution = Double.parseDouble(partsOfLine.get(3));
+//        this.meanControl = Double.parseDouble(partsOfLine.get(4));
+//        this.meanTrickDiversity = Double.parseDouble(partsOfLine.get(5));
+//        this.meanSpaceUseAndEmphasis = Double.parseDouble(partsOfLine.get(6));
+//        this.meanChoreography= Double.parseDouble(partsOfLine.get(7));
+//        this.meanConstruction = Double.parseDouble(partsOfLine.get(8));
+//        this.meanBodyControl = Double.parseDouble(partsOfLine.get(9));
+//        this.meanShowmanship = Double.parseDouble(partsOfLine.get(10));
+//    }
 
-    }
+
+    public abstract void printLoadOutput(ArrayList<String> partsOfLine);
+//    public void printLoadOutput(ArrayList<String> partsOfLine){
+//        System.out.println("Analyzed competition information from memory");
+//        System.out.println("---------------------------------------");
+//        System.out.println("Mean positive clicks amongst routines: " + partsOfLine.get(0));
+//        System.out.println("Mean negative clicks amongst routines: " +partsOfLine.get(1));
+//        System.out.println("Mean clickerscore amongst routines: " + partsOfLine.get(2));
+//        System.out.println("Mean execution score amongst routines: " + partsOfLine.get(3));
+//        System.out.println("Mean control score amongst routines: " + partsOfLine.get(4));
+//        System.out.println("Mean trick diversity score amongst routines: " + partsOfLine.get(5));
+//        System.out.println("Mean space use & emphasis score amongst routines: " + partsOfLine.get(6));
+//        System.out.println("Mean music use 1: choreography score amongst routines: " + partsOfLine.get(7));
+//        System.out.println("Mean music use 2: construction score amongst routines: " + partsOfLine.get(8));
+//        System.out.println("Mean body control score amongst routines: " + partsOfLine.get(9));
+//        System.out.println("Mean showmanship score amongst routines: " + partsOfLine.get(10));
+//
+//    }
+
+    public abstract void printAnalyzedCompetitionInformation(CompetitionDataAnalysis cData);
 
 }
 

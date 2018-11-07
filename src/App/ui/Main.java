@@ -1,12 +1,18 @@
+//own judging algorithm, necessary fields and methods. One per style of judging. Have a field inside of a judge which insantiates the algorithm. state something - 310
+// judge algorithm interface. if novice - insantiate novice judging rules...
+// competition and individual
+// declare mode into one class - instantiate
+
 package App.ui;
 
-import App.Competition.*;
 import App.Exceptions.*;
 import App.player.*;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class Main {
     Scanner scanner = new Scanner(System.in);
@@ -15,6 +21,7 @@ public class Main {
     ArrayList<String> performanceEvaluationQuestions = new ArrayList<>();
     ArrayList<String> evaluationKeywords = new ArrayList<>();
     ArrayList<String> routineTypes = new ArrayList<>();
+    static AppStrategy appStrategy;
 
 
     // Constructor
@@ -65,7 +72,7 @@ public class Main {
         if (routineType.equals("Wildcard"))
             return runStartAsWildcardPlayer(p, routineType, data);
         else if (routineType.equals("Prelim") || routineType.equals("Semi") || routineType.equals("Two Minute Final"))
-            return runStartAsPrelimSemiTwoMinutePlayer(p, routineType, data);
+            return runStartAsPrelimTwoSemiPlayer(p, routineType, data);
         else if (routineType.equals("World Final")) {
             return runStartAsWorldFinalPlayer(p, routineType, data);
         }
@@ -90,13 +97,13 @@ public class Main {
 
     //MODIFIES: This, Player, PlayerDataAnalysis
     //EFFECTS: progresses through judging a routine for a prelim,semi or two minute final player
-    public PlayerDataAnalysis runStartAsPrelimSemiTwoMinutePlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
+    public PlayerDataAnalysis runStartAsPrelimTwoSemiPlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
         setPlayerInformation(p);
         p.setRoutineLength(routineType);
         clicker(p, data);
         printRawRoutineInformation(p);
         setAllPerformanceEvals(p, performanceEvaluationQuestions, evaluationKeywords);
-        getPerformanceEvals(p);
+        p.getPerformanceEvals(p);
         data.callAllDataAnalysis();
         printAnalyzedRoutineInformation(data);
         String firstName = p.getFirstName();
@@ -113,7 +120,7 @@ public class Main {
         clicker(p, data);
         printRawRoutineInformation(p);
         setAllPerformanceEvals(p, performanceEvaluationQuestionsWorld, evaluationKeywordsWorld);
-        getWorldPerformanceEvals(p);
+        p.getPerformanceEvals(p);
         data.callAllDataAnalysis();
         printAnalyzedRoutineInformation(data);
         String firstName = p.getFirstName();
@@ -143,21 +150,6 @@ public class Main {
         System.out.println("-------------------------------------------");
     }
 
-    //EFFECTS: Prints analyzed competition information
-    public void printAnalyzedCompetitionInformation(CompetitionDataAnalysis cdata){
-        System.out.println("Mean positive clicks amongst routines: " + cdata.getMeanPositiveClicks());
-        System.out.println("Mean negative clicks amongst routines: " +cdata.getMeanNegativeClicks());
-        System.out.println("Mean clickerscore amongst routines: " + cdata.getMeanClickerscore());
-        System.out.println("Mean execution score amongst routines: " + cdata.getMeanExecution());
-        System.out.println("Mean control score amongst routines: " + cdata.getMeanControl());
-        System.out.println("Mean trick diversity score amongst routines: " + cdata.getMeanTrickDiversity());
-        System.out.println("Mean space use & emphasis score amongst routines: " + cdata.getMeanSpaceUseAndEmphasis());
-        System.out.println("Mean music use 1: choreography score amongst routines: " + cdata.getMeanChoreography());
-        System.out.println("Mean music use 2: construction score amongst routines: " + cdata.getMeanConstruction());
-        System.out.println("Mean body control score amongst routines: " + cdata.getMeanBodyControl());
-        System.out.println("Mean showmanship score amongst routines: " + cdata.getMeanShowmanship());
-    }
-
     //MODIFIES: This, player
     //EFFECTS: Records information for a given player
     public void setPlayerInformation(Player p) {
@@ -170,9 +162,9 @@ public class Main {
         p.setFirstName(firstName);
         p.setLastName(lastName);
         p.setDivision(division);
-
     }
 
+    // where the is a noun - supertype
     //MODIFIES: This, player
     //EFFECTS: Will increase/decrease the clicker score of a player and then return the clicker score after the routine is over
     public void wildcardClicker(Player p) {
@@ -196,11 +188,6 @@ public class Main {
             }
         }
     }
-
-    //own judging algorithm, necessary fields and methods. One per style of judging. Have a field inside of a judge which insantiates the algorithm. state something - 310 
-    // judge algorithm interface. if novice - insantiate novice judging rules...
-    // competition and individual
-    // declare mode into one class - instantiate
 
     //MODIFIES: This, player
     //EFFECTS: Will increase/decrease the clicker score of a player and then return the clicker score after the routine is over
@@ -271,35 +258,33 @@ public class Main {
     }
 
 
+//    //MODIFIES: This, Player
+//    //EFFECTS: Creates player and playerDataAnalysis subtypes depending on user-inputted routineType
+//    public PlayerDataAnalysis createPlayerSubtype(String routineType) {
+//        if (routineType.equals("Wildcard")) {
+//            WildcardPlayer p = new WildcardPlayer();
+//            WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(p);
+//            return data;
+//        } else if (routineType.equals("Prelim")) {
+//            PrelimTwoSemiPlayer p = new PrelimTwoSemiPlayer();
+//            PrelimTwoSemiPlayerDataAnalysis data = new PrelimTwoSemiPlayerDataAnalysis(p);
+//            return data;
+//        } else if (routineType.equals("Semi")) {
+//            SemiPlayer p = new SemiPlayer();
+//            SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(p);
+//            return data;
+//        } else if (routineType.equals("Two Minute Final")) {
+//            TwoMinuteFinalPlayer p = new TwoMinuteFinalPlayer();
+//            TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(p);
+//            return data;
+//        } else if (routineType.equals("World Final")) {
+//            WorldFinalPlayer p = new WorldFinalPlayer();
+//            WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(p);
+//            return data;
+//        }
+//        return null;
+//    }
 
-    //EFFECTS: Prints judge inputted performance evaluations
-    public void getPerformanceEvals(Player p) {
-        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s performance evaluation scores are: ");
-        System.out.println("Execution: " + p.getExecution());
-        System.out.println("Control: " + p.getControl());
-        System.out.println("Choreography: " + p.getChoreography());
-        System.out.println("Body control: " + p.getBodyControl());
-    }
-
-    //EFFECTS: Prints judge inputted performance evaluations
-    public void getWorldPerformanceEvals(Player p) {
-        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s performance evaluation scores are: ");
-        System.out.println("Execution: " + p.getExecution());
-        System.out.println("Control: " + p.getControl());
-        System.out.println("Trick Diversity: " + p.getTrickDiversity());
-        System.out.println("Space Use and Emphasis: " + p.getSpaceUseAndEmphasis());
-        System.out.println("Choreography: " + p.getChoreography());
-        System.out.println("Construction: " + p.getConstruction());
-        System.out.println("Body control: " + p.getBodyControl());
-        System.out.println("Showmanship: " + p.getShowmanship());
-    }
-
-    //EFFECTS: Reads from memory
-    public void readFromMemory(String firstName, String routineType) throws IOException {
-        PlayerDataAnalysis data = createPlayerSubtype(routineType);
-        Player p = data.getPlayer();
-        CallAllRead(p, data, firstName, routineType);
-    }
 
     //MODIFIES: This, Player
     //EFFECTS: Creates player and playerDataAnalysis subtypes depending on user-inputted routineType
@@ -308,17 +293,9 @@ public class Main {
             WildcardPlayer p = new WildcardPlayer();
             WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(p);
             return data;
-        } else if (routineType.equals("Prelim")) {
-            PrelimPlayer p = new PrelimPlayer();
-            PrelimPlayerDataAnalysis data = new PrelimPlayerDataAnalysis(p);
-            return data;
-        } else if (routineType.equals("Semi")) {
-            SemiPlayer p = new SemiPlayer();
-            SemiPlayerDataAnalysis data = new SemiPlayerDataAnalysis(p);
-            return data;
-        } else if (routineType.equals("Two Minute Final")) {
-            TwoMinuteFinalPlayer p = new TwoMinuteFinalPlayer();
-            TwoMinuteFinalPlayerDataAnalysis data = new TwoMinuteFinalPlayerDataAnalysis(p);
+        } else if (routineType.equals("Prelim") || routineType.equals("Semi") || routineType.equals("Two Minute Final")) {
+            PrelimTwoSemiPlayer p = new PrelimTwoSemiPlayer();
+            PrelimTwoSemiPlayerDataAnalysis data = new PrelimTwoSemiPlayerDataAnalysis(p);
             return data;
         } else if (routineType.equals("World Final")) {
             WorldFinalPlayer p = new WorldFinalPlayer();
@@ -328,12 +305,6 @@ public class Main {
         return null;
     }
 
-    //EFFECTS: Calls the read methods of player and playerDataAnalysis
-    public void CallAllRead(Player p, PlayerDataAnalysis data, String firstName, String routineType) throws IOException {
-        p.read(firstName + "_" + routineType + "_player.csv");
-        data.read(firstName + "_" + routineType + "_playerDataAnalysis.csv");
-    }
-
     //EFFECTS: Calls the save methods of player and playerDataAnalysis
     public void callAllSave(Player p, PlayerDataAnalysis data, String firstName, String routineType) throws IOException {
         p.setRoutineType(routineType);
@@ -341,128 +312,161 @@ public class Main {
         data.save(firstName + "_" + routineType + "_playerDataAnalysis.csv");
     }
 
-    //EFFECTS: Will gather the routineType of the player from user input
-    public String retrieveRoutineType(String choice) throws IncorrectUserInputException {
-        if (choice.equals("start")) {
-            System.out.println("Input the routine type (Wildcard, Prelim, Semi, Two Minute Final, World Final): ");
-        }
-        if (choice.equals("read")) {
-            System.out.println("Type in the routine type(Wildcard, Prelim, Semi, Two Minute Final, World Final) of the player you would like to view");
-        }
-        if (choice.equals("competition")) {
-            System.out.println("What type of competition is it? (Wildcard, Prelim, Semi, Two Minute Final, World Final)");
-        }
-        String routineChoice = scanner.nextLine();
-        if(routineTypes.contains(routineChoice)) {
-            return routineChoice;
-        }
-        else{
-            throw new IncorrectUserInputException("You inputted an invalid routine type");
-        }
+    public String competitionOrPlayerMode (){
+        System.out.println("Type competition to begin competition mode and individual to begin individual player mode");
+        String competitionOrPlayerMode;
+        competitionOrPlayerMode = scanner.nextLine();
+        return competitionOrPlayerMode;
     }
 
-
-        //MODIFIES: This, Player, PlayerDataAnalysis, App.Competition, CompetitionDataAnalysis
-        //EFFECTS: Runs the application in competition mode (judge multiple players sequentially)
-        public static void competitionMode(Main yyjh, String choice) throws IOException, AlreadyInCompetitionException {
-            Scanner scanner = new Scanner(System.in);
-            Competition c = new Competition();
-            CompetitionDataAnalysis cData = new CompetitionDataAnalysis(c);
-            System.out.println("Type start to start judging a competition or read to read competition data from memory");
-            String startOrRead = scanner.nextLine();
-            if (startOrRead.equals("start")) {
-                String routineType = null;
-                try {
-                    routineType = yyjh.retrieveRoutineType(choice);
-                } catch (IncorrectUserInputException e) {
-                    System.out.println(e.getMessage());
-                    competitionMode(yyjh,choice);
-                }
-                System.out.println("What is the name of the competition you are judging");
-                String competitionName = scanner.nextLine();
-                c.setCompetitionName(competitionName);
-                while (true) {
-                    PlayerDataAnalysis data = yyjh.start(routineType);
-                    c.addPlayerDataAnalysis(data);
-                    c.addPlayer(data.getPlayer());
-                    System.out.println("Is there another player to judge in this competition yes or no");
-                    String anotherPlayer = scanner.nextLine();
-                    String space = scanner.nextLine();
-                    if (anotherPlayer.equals("no")) {
-                        c.save(competitionName);
-                        cData.callAllDataAnalysis();
-                        cData.save(competitionName);
-                        yyjh.printAnalyzedCompetitionInformation(cData);
-                        data.getPlayer().save("Just for this deliverable");
-                        break;
-                    }
-                }
-            }
-            else if (startOrRead.equals("read")) {
-                System.out.println("What competition would you like to read from memory?");
-                String competitionName = scanner.next();
-                c.read(competitionName);
-                cData.read(competitionName);
-            }
-        }
-
-        //MODIFIES: This, Player, PlayerDataAnalysis, App.Competition, CompetitionDataAnalysis
-        //EFFECTS: Runs the application in individual mode (judge an individual player)
-        public void individualMode(Main yyjh){
-            System.out.println("Type start to start judging a player or read to read from memory");
-            String choice = scanner.nextLine();
-            if (choice.equals("start")) {
-                try {
-                    try {
-                        start(yyjh.retrieveRoutineType(choice));
-                    } catch (IncorrectUserInputException e) {
-                        System.out.println(e.getMessage());
-                        individualMode(yyjh);
-                    }
-                } catch (IOException e) {
-                    System.out.println("Data save problem");
-                }
-            } else if (choice.equals("read")) {
-                System.out.println("Type in the name of a player who has already been judged");
-                String firstName = scanner.nextLine();
-                String routineType = null;
-                try {
-                    routineType = retrieveRoutineType(choice);
-                } catch (IncorrectUserInputException e) {
-                    System.out.println(e.getMessage());
-                    individualMode(yyjh);
-                }
-                try {
-                    readFromMemory(firstName, routineType);
-                }
-                catch (IOException e) {
-                    System.out.println("Player name and routine type combination inputted is not saved in memory");
-                }
-            }
-        }
-
-        public String competitionOrPlayerMode (){
-            System.out.println("Type competition to begin competition mode and individual to begin individual player mode");
-            String competitionOrPlayerMode;
-            competitionOrPlayerMode = scanner.nextLine();
-            return competitionOrPlayerMode;
-        }
-
+    public void applicationWelcome(){
+        System.out.println("Welcome to the yo-yo judging application");
+        System.out.println("Created by: Harrison Lee");
+    }
 
         public static void main (String[]args) throws IOException {
             Main yyjh = new Main();
-            System.out.println("Welcome to the yo-yo judging application");
-            String competitionOrPlayerMode = yyjh.competitionOrPlayerMode();
+            yyjh.applicationWelcome();
+            String competitionOrPlayerMode;
+            competitionOrPlayerMode = yyjh.competitionOrPlayerMode();
             if (competitionOrPlayerMode.equals("competition")) {
+                appStrategy = new CompetitionStrategy();
                 try {
-                    competitionMode(yyjh,competitionOrPlayerMode);
+                    appStrategy.callMode();
                 } catch (AlreadyInCompetitionException e) {
                     System.out.println(e.getMessage());
                 }
+//                try {
+//                    yyjh.competitionMode(yyjh,competitionOrPlayerMode);
+//                } catch (AlreadyInCompetitionException e) {
+//                    System.out.println(e.getMessage());
+//                }
             }
             else if (competitionOrPlayerMode.equals("individual")) {
-                yyjh.individualMode(yyjh);
+                appStrategy = new IndividualStrategy();
+                try {
+                    appStrategy.callMode();
+                } catch (AlreadyInCompetitionException e) {
+                    System.out.println(e.getMessage());
+                }
+//                yyjh.individualMode(yyjh);
 
             }
         }
     }
+
+
+//        //MODIFIES: This, Player, PlayerDataAnalysis, App.Competition, CompetitionDataAnalysis
+//        //EFFECTS: Runs the application in competition mode (judge multiple players sequentially)
+//        public static void competitionMode(Main yyjh, String choice) throws IOException, AlreadyInCompetitionException {
+//            Scanner scanner = new Scanner(System.in);
+//            Competition c = new Competition();
+//            CompetitionDataAnalysis cData = new CompetitionDataAnalysis(c);
+//            System.out.println("Type start to start judging a competition or load to load competition data from memory");
+//            String startOrRead = scanner.nextLine();
+//            if (startOrRead.equals("start")) {
+//                String routineType = null;
+//                try {
+//                    routineType = yyjh.retrieveRoutineType(choice);
+//                } catch (IncorrectUserInputException e) {
+//                    System.out.println(e.getMessage());
+//                    competitionMode(yyjh,choice);
+//                }
+//                String competitionName = setCompetitionNameFromUserInput(c);
+//                yyjh.judgePlayersSequentially(c,cData,yyjh,competitionName,routineType);
+//            }
+//            else if (startOrRead.equals("load")) {
+//                yyjh.competitionModeRead(c,cData);
+//
+//            }
+//        }
+
+//        public static String setCompetitionNameFromUserInput(Competition c){
+//            Scanner scanner = new Scanner(System.in);
+//            System.out.println("What is the name of the competition you are judging");
+//            String competitionName = scanner.nextLine();
+//            c.setCompetitionName(competitionName);
+//            return competitionName;
+//        }
+//
+//        public void competitionModeRead(Competition c, CompetitionDataAnalysis cData) throws IOException {
+//            System.out.println("What competition would you like to load from memory?");
+//            String competitionName = scanner.nextLine();
+//            c.load(competitionName);
+//            cData.load(competitionName);
+//        }
+//
+//        public void judgePlayersSequentially (Competition c, CompetitionDataAnalysis cData, Main yyjh, String competitionName, String routineType) throws IOException {
+//            while (true) {
+//                PlayerDataAnalysis data = yyjh.start(routineType);
+//                c.addPlayerDataAnalysis(data);
+//                Player p = data.getPlayer();
+//                c.addPlayer(p);
+//                String anotherPlayer = anotherPlayer();
+//                if (anotherPlayer.equals("yes")) {
+//                }
+//                if (anotherPlayer.equals("no")) {
+//                    c.save(competitionName);
+//                    cData.save(competitionName);
+//                    cData.callAllDataAnalysis();
+//                    yyjh.printAnalyzedCompetitionInformation(cData);
+//                    break;
+//                }
+//            }
+//        }
+//
+//        public String anotherPlayer(){
+//            System.out.println("Is there another player to judge in this competition yes or no");
+//            String anotherPlayer = scanner.nextLine();
+//            return anotherPlayer;
+//        }
+
+//        //MODIFIES: This, Player, PlayerDataAnalysis, App.Competition, CompetitionDataAnalysis
+//        //EFFECTS: Runs the application in individual mode (judge an individual player)
+//        public void individualMode(Main yyjh){
+//            System.out.println("Type start to start judging a player or load to load from memory");
+//            String choice = scanner.nextLine();
+//            if (choice.equals("start")) {
+//                try {
+//                    try {
+//                        String routineType = retrieveRoutineType(choice);
+//                        start(routineType);
+//                    } catch (IncorrectUserInputException e) {
+//                        System.out.println(e.getMessage());
+//                        individualMode(yyjh);
+//                    }
+//                } catch (IOException e) {
+//                    System.out.println("Data save problem");
+//                }
+//            }
+//            else if (choice.equals("load")) {
+//                String firstName = retrieveJudgedPlayerName();
+//                String routineType = null;
+//                try {
+//                    routineType = retrieveRoutineType(choice);
+//                } catch (IncorrectUserInputException e) {
+//                    System.out.println(e.getMessage());
+//                    individualMode(yyjh);
+//                }
+//                try {
+//                    individualModeRead(firstName, routineType);
+//                }
+//                catch (IOException e) {
+//                    System.out.println("Player name and routine type combination inputted is not saved in memory");
+//                }
+//            }
+//        }
+
+//        public String retrieveJudgedPlayerName(){
+//            System.out.println("Type in the name of a player who has already been judged");
+//            String firstName = scanner.nextLine();
+//            return firstName;
+//        }
+//
+//        //EFFECTS: Reads from memory
+//        public void individualModeRead(String firstName, String routineType) throws IOException {
+//            PlayerDataAnalysis data = createPlayerSubtype(routineType);
+//            Player p = data.getPlayer();
+//            p.load(firstName + "_" + routineType + "_player.csv");
+//            data.load(firstName + "_" + routineType + "_playerDataAnalysis.csv");
+//        }

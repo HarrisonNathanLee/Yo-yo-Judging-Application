@@ -14,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestSaveable {
 
-    PrelimPlayer player;
-    PrelimPlayerDataAnalysis data;
+    PrelimTwoSemiPlayer player;
+    PrelimTwoSemiPlayerDataAnalysis data;
 
     @BeforeEach
     public void setUp() {
-        player = new PrelimPlayer();
-        data = new PrelimPlayerDataAnalysis(player);
+        player = new PrelimTwoSemiPlayer();
+        data = new PrelimTwoSemiPlayerDataAnalysis(player);
     }
 
 

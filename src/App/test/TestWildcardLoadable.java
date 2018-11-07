@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestWildcardReadable {
+public class TestWildcardLoadable {
 
     WildcardPlayer player;
     WildcardPlayerDataAnalysis data;
@@ -22,7 +22,7 @@ public class TestWildcardReadable {
 
     @Test
     public void testReadForPlayer() throws IOException {
-        player.read("Test_testWildcardPlayer.csv");
+        player.load("Test_testWildcardPlayer.csv");
         assertEquals("Test",player.getFirstName());
         assertEquals("Test",player.getLastName());
         assertEquals("1a",player.getDivision());
@@ -33,7 +33,7 @@ public class TestWildcardReadable {
 
     @Test
     public void testReadForPlayerDataAnalysis() throws IOException {
-        data.read("Test_testWildcardPlayerDataAnalysis.csv");
+        data.load("Test_testWildcardPlayerDataAnalysis.csv");
         assertEquals("Test",player.getFirstName());
         assertEquals("Test", player.getLastName()); //lastName
         assertEquals(0.5,data.getCPS());//CPS

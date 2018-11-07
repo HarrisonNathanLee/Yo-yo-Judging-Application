@@ -3,23 +3,23 @@ package App.test;
 import App.Competition.Competition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import App.player.PrelimPlayer;
-import App.player.PrelimPlayerDataAnalysis;
+import App.player.PrelimTwoSemiPlayer;
+import App.player.PrelimTwoSemiPlayerDataAnalysis;
 
 import java.io.IOException;
 
 
 public class TestCompetition {
-    PrelimPlayer player1;
-    PrelimPlayerDataAnalysis data1;
-    PrelimPlayer player2;
-    PrelimPlayerDataAnalysis data2;
+    PrelimTwoSemiPlayer player1;
+    PrelimTwoSemiPlayerDataAnalysis data1;
+    PrelimTwoSemiPlayer player2;
+    PrelimTwoSemiPlayerDataAnalysis data2;
     Competition competition;
 
     @BeforeEach
     public void setUp(){
-        player1 = new PrelimPlayer();
-        data1 = new PrelimPlayerDataAnalysis(player1);
+        player1 = new PrelimTwoSemiPlayer();
+        data1 = new PrelimTwoSemiPlayerDataAnalysis(player1);
         player1.setFirstName("Harrison");
         player1.setLastName("Lee");
         player1.setDivision("1a");
@@ -38,8 +38,8 @@ public class TestCompetition {
         player1.setEvaluation(10, "bodyControl");
         data1.callAllDataAnalysis();
 
-        player2 = new PrelimPlayer();
-        data2 = new PrelimPlayerDataAnalysis(player2);
+        player2 = new PrelimTwoSemiPlayer();
+        data2 = new PrelimTwoSemiPlayerDataAnalysis(player2);
         player2.setFirstName("Allison");
         player2.setLastName("Lee");
         player2.setDivision("1a");
@@ -75,7 +75,7 @@ public class TestCompetition {
 
     @Test
     public void testCompetitionRead() throws IOException {
-        competition.read(competition.getCompetitionName());
+        competition.load(competition.getCompetitionName());
     }
 
 }
