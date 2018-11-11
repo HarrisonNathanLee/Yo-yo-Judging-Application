@@ -79,7 +79,7 @@ public class TestCompetitionDataAnalysis {
     }
 
     @Test
-    public void testProduceAllMean (){
+    public void testProduceAllCompetitionDataAnalysis (){
         cData.callAllDataAnalysis();
         assertEquals(6, cData.getMeanExecution());
         assertEquals(6, cData.getMeanControl());
@@ -92,8 +92,32 @@ public class TestCompetitionDataAnalysis {
         assertEquals(7.5, cData.getMeanClickerscore());
         assertEquals(15,cData.getMeanPositiveClicks());
         assertEquals(7.5,cData.getMeanNegativeClicks());
+        assertEquals(32,cData.getVarianceExecution());
+        assertEquals(32,cData.getVarianceControl());
+        assertEquals(32,cData.getVarianceTrickDiversity());
+        assertEquals(32,cData.getVarianceSpaceUseAndEmphasis());
+        assertEquals(32,cData.getVarianceChoreography());
+        assertEquals(32,cData.getVarianceConstruction());
+        assertEquals(32,cData.getVarianceBodyControl());
+        assertEquals(32,cData.getVarianceShowmanship());
+        assertEquals(12.5,cData.getVarianceClickerscore());
+        assertEquals(50,cData.getVariancePositiveClicks());
+        assertEquals(12.5,cData.getVarianceNegativeClicks());
+        assertEquals(5.656854249492381,cData.getSdExecution());
+        assertEquals(5.656854249492381,cData.getSdControl());
+        assertEquals(5.656854249492381,cData.getSdTrickDiversity());
+        assertEquals(5.656854249492381,cData.getSdSpaceUseAndEmphasis());
+        assertEquals(5.656854249492381,cData.getSdChoreography());
+        assertEquals(5.656854249492381,cData.getSdConstruction());
+        assertEquals(5.656854249492381,cData.getSdBodyControl());
+        assertEquals(5.656854249492381,cData.getSdShowmanship());
+        assertEquals(3.5355339059327378,cData.getSdClickerscore());
+        assertEquals(7.0710678118654755,cData.getSdPositiveClicks());
+        assertEquals(3.5355339059327378,cData.getSdNegativeClicks());
+
 
     }
+
 
 
 }

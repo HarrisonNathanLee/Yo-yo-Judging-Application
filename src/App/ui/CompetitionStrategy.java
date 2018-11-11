@@ -18,10 +18,9 @@ public class CompetitionStrategy implements AppStrategy {
     @Override
     public void callMode() throws IOException, AlreadyInCompetitionException {
         competitionMode(yyjh = new Main());
-
     }
 
-    //MODIFIES: This, Player, PlayerDataAnalysis, App.Competition, CompetitionDataAnalysis
+    //MODIFIES: This, Player, PlayerDataAnalysis, Competition, CompetitionDataAnalysis
     //EFFECTS: Runs the application in competition mode (judge multiple players sequentially)
     public void competitionMode(Main yyjh) throws IOException, AlreadyInCompetitionException {
         Scanner scanner = new Scanner(System.in);
@@ -30,31 +29,35 @@ public class CompetitionStrategy implements AppStrategy {
         System.out.println("Type start to start judging a competition or load to load competition data from memory");
         String startOrRead = scanner.nextLine();
         if (startOrRead.equals("start")) {
-            String routineType = null;
-            try {
-                routineType = retrieveRoutineType("competition");
-            } catch (IncorrectUserInputException e) {
-                System.out.println(e.getMessage());
-                competitionMode(yyjh);
-            }
-            cData = createCompetitionDataAnalysisSubtype(routineType, c);
+            cData = getCompetitionDataAnalysis(yyjh, c);
             String competitionName = setCompetitionNameFromUserInput(c);
-            judgePlayersSequentially(c,cData,yyjh,competitionName,routineType);
+            judgePlayersSequentially(c,cData,yyjh,competitionName);
         }
         else if (startOrRead.equals("load")) {
-            String routineType = null;
-            try {
-                routineType = retrieveRoutineType("competition");
-            } catch (IncorrectUserInputException e) {
-                System.out.println(e.getMessage());
-                competitionMode(yyjh);
-            }
-            cData = createCompetitionDataAnalysisSubtype(routineType, c);
-            competitionModeRead(c,cData);
+            cData = getCompetitionDataAnalysis(yyjh,c);
+            String routineType = c.getCompetitionRoutineType();
+            competitionModLoad(c,cData, routineType);
         }
     }
 
+    //MODIFIES: This
+    //EFFECTS: returns a specific type of competition data analysis
+    private CompetitionDataAnalysis getCompetitionDataAnalysis(Main yyjh, Competition c) throws IOException, AlreadyInCompetitionException {
+        CompetitionDataAnalysis cData;
+        String routineType = null;
+        try {
+            routineType = retrieveRoutineType("competition");
+            c.setCompetitionRoutineType(routineType);
+        } catch (IncorrectUserInputException e) {
+            System.out.println(e.getMessage());
+            competitionMode(yyjh);
+        }
+        cData = createCompetitionDataAnalysisSubtype(routineType, c);
+        return cData;
+    }
 
+    //MODIFIES: This
+    //EFFECTS: sets the competition name based on user input
     public static String setCompetitionNameFromUserInput(Competition c){
         Scanner scanner = new Scanner(System.in);
         System.out.println("What is the name of the competition you are judging");
@@ -63,14 +66,17 @@ public class CompetitionStrategy implements AppStrategy {
         return competitionName;
     }
 
-    public void competitionModeRead(Competition c, CompetitionDataAnalysis cData) throws IOException {
+    //MODIFIES This
+    //EFFECTS: loads competition information from memory
+    public void competitionModLoad(Competition c, CompetitionDataAnalysis cData, String routineType) throws IOException {
         System.out.println("What competition would you like to load from memory?");
         String competitionName = scanner.nextLine();
-        c.load(competitionName);
-        cData.load(competitionName);
+        c.load(competitionName+routineType);
+        cData.load(competitionName+routineType);
     }
 
 
+    //EFFECTS: Factory - creates competition data analysis subtype based on user input
     public CompetitionDataAnalysis createCompetitionDataAnalysisSubtype(String routineType, Competition competition){
         if(routineType.equals("Wildcard")){
             WildcardCompetitionDataAnalysis cData = new WildcardCompetitionDataAnalysis(competition);
@@ -88,8 +94,11 @@ public class CompetitionStrategy implements AppStrategy {
         return null;
     }
 
-    public void judgePlayersSequentially (Competition c, CompetitionDataAnalysis cData, Main yyjh, String competitionName, String routineType) throws IOException {
+    //MODIFIES This, player, playerDataAnaysis, competitonDataAnalysis, competition
+    //EFFECTS: will judge numerous players sequentially
+    public void judgePlayersSequentially (Competition c, CompetitionDataAnalysis cData, Main yyjh, String competitionName) throws IOException {
         while (true) {
+            String routineType = c.getCompetitionRoutineType();
             PlayerDataAnalysis data = yyjh.start(routineType);
             c.addPlayerDataAnalysis(data);
             Player p = data.getPlayer();
@@ -98,15 +107,16 @@ public class CompetitionStrategy implements AppStrategy {
             if (anotherPlayer.equals("yes")) {
             }
             if (anotherPlayer.equals("no")) {
-                c.save(competitionName);
-                cData.save(competitionName);
                 cData.callAllDataAnalysis();
                 cData.printAnalyzedCompetitionInformation(cData);
+                c.save(competitionName+routineType);
+                cData.save(competitionName+routineType);
                 break;
             }
         }
     }
 
+    //EFFECTS: asks user if another player still has to be judged
     public String anotherPlayer(){
         System.out.println("Is there another player to judge in this competition yes or no");
         String anotherPlayer = scanner.nextLine();

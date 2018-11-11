@@ -1,5 +1,6 @@
 package App.player;
 
+import javax.print.DocFlavor;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,7 +36,7 @@ public class WildcardPlayerDataAnalysis extends PlayerDataAnalysis {
         List<String> lines = Files.readAllLines(Paths.get(saveLocation));
         String line  = lines.get(0);
         ArrayList<String> partsOfLine = splitOnComma(line);
-       printLoadOutput(partsOfLine);
+        printLoadOutput(partsOfLine);
         loadOutput(partsOfLine);
 
     }
@@ -47,7 +48,7 @@ public class WildcardPlayerDataAnalysis extends PlayerDataAnalysis {
         sb.append(",");
         sb.append(player.getLastName());
         sb.append(",");
-        sb.append(this.CPS);
+        sb.append(CPS);
         sb.append("\n");
         return sb.toString();
     }
@@ -61,12 +62,12 @@ public class WildcardPlayerDataAnalysis extends PlayerDataAnalysis {
 
     //EFFECTS: Prints wildcard App.player data analysis information from memory
     public void printLoadOutput(ArrayList<String> partsOfLine){
-        System.out.println("Player data analysis information from memory");
-        System.out.println("---------------------------------------");
-        System.out.println("firstName: " + partsOfLine.get(0) + " ");
-        System.out.println("lastName: " + partsOfLine.get(1) + " ");
-        System.out.println("CPS: " + partsOfLine.get(2) + " ");
-        System.out.println("---------------------------------------");
+        System.out.println(SCORESFROMMEMORY);
+        System.out.println(STRINGBREAK);
+        System.out.println("firstName: " + partsOfLine.get(0));
+        System.out.println("lastName: " + partsOfLine.get(1));
+        System.out.println("CPS: " + partsOfLine.get(2));
+        System.out.println(STRINGBREAK);
     }
 
 }

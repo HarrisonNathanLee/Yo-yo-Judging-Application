@@ -15,7 +15,6 @@ public class IndividualStrategy implements AppStrategy {
 
     public void callMode(){
         individualMode(yyjh = new Main());
-
     }
 
     //MODIFIES: This, Player, PlayerDataAnalysis, App.Competition, CompetitionDataAnalysis
@@ -54,6 +53,8 @@ public class IndividualStrategy implements AppStrategy {
         }
     }
 
+
+    //EFFECTS: asks user for a player who has already been judged
     public String retrieveJudgedPlayerName(){
         System.out.println("Type in the name of a player who has already been judged");
         String firstName = scanner.nextLine();

@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static App.player.Player.NEGATIVE;
+import static App.player.Player.POSITIVE;
 
 public abstract class PlayerDataAnalysis extends Loadable implements Saveable, DataAnalysis{
 
@@ -18,6 +20,8 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
     protected static final int FIRE = 10; //an arbitrary number for now
     protected static final double TECHWEIGHT = 0.6;
     protected static final double EVALWEIGHT = 0.4;
+    protected static final String STRINGBREAK  = "---------------------------------------";
+    protected static final String SCORESFROMMEMORY  = "Player data analysis information from memory";
     protected int numberOfFireSectionsInRoutine = 0;
     protected int numberOfTiltedSectionsInRoutine = 0;
     protected double CPS = 0;
@@ -29,6 +33,8 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
     protected double totalWeightedScore = 0;
     protected String saveLocation = "playerDataAnalysis.csv";
 
+
+    //CONSTRUCTOR
     public PlayerDataAnalysis(Player player) {
         this.player = player;
     }
@@ -78,37 +84,31 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
     //EFFECTS: Returns the CIPPS of the App.player
     public double getCIPPS() { return CIPPS; }
 
-    //EFFECTS: Will count the number of FIRE(judge has awarded multiple clicks in a row) sections in a routine
-    public void clicksOnFire() {
-        int numberOfPositiveInRow = 0;
-        for (String click : player.clicksLog) {
-            if (click.equals("positive")) {
-                numberOfPositiveInRow++;
-            } else if (click.equals("negative")) {
-                numberOfPositiveInRow = 0;
-            }
-            if (numberOfPositiveInRow == FIRE) {
-                numberOfFireSectionsInRoutine++;
-                numberOfPositiveInRow = 0;
-            }
-        }
+    public void setNumberOfFireSectionsInRoutine(int numberOfFireSectionsInRoutine) {
+        this.numberOfFireSectionsInRoutine = numberOfFireSectionsInRoutine;
     }
 
-    //EFFECTS: Will count the number of TILTED(judge has deducted multiple clicks in a row) sections in a routine
-    public void clicksOnTilt() {
-        int numberOfNegativeInRow = 0;
-        for (String click : player.clicksLog) {
-            if (click.equals("negative")) {
-                numberOfNegativeInRow++;
-            } else if (click.equals("positive")) {
-                numberOfNegativeInRow = 0;
-            }
+    public void setNumberOfTiltedSectionsInRoutine(int numberOfTiltedSectionsInRoutine) {
+        this.numberOfTiltedSectionsInRoutine = numberOfTiltedSectionsInRoutine;
+    }
 
-            if (numberOfNegativeInRow == TILTED) {
-                numberOfTiltedSectionsInRoutine++;
-                numberOfNegativeInRow = 0;
+    //EFFECTS: Will count the number of FIRE or TILTED sections in a routine
+    public int clicksOnFireOrTilt(String determiner, String other, int comparator){
+        int numberOfPositiveOrNegativeInRow  = 0;
+        int numberOfSectionsInRoutine = 0;
+        for (String click: player.clicksLog){
+            if (click.equals(determiner)){
+                numberOfPositiveOrNegativeInRow++;
+            }
+            else if (click.equals(other)){
+                numberOfPositiveOrNegativeInRow = 0;
+            }
+            if (numberOfPositiveOrNegativeInRow == comparator){
+                numberOfSectionsInRoutine++;
+                numberOfPositiveOrNegativeInRow = 0;
             }
         }
+        return numberOfSectionsInRoutine;
     }
 
     //MODIFIES: This, App.player
@@ -139,7 +139,8 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
         }
     }
 
-
+    //MODIFIES: This
+    //EFFECTS: produces the total eval score
     public void produceTotalEvalScore (){
         totalEvalScore += player.getExecution();
         totalEvalScore += player.getBodyControl();
@@ -147,11 +148,15 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
         totalEvalScore += player.getChoreography();
     }
 
+    //MODIFIES: This
+    //EFFECTS: produces the total eval score based off of IYYF rulings
     public void produceTotalWeightedScore (){
         produceTotalEvalScore();
         totalWeightedScore = (totalEvalScore * EVALWEIGHT) + (player.clickerScore * TECHWEIGHT);
     }
 
+    //MODIFIES: This
+    //EFFECTS: produces the total majors based off of IYYF rulings
     public void produceTotalMajors (){
         totalMajors += player.getChangeFinal();
         totalMajors += player.getDiscardFinal();
@@ -169,14 +174,14 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
     //EFFECTS: Returns the clicks if perfect per second
     public void clicksIfPerfectPerSecond(){
         this.clicksIfPerfect();
-        this.CIPPS = (double)this.numberIfPerfect/player.getRoutineLength();
+        CIPPS = (double)this.numberIfPerfect/player.getRoutineLength();
     }
 
     //MODIFIES: This
     //EFFECTS: Performs all App.player data analysis methods
     public void callAllDataAnalysis() {
-        clicksOnFire();
-        clicksOnTilt();
+        numberOfFireSectionsInRoutine = clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE);
+        numberOfTiltedSectionsInRoutine = clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED);
         clicksPerSecond();
         try {
             clickRatio();
@@ -207,7 +212,7 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
         ArrayList<String> partsOfLine = splitOnComma(line);
         printLoadOutput(partsOfLine);
         loadOutput(partsOfLine);
-        System.out.println("---------------------------------------");
+        System.out.println(STRINGBREAK);
     }
 
     //EFFECTS: Creates a string of App.player data analysis information
@@ -217,48 +222,86 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
         sb.append(",");
         sb.append(player.getLastName());
         sb.append(",");
-        sb.append(this.numberOfFireSectionsInRoutine);
+        sb.append(numberOfFireSectionsInRoutine);
         sb.append(",");
-        sb.append(this.numberOfTiltedSectionsInRoutine);
+        sb.append(numberOfTiltedSectionsInRoutine);
         sb.append(",");
-        sb.append(this.CPS);
+        sb.append(CPS);
         sb.append(",");
-        sb.append(this.CR);
+        sb.append(CR);
         sb.append(",");
-        sb.append(this.numberIfPerfect);
+        sb.append(numberIfPerfect);
         sb.append(",");
-        sb.append(this.CIPPS);
+        sb.append(CIPPS);
+        sb.append(",");
+        sb.append(totalWeightedScore);
         sb.append("\n");
         return sb.toString();
     }
 
     //EFFECTS: Prints App.player data analysis information from memory
     public void printLoadOutput(ArrayList<String> partsOfLine){
-        System.out.println("Player data analysis information from memory");
-        System.out.println("---------------------------------------");
-        System.out.println("firstName: " + partsOfLine.get(0) + " ");
-        System.out.println("lastName: " + partsOfLine.get(1) + " ");
-        System.out.println("numberOfFireSectionsInRoutine: " + partsOfLine.get(2) + " ");
-        System.out.println("numberOfTiltedSectionsInRoutine: " + partsOfLine.get(3) + " ");
-        System.out.println("CPS: " + partsOfLine.get(4) + " ");
-        System.out.println("CR: " + partsOfLine.get(5) + " ");
-        System.out.println("numberIfPerfect: " + partsOfLine.get(6) + " ");
-        System.out.println("---------------------------------------");
+        System.out.println(SCORESFROMMEMORY);
+        System.out.println(STRINGBREAK);
+        System.out.println("firstName: " + partsOfLine.get(0));
+        System.out.println("lastName: " + partsOfLine.get(1));
+        System.out.println("numberOfFireSectionsInRoutine: " + partsOfLine.get(2));
+        System.out.println("numberOfTiltedSectionsInRoutine: " + partsOfLine.get(3));
+        System.out.println("CPS: " + partsOfLine.get(4));
+        System.out.println("CR: " + partsOfLine.get(5));
+        System.out.println("numberIfPerfect: " + partsOfLine.get(6));
+        System.out.println("total weighted score: " + partsOfLine.get(7));
+        System.out.println(STRINGBREAK);
     }
 
     //EFFECTS: Reads App.player data analysis information from memory
     public void loadOutput(ArrayList<String> partsOfLine){
         player.setFirstName(partsOfLine.get(0));
         player.setLastName(partsOfLine.get(1));
-        this.numberOfFireSectionsInRoutine = Integer.parseInt(partsOfLine.get(2));
-        this.numberOfTiltedSectionsInRoutine = Integer.parseInt(partsOfLine.get(3));
-        this.CPS = Double.parseDouble(partsOfLine.get(4));
-        this.CR = Double.parseDouble(partsOfLine.get(5));
-        this.numberIfPerfect = Integer.parseInt(partsOfLine.get(6));
-        this.CIPPS = Double.parseDouble(partsOfLine.get(7));
+        numberOfFireSectionsInRoutine = Integer.parseInt(partsOfLine.get(2));
+        numberOfTiltedSectionsInRoutine = Integer.parseInt(partsOfLine.get(3));
+        CPS = Double.parseDouble(partsOfLine.get(4));
+        CR = Double.parseDouble(partsOfLine.get(5));
+        numberIfPerfect = Integer.parseInt(partsOfLine.get(6));
+        CIPPS = Double.parseDouble(partsOfLine.get(7));
     }
 
 }
+
+//    //EFFECTS: Will count the number of TILTED(judge has deducted multiple clicks in a row) sections in a routine
+//    public void clicksOnTilt() {
+//        int numberOfNegativeInRow = 0;
+//        for (String click : player.clicksLog) {
+//            if (click.equals("negative")) {
+//                numberOfNegativeInRow++;
+//            } else if (click.equals("positive")) {
+//                numberOfNegativeInRow = 0;
+//            }
+//
+//            if (numberOfNegativeInRow == TILTED) {
+//                numberOfTiltedSectionsInRoutine++;
+//                numberOfNegativeInRow = 0;
+//            }
+//        }
+//    }
+
+
+
+//    //EFFECTS: Will count the number of FIRE(judge has awarded multiple clicks in a row) sections in a routine
+//    public void clicksOnFire() {
+//        int numberOfPositiveInRow = 0;
+//        for (String click : player.clicksLog) {
+//            if (click.equals("positive")) {
+//                numberOfPositiveInRow++;
+//            } else if (click.equals("negative")) {
+//                numberOfPositiveInRow = 0;
+//            }
+//            if (numberOfPositiveInRow == FIRE) {
+//                numberOfFireSectionsInRoutine++;
+//                numberOfPositiveInRow = 0;
+//            }
+//        }
+//    }
 
 //TODO: Implement when I have a UI and can get timer functionality working
     /*

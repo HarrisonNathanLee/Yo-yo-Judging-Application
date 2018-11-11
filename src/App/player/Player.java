@@ -36,7 +36,12 @@ public abstract class Player extends Loadable implements Saveable{
     protected int restartFinal = 0;
     protected int changeFinal = 0;
     protected int discardFinal = 0;
-    protected String saveLocation = "App.player.csv";
+    protected String saveLocation = "player.csv";
+    protected static final String STRINGBREAK  = "---------------------------------------";
+    protected static final String SCORESFROMMEMORY = "Player information and raw scores from memory";
+    protected static final String PERFORMANCEEVALS = "'s performance evaluation scores are: ";
+    protected static final String POSITIVE = "positive";
+    protected static final String NEGATIVE = "negative";
     ArrayList<String> clicksLog = new ArrayList<>();
 
     //MODIFIES: This
@@ -275,7 +280,7 @@ public abstract class Player extends Loadable implements Saveable{
     //EFFECTS: Adds one to positive clicks and logs the click to clicksLog
     public void awardClick() {
         positiveClicks++;
-        clicksLog.add("positive");
+        clicksLog.add(POSITIVE);
     }
 
     //MODIFIES: This
@@ -283,7 +288,7 @@ public abstract class Player extends Loadable implements Saveable{
     public void doubleClick() {
         for (int i = 0; i<2; i++){
             positiveClicks++;
-            clicksLog.add("positive");
+            clicksLog.add(POSITIVE);
         }
     }
 
@@ -291,13 +296,13 @@ public abstract class Player extends Loadable implements Saveable{
     //EFFECTS: Adds one to negative clicks and logs the click to clicksLog
     public void removeClick() {
         negativeClicks++;
-        clicksLog.add("negative");
+        clicksLog.add(NEGATIVE);
     }
 
     //MODIFIES: This
     //EFFECTS: Produces and returns the final clickerScore from the positive clicks awarded and the negative clicks deducted
     public void produceClickerScore(){
-        clickerScore = this.positiveClicks - this.negativeClicks;
+        clickerScore = positiveClicks - negativeClicks;
     }
 
     //MODIFIES: This
@@ -309,7 +314,7 @@ public abstract class Player extends Loadable implements Saveable{
     //MODIFIES: This
     //EFFECTS: Returns and multiplies number of restarts by restart multiplier
     public void multiplyRestart() {
-        restartFinal = this.numberOfRestarts * this.restartMultiplier;
+        restartFinal = numberOfRestarts * restartMultiplier;
     }
 
     //MODIFIES: This
@@ -329,13 +334,13 @@ public abstract class Player extends Loadable implements Saveable{
     //MODIFIES: This
     //EFFECTS: Returns and multiplies number of changes by change multiplier
     public void multiplyChange() {
-        changeFinal = this.numberOfChanges * this.changeMultiplier;
+        changeFinal = numberOfChanges * changeMultiplier;
     }
 
     //MODIFIES: This
     //EFFECTS: Returns the final change score
     public int getChangeFinal() {
-        this.multiplyChange();
+        multiplyChange();
         return changeFinal;
     }
 
@@ -348,7 +353,7 @@ public abstract class Player extends Loadable implements Saveable{
     //MODIFIES: This
     //EFFECTS: Returns and multiplies number of discards by discard multiplier
     public void multiplyDiscard() {
-        discardFinal = this.numberOfDiscards * this.discardMultiplier;
+        discardFinal = numberOfDiscards * discardMultiplier;
     }
 
     //MODIFIES: This
@@ -399,105 +404,8 @@ public abstract class Player extends Loadable implements Saveable{
         loadOutput(partsOfLine);
     }
 
-
-    //EFFECTS: Creates a string of App.player information
-    public abstract String toSaveString();
-//    public String toSaveString(){
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(this.firstName);
-//        sb.append(",");
-//        sb.append(this.lastName);
-//        sb.append(",");
-//        sb.append(this.division);
-//        sb.append(",");
-//        sb.append(this.routineType);
-//        sb.append(",");
-//        sb.append(this.positiveClicks);
-//        sb.append(",");
-//        sb.append(this.negativeClicks);
-//        sb.append(",");
-//        sb.append(this.clickerScore);
-//        sb.append(",");
-//        sb.append(this.numberOfRestarts);
-//        sb.append(",");
-//        sb.append(this.numberOfChanges);
-//        sb.append(",");
-//        sb.append(this.numberOfDiscards);
-//        sb.append(",");
-//        sb.append(this.restartFinal);
-//        sb.append(",");
-//        sb.append(this.changeFinal);
-//        sb.append(",");
-//        sb.append(this.discardFinal);
-//        sb.append(",");
-//        sb.append(this.execution);
-//        sb.append(",");
-//        sb.append(this.control);
-//        sb.append(",");
-//        sb.append(this.choreography);
-//        sb.append(",");
-//        sb.append(this.bodyControl);
-//        sb.append(",");
-//        return sb.toString();
-//    }
-
-    //EFFECTS: Reads App.player information from memory
-    public abstract void loadOutput(ArrayList<String> partsOfLine);
-//    public void loadOutput(ArrayList<String> partsOfLine){
-//        this.firstName = partsOfLine.get(0);
-//        this.lastName = partsOfLine.get(1);
-//        this.division = partsOfLine.get(2);
-//        this.routineType = partsOfLine.get(3);
-//        this.positiveClicks = Double.parseDouble(partsOfLine.get(4));
-//        this.negativeClicks = Double.parseDouble(partsOfLine.get(5));
-//        this.clickerScore = Double.parseDouble(partsOfLine.get(6));
-//        this.numberOfRestarts = Integer.parseInt(partsOfLine.get(7));
-//        this.numberOfChanges = Integer.parseInt(partsOfLine.get(8));
-//        this.numberOfDiscards = Integer.parseInt(partsOfLine.get(9));
-//        this.restartFinal = Integer.parseInt(partsOfLine.get(10));
-//        this.changeFinal = Integer.parseInt(partsOfLine.get(11));
-//        this.discardFinal = Integer.parseInt(partsOfLine.get(12));
-//        this.execution = Integer.parseInt(partsOfLine.get(13));
-//        this.control = Integer.parseInt(partsOfLine.get(14));
-//        this.choreography = Integer.parseInt(partsOfLine.get(15));
-//        this.bodyControl = Integer.parseInt(partsOfLine.get(16));
-//    }
-
-    //EFFECTS: Prints App.player information from memory
-    public abstract void printLoadOutput(ArrayList<String> partsOfLine);
-//    public void printLoadOutput(ArrayList<String> partsOfLine){
-//        System.out.println("Player information and raw scores from memory");
-//        System.out.println("---------------------------------------");
-//        System.out.println("firstName: " + partsOfLine.get(0) + " ");
-//        System.out.println("lastName: " + partsOfLine.get(1) + " ");
-//        System.out.println("division: " + partsOfLine.get(2) + " ");
-//        System.out.println("routineType: " + partsOfLine.get(3) + " ");
-//        System.out.println("positiveClicks: " + partsOfLine.get(4) + " ");
-//        System.out.println("negativeClicks: " + partsOfLine.get(5) + " ");
-//        System.out.println("clickerScore: " + partsOfLine.get(6) + " ");
-//        System.out.println("numberOfRestarts: " + partsOfLine.get(7) + " ");
-//        System.out.println("numberOfChanges: " + partsOfLine.get(8) + " ");
-//        System.out.println("numberOfDiscards: " + partsOfLine.get(9) + " ");
-//        System.out.println("restartFinal: " + partsOfLine.get(10) + " ");
-//        System.out.println("changeFinal: " + partsOfLine.get(11) + " ");
-//        System.out.println("discardFinal: " + partsOfLine.get(12) + " ");
-//        System.out.println("execution: " + partsOfLine.get(13) + " ");
-//        System.out.println("control: " + partsOfLine.get(14) + " ");
-//        System.out.println("choreography: " + partsOfLine.get(15) + " ");
-//        System.out.println("bodyControl: " + partsOfLine.get(16) + " ");
-//        System.out.println("---------------------------------------");
-//    }
-
-
     //EFFECTS: Prints judge inputted performance evaluations
     public abstract void getPerformanceEvals(Player p);
-//    public void getPerformanceEvals(Player p) {
-//        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s performance evaluation scores are: ");
-//        System.out.println("Execution: " + p.getExecution());
-//        System.out.println("Control: " + p.getControl());
-//        System.out.println("Choreography: " + p.getChoreography());
-//        System.out.println("Body control: " + p.getBodyControl());
-//    }
 
     @Override
     public boolean equals(Object o) {
@@ -512,8 +420,6 @@ public abstract class Player extends Loadable implements Saveable{
     public int hashCode() {
         return Objects.hash(firstName, lastName);
     }
-
-
 
 
 }

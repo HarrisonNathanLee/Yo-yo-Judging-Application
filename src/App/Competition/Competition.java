@@ -26,6 +26,17 @@ public class Competition extends Loadable implements Saveable {
         this.competitionName = competitionName;
     }
 
+    //MODIFIES: THis
+    //EFFECTS: Sets the return type of the competition
+    public void setCompetitionRoutineType(String competitionRoutineType) {
+        this.competitionRoutineType = competitionRoutineType;
+    }
+
+    //EFFECTS: Returns the return type of the competition
+    public String getCompetitionRoutineType() {
+        return competitionRoutineType;
+    }
+
     //EFFECTS: Returns the competitionName of the competition
     public String getCompetitionName() {
         return competitionName;
@@ -101,11 +112,8 @@ public class Competition extends Loadable implements Saveable {
                 readPlayerDataAnalysisLines(playerDataAnalysisLines, data, i);
                 i++;
             }
-
-
-            }
         }
-
+    }
 
     //EFFECTS: Reads and prints an individual line of a competiton playerDataAnalysis file based on index
     private void readPlayerDataAnalysisLines(List<String> playerDataAnalysisLines, PlayerDataAnalysis data, Integer i) {

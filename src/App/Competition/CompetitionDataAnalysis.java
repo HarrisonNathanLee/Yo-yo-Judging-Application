@@ -13,6 +13,50 @@ import java.util.List;
 public abstract class CompetitionDataAnalysis extends Loadable implements Saveable, DataAnalysis {
     protected ArrayList<Player> players;
     protected Competition competition;
+    protected static final String ENDOFFILENAME = "DataAnalysis.csv";
+    protected static final String MEANSTRING = "Mean ";
+    protected static final String VARIANCESTRING = "Variance of ";
+    protected static final String SDSTRING = "Standard deviation of ";
+    protected static final String ENDSTRING = "amongst routines: ";
+    protected static final String STRINGBREAK = "---------------------------------------";
+    protected static final String ANALYSISINTRO = "Analyzed competition information from memory";
+    protected ArrayList<String> middleStrings;
+
+    protected double meanExecution = 0;
+    protected double meanControl = 0;
+    protected double meanTrickDiversity = 0;
+    protected double meanSpaceUseAndEmphasis = 0;
+    protected double meanChoreography = 0;
+    protected double meanConstruction = 0;
+    protected double meanBodyControl = 0;
+    protected double meanShowmanship = 0;
+    protected double meanClickerscore = 0;
+    protected double meanPositiveClicks = 0;
+    protected double meanNegativeClicks = 0;
+
+    protected double varianceExecution = 0;
+    protected double varianceControl = 0;
+    protected double varianceTrickDiversity = 0;
+    protected double varianceSpaceUseAndEmphasis = 0;
+    protected double varianceChoreography = 0;
+    protected double varianceConstruction = 0;
+    protected double varianceBodyControl = 0;
+    protected double varianceShowmanship = 0;
+    protected double varianceClickerscore = 0;
+    protected double variancePositiveClicks = 0;
+    protected double varianceNegativeClicks = 0;
+
+    protected double sdExecution = 0;
+    protected double sdControl = 0;
+    protected double sdTrickDiversity = 0;
+    protected double sdSpaceUseAndEmphasis = 0;
+    protected double sdChoreography = 0;
+    protected double sdConstruction = 0;
+    protected double sdBodyControl = 0;
+    protected double sdShowmanship = 0;
+    protected double sdClickerscore = 0;
+    protected double sdPositiveClicks = 0;
+    protected double sdNegativeClicks = 0;
 
     //EFFECTS: Returns the mean execution
     public double getMeanExecution() {
@@ -38,9 +82,7 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
     }
 
     //EFFECTS: Returns the mean construction
-    public double getMeanConstruction() {
-        return meanConstruction;
-    }
+    public double getMeanConstruction() { return meanConstruction; }
 
     //EFFECTS: Returns the mean body control
     public double getMeanBodyControl() { return meanBodyControl; }
@@ -65,18 +107,115 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
         return meanNegativeClicks;
     }
 
-    private double meanExecution = 0;
-    private double meanControl = 0;
-    private double meanTrickDiversity = 0;
-    private double meanSpaceUseAndEmphasis = 0;
-    private double meanChoreography = 0;
-    private double meanConstruction = 0;
-    private double meanBodyControl = 0;
-    private double meanShowmanship = 0;
-    private double meanClickerscore = 0;
-    private double meanPositiveClicks = 0;
-    private double meanNegativeClicks = 0;
+    //EFFECTS: Returns the variance execution
+    public double getVarianceExecution() {
+        return varianceExecution;
+    }
 
+    //EFFECTS: Returns the variance control
+    public double getVarianceControl() {
+        return varianceControl;
+    }
+
+    //EFFECTS: Returns the variance trick diversity
+    public double getVarianceTrickDiversity() {
+        return varianceTrickDiversity;
+    }
+
+    //EFFECTS: Returns the variance space use and emphasis
+    public double getVarianceSpaceUseAndEmphasis() {
+        return varianceSpaceUseAndEmphasis;
+    }
+
+    //EFFECTS: Returns the variance choreography
+    public double getVarianceChoreography() {
+        return varianceChoreography;
+    }
+
+    //EFFECTS: Returns the variance construction
+    public double getVarianceConstruction() {
+        return varianceConstruction;
+    }
+
+    //EFFECTS: Returns the variance body control
+    public double getVarianceBodyControl() {
+        return varianceBodyControl;
+    }
+
+    //EFFECTS: Returns the variance showmanship
+    public double getVarianceShowmanship() {
+        return varianceShowmanship;
+    }
+
+    //EFFECTS: Returns the variance clickerscore
+    public double getVarianceClickerscore() {
+        return varianceClickerscore;
+    }
+
+    //EFFECTS: Returns the variance positive clicks
+    public double getVariancePositiveClicks() {
+        return variancePositiveClicks;
+    }
+
+    //EFFECTS: Returns the variance negative clicks
+    public double getVarianceNegativeClicks() {
+        return varianceNegativeClicks;
+    }
+
+    //EFFECTS: Returns the standard deviation execution
+    public double getSdExecution() {
+        return sdExecution;
+    }
+
+    //EFFECTS: Returns the standard deviation control
+    public double getSdControl() {
+        return sdControl;
+    }
+
+    //EFFECTS: Returns the standard deviation trick diversity
+    public double getSdTrickDiversity() {
+        return sdTrickDiversity;
+    }
+
+    //EFFECTS: Returns the standard deviation space use and emphasis
+    public double getSdSpaceUseAndEmphasis() {
+        return sdSpaceUseAndEmphasis;
+    }
+
+    //EFFECTS: Returns the standard deviation choreography
+    public double getSdChoreography() {
+        return sdChoreography;
+    }
+
+    //EFFECTS: Returns the standard deviation construction
+    public double getSdConstruction() {
+        return sdConstruction;
+    }
+
+    //EFFECTS: Returns the standard deviation body control
+    public double getSdBodyControl() {
+        return sdBodyControl;
+    }
+
+    //EFFECTS: Returns the standard deviation showmanship
+    public double getSdShowmanship() {
+        return sdShowmanship;
+    }
+
+    //EFFECTS: Returns the standard deviation clickerscore
+    public double getSdClickerscore() {
+        return sdClickerscore;
+    }
+
+    //EFFECTS: Returns the standard deviation positive clicks
+    public double getSdPositiveClicks() {
+        return sdPositiveClicks;
+    }
+
+    //EFFECTS: Returns the standard deviation negative clicks
+    public double getSdNegativeClicks() {
+        return sdNegativeClicks;
+    }
 
     //MODIFIES: This
     //EFFECTS: Sets the mean of execution scores in a competition
@@ -98,9 +237,7 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
 
     //MODIFIES: This
     //EFFECTS: Sets the mean of space use and emphasis scores in a competition
-    public void setMeanSpaceUseAndEmphasis(double meanSpaceUseAndEmphasis) {
-        this.meanSpaceUseAndEmphasis = meanSpaceUseAndEmphasis;
-    }
+    public void setMeanSpaceUseAndEmphasis(double meanSpaceUseAndEmphasis) { this.meanSpaceUseAndEmphasis = meanSpaceUseAndEmphasis; }
 
     //MODIFIES: This
     //EFFECTS: Sets the mean of choreography scores in a competition
@@ -142,6 +279,138 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
     //EFFECTS: Sets the mean of negativeclicks in a competition
     public void setMeanNegativeClicks(double meanNegativeClicks) {
         this.meanNegativeClicks = meanNegativeClicks;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the variance execution
+    public void setVarianceExecution(double varianceExecution) {
+        this.varianceExecution = varianceExecution;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the variance control
+    public void setVarianceControl(double varianceControl) {
+        this.varianceControl = varianceControl;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the variance trick diversity
+    public void setVarianceTrickDiversity(double varianceTrickDiversity) {
+        this.varianceTrickDiversity = varianceTrickDiversity;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the variance space use and emphasis
+    public void setVarianceSpaceUseAndEmphasis(double varianceSpaceUseAndEmphasis) {
+        this.varianceSpaceUseAndEmphasis = varianceSpaceUseAndEmphasis;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the variance choreography
+    public void setVarianceChoreography(double varianceChoreography) {
+        this.varianceChoreography = varianceChoreography;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the variance construction
+    public void setVarianceConstruction(double varianceConstruction) {
+        this.varianceConstruction = varianceConstruction;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the variance body control
+    public void setVarianceBodyControl(double varianceBodyControl) {
+        this.varianceBodyControl = varianceBodyControl;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the variance showmanship
+    public void setVarianceShowmanship(double varianceShowmanship) {
+        this.varianceShowmanship = varianceShowmanship;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the variance clickerscore
+    public void setVarianceClickerscore(double varianceClickerscore) {
+        this.varianceClickerscore = varianceClickerscore;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the variance positive clicks
+    public void setVariancePositiveClicks(double variancePositiveClicks) {
+        this.variancePositiveClicks = variancePositiveClicks;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the variance negative clicks
+    public void setVarianceNegativeClicks(double varianceNegativeClicks) {
+        this.varianceNegativeClicks = varianceNegativeClicks;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the standard deviation execution
+    public void setSdExecution(double sdExecution) {
+        this.sdExecution = sdExecution;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the standard deviation control
+    public void setSdControl(double sdControl) {
+        this.sdControl = sdControl;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the standard deviation trick diversity
+    public void setSdTrickDiversity(double sdTrickDiversity) {
+        this.sdTrickDiversity = sdTrickDiversity;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the standard deviation space use and emphasis
+    public void setSdSpaceUseAndEmphasis(double sdSpaceUseAndEmphasis) {
+        this.sdSpaceUseAndEmphasis = sdSpaceUseAndEmphasis;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the standard deviation choreography
+    public void setSdChoreography(double sdChoreography) {
+        this.sdChoreography = sdChoreography;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the standard deviation construction
+    public void setSdConstruction(double sdConstruction) {
+        this.sdConstruction = sdConstruction;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the standard deviation body control
+    public void setSdBodyControl(double sdBodyControl) {
+        this.sdBodyControl = sdBodyControl;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the standard deviation showmanship
+    public void setSdShowmanship(double sdShowmanship) {
+        this.sdShowmanship = sdShowmanship;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the standard deviation clickerscore
+    public void setSdClickerscore(double sdClickerscore) {
+        this.sdClickerscore = sdClickerscore;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the standard deviation positive clicks
+    public void setSdPositiveClicks(double sdPositiveClicks) {
+        this.sdPositiveClicks = sdPositiveClicks;
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Sets the standard deviation negative clicks
+    public void setSdNegativeClicks(double sdNegativeClicks) {
+        this.sdNegativeClicks = sdNegativeClicks;
     }
 
     public CompetitionDataAnalysis (Competition competition){
@@ -234,14 +503,113 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
         return sum;
     }
 
-    //EFFFECTS: Returns the number of elements in a list
+    //EFFECTS: Returns the number of elements in a list
     public Integer getCount(ArrayList<Player> players){
         return players.size();
     }
 
 
+    //EFFECTS: Returns the sum of observation differences from the mean squared
+    public Double getObservationDifferenceFromMeanSquared(ArrayList<Player> players, String parameter){
+        ArrayList<Double> listOfParameter = getValuesForParameter(players,parameter);
+        double sumObservationDifferenceFromMean = 0;
+        if (parameter.equals("execution")){
+            for (Double observation: listOfParameter){
+                double mean = produceMean(players, "execution");
+                double difference = observation - mean;
+                double differenceSquared = difference*difference;
+                sumObservationDifferenceFromMean += differenceSquared;
+            }
+        }
+        else if (parameter.equals("control")){
+            for (Double observation: listOfParameter){
+                double mean = produceMean(players, "control");
+                double difference = observation - mean;
+                double differenceSquared = difference*difference;
+                sumObservationDifferenceFromMean += differenceSquared;
+            }
+        }
+        else if (parameter.equals("trickDiversity")) {
+            for (Double p: listOfParameter){
+                double mean = produceMean(players, "trickDiversity");
+                double difference = p - mean;
+                double differenceSquared = difference*difference;
+                sumObservationDifferenceFromMean += differenceSquared;
+            }
+
+        }
+        else if (parameter.equals("spaceUseAndEmphasis")) {
+            for (Double p: listOfParameter){
+                double mean = produceMean(players, "spaceUseAndEmphasis");
+                double difference = p - mean;
+                double differenceSquared = difference*difference;
+                sumObservationDifferenceFromMean += differenceSquared;
+            }
+        }
+
+        else if (parameter.equals("choreography")){
+            for (Double p: listOfParameter){
+                double mean = produceMean(players, "choreography");
+                double difference = p - mean;
+                double differenceSquared = difference*difference;
+                sumObservationDifferenceFromMean += differenceSquared;
+            }
+        }
+
+        else if (parameter.equals("construction")){
+            for (Double p: listOfParameter){
+                double mean = produceMean(players, "construction");
+                double difference = p - mean;
+                double differenceSquared = difference*difference;
+                sumObservationDifferenceFromMean += differenceSquared;
+            }
+        }
+        else if (parameter.equals("bodyControl")){
+            for (Double p: listOfParameter){
+                double mean = produceMean(players, "bodyControl");
+                double difference = p - mean;
+                double differenceSquared = difference*difference;
+                sumObservationDifferenceFromMean += differenceSquared;
+            }
+        }
+        else if (parameter.equals("showmanship")){
+            for (Double p: listOfParameter){
+                double mean = produceMean(players, "showmanship");
+                double difference = p - mean;
+                double differenceSquared = difference*difference;
+                sumObservationDifferenceFromMean += differenceSquared;
+            }
+        }
+        else if (parameter.equals("clickerscore")){
+            for (Double p: listOfParameter){
+                double mean = produceMean(players, "clickerscore");
+                double difference = p - mean;
+                double differenceSquared = difference*difference;
+                sumObservationDifferenceFromMean += differenceSquared;
+            }
+        }
+        else if (parameter.equals("positive clicks")){
+            for (Double p: listOfParameter){
+                double mean = produceMean(players, "positive clicks");
+                double difference = p - mean;
+                double differenceSquared = difference*difference;
+                sumObservationDifferenceFromMean += differenceSquared;
+            }
+        }
+        else if (parameter.equals("negative clicks")){
+            for (Double p: listOfParameter){
+                double mean = produceMean(players, "negative clicks");
+                double difference = p - mean;
+                double differenceSquared = difference*difference;
+                sumObservationDifferenceFromMean += differenceSquared;
+            }
+        }
+        return sumObservationDifferenceFromMean;
+
+    }
+
     //MODIFIES: This
-    //EFFECTS: Produces the mean for a single eval parameters
+    //EFFECTS: Produces the mean for a single eval parameter
     public Double produceMean(ArrayList<Player> players, String parameter){
         ArrayList<Double> listOfParameter = getValuesForParameter(players,parameter);
         Double sum = getSum(listOfParameter);
@@ -250,104 +618,62 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
         return mean;
     }
 
+    //EFFECTS: Produces the variance for a single eval parameter
+    public Double produceVariance (ArrayList<Player> players, String parameter){
+        double sumObservationDifferenceFromMean = getObservationDifferenceFromMeanSquared(players,parameter);
+        Integer count = getCount(players);
+        Double variance = sumObservationDifferenceFromMean /(count - 1);
+        return variance;
+    }
     //MODIFIES: This
     //EFFECTS: Sets the mean for all eval parameters
     public abstract void produceAllMean();
-//    public void produceAllMean(){
-//       players = competition.getPlayers();
-//       meanExecution = produceMean(players, "execution");
-//       meanControl = produceMean(players, "control");
-//       meanTrickDiversity = produceMean(players, "trickDiversity");
-//       meanSpaceUseAndEmphasis = produceMean(players, "spaceUseAndEmphasis");
-//       meanChoreography = produceMean(players, "choreography");
-//       meanConstruction = produceMean(players, "construction");
-//       meanBodyControl = produceMean(players, "bodyControl");
-//       meanShowmanship = produceMean(players, "showmanship");
-//       meanPositiveClicks = produceMean(players,"positive clicks");
-//       meanNegativeClicks = produceMean(players, "negative clicks");
-//       meanClickerscore = produceMean(players, "clickerscore");
-//    }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the variance for all eval parameters
+    public abstract void produceAllVariance();
+
+    //MODIFIES: This
+    //EFFECTS: Sets the standard deviation for all eval parameters
+    public abstract void produceAllStandardDeviation();
+
+
+    //MODIFIES: This
+    //EFFECTS: Sets the the mean,variance,and standard deviation for all eval parameters
     public void callAllDataAnalysis(){
         produceAllMean();
+        produceAllVariance();
+        produceAllStandardDeviation();
     }
 
+    //EFFECTS: Saves competition data analysis information to a csv file
     public void save(String saveLocation) throws FileNotFoundException {
-        PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation + "DataAnalysis.csv", false));
+        PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation + ENDOFFILENAME, false));
         pw.write(toSaveString());
         pw.close();
     }
 
+    //EFFECTS: Loads competition data analysis from CSV file
     public void load(String saveLocation) throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(saveLocation+ "DataAnalysis.csv"));
+        List<String> lines = Files.readAllLines(Paths.get(saveLocation + ENDOFFILENAME));
         String line = lines.get(0);
         ArrayList<String> partsOfLine = splitOnComma(line);
         printLoadOutput(partsOfLine);
         loadOutput(partsOfLine);
     }
 
+    //EFFECTS: Helper method for load
+    public void printLoadOutputHelper(String statType, ArrayList<String> partsOfline, int startingpoint, int endpoint){
+        for (int i = startingpoint; i < endpoint; i++){
+            System.out.println(statType + middleStrings.get(i-startingpoint) + ENDSTRING + partsOfline.get(i));
+        }
+    }
 
     public abstract String toSaveString();
-//    public String toSaveString(){
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(this.meanPositiveClicks);
-//        sb.append(",");
-//        sb.append(this.meanNegativeClicks);
-//        sb.append(",");
-//        sb.append(this.meanClickerscore);
-//        sb.append(",");
-//        sb.append(this.meanExecution);
-//        sb.append(",");
-//        sb.append(this.meanControl);
-//        sb.append(",");
-//        sb.append(this.meanTrickDiversity);
-//        sb.append(",");
-//        sb.append(this.meanSpaceUseAndEmphasis);
-//        sb.append(",");
-//        sb.append(this.meanChoreography);
-//        sb.append(",");
-//        sb.append(this.meanConstruction);
-//        sb.append(",");
-//        sb.append(this.meanBodyControl);
-//        sb.append(",");
-//        sb.append(this.meanShowmanship);
-//        sb.append("\n");
-//        return sb.toString();
-//    }
 
     public abstract void loadOutput(ArrayList<String> partsOfLine);
-//    public void loadOutput(ArrayList<String> partsOfLine){
-//        this.meanPositiveClicks = Double.parseDouble(partsOfLine.get(0));
-//        this.meanNegativeClicks = Double.parseDouble(partsOfLine.get(1));
-//        this.meanClickerscore = Double.parseDouble(partsOfLine.get(2));
-//        this.meanExecution = Double.parseDouble(partsOfLine.get(3));
-//        this.meanControl = Double.parseDouble(partsOfLine.get(4));
-//        this.meanTrickDiversity = Double.parseDouble(partsOfLine.get(5));
-//        this.meanSpaceUseAndEmphasis = Double.parseDouble(partsOfLine.get(6));
-//        this.meanChoreography= Double.parseDouble(partsOfLine.get(7));
-//        this.meanConstruction = Double.parseDouble(partsOfLine.get(8));
-//        this.meanBodyControl = Double.parseDouble(partsOfLine.get(9));
-//        this.meanShowmanship = Double.parseDouble(partsOfLine.get(10));
-//    }
-
 
     public abstract void printLoadOutput(ArrayList<String> partsOfLine);
-//    public void printLoadOutput(ArrayList<String> partsOfLine){
-//        System.out.println("Analyzed competition information from memory");
-//        System.out.println("---------------------------------------");
-//        System.out.println("Mean positive clicks amongst routines: " + partsOfLine.get(0));
-//        System.out.println("Mean negative clicks amongst routines: " +partsOfLine.get(1));
-//        System.out.println("Mean clickerscore amongst routines: " + partsOfLine.get(2));
-//        System.out.println("Mean execution score amongst routines: " + partsOfLine.get(3));
-//        System.out.println("Mean control score amongst routines: " + partsOfLine.get(4));
-//        System.out.println("Mean trick diversity score amongst routines: " + partsOfLine.get(5));
-//        System.out.println("Mean space use & emphasis score amongst routines: " + partsOfLine.get(6));
-//        System.out.println("Mean music use 1: choreography score amongst routines: " + partsOfLine.get(7));
-//        System.out.println("Mean music use 2: construction score amongst routines: " + partsOfLine.get(8));
-//        System.out.println("Mean body control score amongst routines: " + partsOfLine.get(9));
-//        System.out.println("Mean showmanship score amongst routines: " + partsOfLine.get(10));
-//
-//    }
 
     public abstract void printAnalyzedCompetitionInformation(CompetitionDataAnalysis cData);
 

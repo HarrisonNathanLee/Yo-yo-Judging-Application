@@ -13,7 +13,7 @@ public class WildcardPlayer extends Player {
     //MODIFIES: This
     //EFFECTS: Produces and returns the final clickerScore from the positive clicks awarded and the negative clicks deducted
     public void produceClickerScore() {
-        clickerScore = this.positiveClicks;
+        clickerScore = positiveClicks;
     }
 
     //MODIFIES: This
@@ -22,66 +22,47 @@ public class WildcardPlayer extends Player {
         positiveClicks = 0;
     }
 
-//    //EFFECTS: Will save judge inputted information to csv file
-//    @Override
-//    public void save(String saveLocation) throws IOException {
-//        PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation, false));
-//        pw.write(toSaveString());
-//        pw.close();
-//    }
-//
-//    //REQUIRES: Save location must exist in memory
-//    //EFFECTS: Will load App.player information from csv file
-//    @Override
-//    public void load(String saveLocation) throws IOException {
-//        List<String> lines = Files.readAllLines(Paths.get(saveLocation));
-//        String line = lines.get(0);
-//        ArrayList<String> partsOfLine = splitOnComma(line);
-//        printLoadOutput(partsOfLine);
-//        loadOutput(partsOfLine);
-//    }
-
-
     //EFFECTS: Creates a string of wildcard App.player information
     public String toSaveString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(this.firstName);
+        sb.append(firstName);
         sb.append(",");
-        sb.append(this.lastName);
+        sb.append(lastName);
         sb.append(",");
-        sb.append(this.division);
+        sb.append(division);
         sb.append(",");
-        sb.append(this.routineType);
+        sb.append(routineType);
         sb.append(",");
-        sb.append(this.positiveClicks);
+        sb.append(positiveClicks);
         sb.append(",");
-        sb.append(this.clickerScore);
+        sb.append(clickerScore);
         sb.append("\n");
         return sb.toString();
     }
 
     //EFFECTS: Reads wildcard App.player information from memory
     public void loadOutput(ArrayList<String> partsOfLine){
-        this.firstName = partsOfLine.get(0);
-        this.lastName = partsOfLine.get(1);
-        this.division = partsOfLine.get(2);
-        this.routineType = partsOfLine.get(3);
-        this.positiveClicks = Double.parseDouble(partsOfLine.get(4));
-        this.clickerScore = Double.parseDouble(partsOfLine.get(5));
+        firstName = partsOfLine.get(0);
+        lastName = partsOfLine.get(1);
+        division = partsOfLine.get(2);
+        routineType = partsOfLine.get(3);
+        positiveClicks = Double.parseDouble(partsOfLine.get(4));
+        clickerScore = Double.parseDouble(partsOfLine.get(5));
     }
 
     //EFFECTS: Prints world final App.player information from memory
     public void printLoadOutput(ArrayList<String> partsOfLine){
-        System.out.println("Player information and raw scores from memory");
-        System.out.println("---------------------------------------");
-        System.out.println("firstName: " + partsOfLine.get(0) + " ");
-        System.out.println("lastName: " + partsOfLine.get(1) + " ");
-        System.out.println("division: " + partsOfLine.get(2) + " ");
-        System.out.println("routineType: " + partsOfLine.get(3) + " ");
-        System.out.println("positiveClicks: " + partsOfLine.get(4) + " ");
-        System.out.println("clickerScore: " + partsOfLine.get(5) + " ");
-        System.out.println("---------------------------------------");
+        System.out.println(SCORESFROMMEMORY);
+        System.out.println(STRINGBREAK);
+        System.out.println("firstName: " + partsOfLine.get(0));
+        System.out.println("lastName: " + partsOfLine.get(1));
+        System.out.println("division: " + partsOfLine.get(2));
+        System.out.println("routineType: " + partsOfLine.get(3));
+        System.out.println("positiveClicks: " + partsOfLine.get(4));
+        System.out.println("clickerScore: " + partsOfLine.get(5));
+        System.out.println(STRINGBREAK);
     }
+
 
     public void getPerformanceEvals(Player p){
         System.out.println("return nothing");

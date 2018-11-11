@@ -13,19 +13,29 @@ public class TestPlayerDataAnalysis {
 
     PrelimTwoSemiPlayer player;
     PrelimTwoSemiPlayerDataAnalysis data;
+    int TILTED;
+    int FIRE;
+    String POSITIVE;
+    String NEGATIVE;
 
     @BeforeEach
     public void setUp() {
         player = new PrelimTwoSemiPlayer();
         data = new PrelimTwoSemiPlayerDataAnalysis(player);
+        POSITIVE = "positive";
+        NEGATIVE = "negative";
+        TILTED = 10;
+        FIRE = 10;
+
+
     }
 
     //Tests for clicksOnTilt and ClicksOnFire
 
     @Test
     public void testNoClick(){
-        data.clicksOnFire();
-        data.clicksOnTilt();
+        data.setNumberOfFireSectionsInRoutine(data.clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE));
+        data.setNumberOfTiltedSectionsInRoutine(data.clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED));
         assertEquals(0, data.getNumberOfFireSectionsInRoutine());
         assertEquals(0, data.getNumberOfTiltedSectionsInRoutine());
     }
@@ -34,8 +44,8 @@ public class TestPlayerDataAnalysis {
     public void testNoFireNoTilt(){
         player.awardClick();
         player.removeClick();
-        data.clicksOnFire();
-        data.clicksOnTilt();
+        data.setNumberOfFireSectionsInRoutine(data.clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE));
+        data.setNumberOfTiltedSectionsInRoutine(data.clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED));
         assertEquals(0, data.getNumberOfFireSectionsInRoutine());
         assertEquals(0, data.getNumberOfTiltedSectionsInRoutine());
     }
@@ -46,8 +56,8 @@ public class TestPlayerDataAnalysis {
             player.awardClick();
             player.removeClick();
         }
-        data.clicksOnFire();
-        data.clicksOnTilt();
+        data.setNumberOfFireSectionsInRoutine(data.clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE));
+        data.setNumberOfTiltedSectionsInRoutine(data.clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED));
         assertEquals(0, data.getNumberOfFireSectionsInRoutine());
         assertEquals(0, data.getNumberOfTiltedSectionsInRoutine());
     }
@@ -59,7 +69,7 @@ public class TestPlayerDataAnalysis {
             player.awardClick();
         }
         player.removeClick();
-        data.clicksOnFire();
+        data.setNumberOfFireSectionsInRoutine(data.clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE));
         assertEquals(0, data.getNumberOfFireSectionsInRoutine());
     }
 
@@ -69,7 +79,7 @@ public class TestPlayerDataAnalysis {
             player.removeClick();
         }
         player.awardClick();
-        data.clicksOnTilt();
+        data.setNumberOfTiltedSectionsInRoutine(data.clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED));
         assertEquals(0, data.getNumberOfTiltedSectionsInRoutine());
     }
 
@@ -78,7 +88,7 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 10; i++) {
             player.awardClick();
         }
-        data.clicksOnFire();
+        data.setNumberOfFireSectionsInRoutine(data.clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE));
         assertEquals(1, data.getNumberOfFireSectionsInRoutine());
     }
 
@@ -87,7 +97,7 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 10; i++) {
             player.removeClick();
         }
-        data.clicksOnTilt();
+        data.setNumberOfTiltedSectionsInRoutine(data.clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED));
         assertEquals(1, data.getNumberOfTiltedSectionsInRoutine());
     }
 
@@ -99,8 +109,8 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 10; i++){
             player.awardClick();
         }
-        data.clicksOnFire();
-        data.clicksOnTilt();
+        data.setNumberOfFireSectionsInRoutine(data.clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE));
+        data.setNumberOfTiltedSectionsInRoutine(data.clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED));
         assertEquals(1, data.getNumberOfFireSectionsInRoutine());
         assertEquals(1, data.getNumberOfTiltedSectionsInRoutine());
     }
@@ -111,7 +121,7 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 20; i++) {
             player.awardClick();
         }
-        data.clicksOnFire();
+        data.setNumberOfFireSectionsInRoutine(data.clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE));
         assertEquals(2, data.getNumberOfFireSectionsInRoutine());
     }
 
@@ -120,7 +130,7 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 20; i++) {
             player.removeClick();
         }
-        data.clicksOnTilt();
+        data.setNumberOfTiltedSectionsInRoutine(data.clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED));
         assertEquals(2, data.getNumberOfTiltedSectionsInRoutine());
 
     }
@@ -130,7 +140,7 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 19; i++) {
             player.awardClick();
         }
-        data.clicksOnFire();
+        data.setNumberOfFireSectionsInRoutine(data.clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE));
         assertEquals(1, data.getNumberOfFireSectionsInRoutine());
     }
 
@@ -139,7 +149,7 @@ public class TestPlayerDataAnalysis {
         for(int i = 0; i < 19; i++) {
             player.removeClick();
         }
-        data.clicksOnTilt();
+        data.setNumberOfTiltedSectionsInRoutine(data.clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED));
         assertEquals(1, data.getNumberOfTiltedSectionsInRoutine());
     }
 
@@ -154,8 +164,8 @@ public class TestPlayerDataAnalysis {
             player.removeClick();
         }
         player.awardClick();
-        data.clicksOnFire();
-        data.clicksOnTilt();
+        data.setNumberOfFireSectionsInRoutine(data.clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE));
+        data.setNumberOfTiltedSectionsInRoutine(data.clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED));
         assertEquals(0,data.getNumberOfFireSectionsInRoutine());
         assertEquals(0,data.getNumberOfTiltedSectionsInRoutine());
     }
@@ -165,8 +175,8 @@ public class TestPlayerDataAnalysis {
     @Test
     public void testResetZeroFireTilt(){
         data.resetFireTilt();
-        data.clicksOnFire();
-        data.clicksOnTilt();
+        data.setNumberOfFireSectionsInRoutine(data.clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE));
+        data.setNumberOfTiltedSectionsInRoutine(data.clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED));
         assertEquals(0,data.getNumberOfFireSectionsInRoutine());
         assertEquals(0,data.getNumberOfTiltedSectionsInRoutine());
     }
@@ -180,14 +190,14 @@ public class TestPlayerDataAnalysis {
             player.awardClick();
         }
 
-        data.clicksOnFire();
-        data.clicksOnTilt();
+        data.setNumberOfFireSectionsInRoutine(data.clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE));
+        data.setNumberOfTiltedSectionsInRoutine(data.clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED));
         assertEquals(1,data.getNumberOfFireSectionsInRoutine());
         assertEquals(1,data.getNumberOfTiltedSectionsInRoutine());
         data.resetFireTilt();
         assertEquals(0, player.getClicksLog().size());
-        data.clicksOnFire();
-        data.clicksOnTilt();
+        data.setNumberOfFireSectionsInRoutine(data.clicksOnFireOrTilt(POSITIVE,NEGATIVE,FIRE));
+        data.setNumberOfTiltedSectionsInRoutine(data.clicksOnFireOrTilt(NEGATIVE,POSITIVE,TILTED));
         assertEquals(0,data.getNumberOfFireSectionsInRoutine());
         assertEquals(0,data.getNumberOfTiltedSectionsInRoutine());
 
@@ -347,15 +357,3 @@ public class TestPlayerDataAnalysis {
 
 }
 
-
-/*
-    @Test
-    public void testIntervalCreation(){
-
-    }
-
-    @Test
-    public void testNoClicksPerSecond(){ //As clickerScore is zero
-
-    }
-*/
