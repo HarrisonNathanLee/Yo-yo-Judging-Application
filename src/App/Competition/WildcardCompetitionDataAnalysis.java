@@ -60,7 +60,7 @@ public class WildcardCompetitionDataAnalysis extends CompetitionDataAnalysis {
         int ep1 = 2;
         int ep2 = 4;
         int ep3 = partsOfLine.size();
-        System.out.println(ANALYSISINTRO);
+        System.out.println(ANALYSISINTROMEMORY);
         System.out.println(STRINGBREAK);
         printLoadOutputHelper(MEANSTRING,partsOfLine,sp,ep1);
         printLoadOutputHelper(VARIANCESTRING,partsOfLine,ep1,ep2);
@@ -80,12 +80,14 @@ public class WildcardCompetitionDataAnalysis extends CompetitionDataAnalysis {
 
     //EFFECTS: Prints analyzed competition information
     public void printAnalyzedCompetitionInformation(CompetitionDataAnalysis cdata){
+        System.out.println(ANALYSISINTROCURRENT);
         System.out.println(MEANSTRING + middleStrings.get(0)+ ENDSTRING + meanPositiveClicks);
         System.out.println(MEANSTRING + middleStrings.get(2) + ENDSTRING + meanClickerscore);
         System.out.println(VARIANCESTRING + middleStrings.get(0)+ ENDSTRING + variancePositiveClicks);
         System.out.println(VARIANCESTRING + middleStrings.get(2)+ ENDSTRING + varianceClickerscore);
         System.out.println(SDSTRING + middleStrings.get(0)+ ENDSTRING + sdPositiveClicks);
         System.out.println(SDSTRING + middleStrings.get(2)+ ENDSTRING + sdClickerscore);
+        System.out.println(STRINGBREAK);
     }
 
 }

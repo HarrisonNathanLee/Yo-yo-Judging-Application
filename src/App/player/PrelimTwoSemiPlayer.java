@@ -98,6 +98,7 @@ public class PrelimTwoSemiPlayer extends Player {
         System.out.println("Control: " + p.getControl());
         System.out.println("Choreography: " + p.getChoreography());
         System.out.println("Body control: " + p.getBodyControl());
+        System.out.println(STRINGBREAK);
     }
 
 }

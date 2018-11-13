@@ -8,9 +8,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.lang.*;
 
+import static App.Competition.CompetitionDataAnalysis.STRINGBREAK;
 
 public class Competition extends Loadable implements Saveable {
     protected Player player;
@@ -19,6 +20,7 @@ public class Competition extends Loadable implements Saveable {
     private String competitionRoutineType = "";
     private ArrayList<Player> players = new ArrayList<>();
     private ArrayList<PlayerDataAnalysis> dataAnalyses = new ArrayList<>();
+    private HashMap<String, Integer> hmap = new HashMap<String, Integer>();
 
     //MODIFIES: This
     //EFFECTS: Sets the competitionName of the competition
@@ -57,6 +59,47 @@ public class Competition extends Loadable implements Saveable {
         dataAnalyses.add(data);
     }
 
+    public void addPlayersToHMAP(){
+        for(PlayerDataAnalysis data: dataAnalyses){
+            String firstName = data.getPlayer().getFirstName();
+            Double totalWeightedScore = data.getTotalWeightedScore();
+            Integer roundedTotalWeightedScore = (int) Math.round(totalWeightedScore);
+            hmap.put(firstName,roundedTotalWeightedScore);
+        }
+    }
+
+    // Taken from https://www.geeksforgeeks.org/sorting-a-hashmap-according-to-values/
+
+    public HashMap<String,Integer> sortByValue (HashMap<String, Integer> hm){
+        List<Map.Entry<String,Integer> > list =
+                new LinkedList<Map.Entry<String, Integer> > (hm.entrySet());
+        Collections.sort(list, new Comparator <Map.Entry<String, Integer>>(){
+                public int compare(Map.Entry<String, Integer> o1,
+                                      Map.Entry<String, Integer> o2)
+                {
+                    return (o2.getValue()).compareTo(o1.getValue());
+                }
+        });
+        HashMap<String,Integer> temporary = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> aa: list){
+            temporary.put(aa.getKey(), aa.getValue());
+        }
+        return temporary;
+    }
+
+    public void addSortPrintHMAP(){
+        addPlayersToHMAP();
+        Map<String, Integer> hmap2 = sortByValue(hmap);
+        int i = 1;
+        System.out.println(STRINGBREAK);
+        System.out.println("Competition Results:");
+        for (Map.Entry<String, Integer> en: hmap2.entrySet()){
+            System.out.println(i + ": " +en.getKey() + " with a rounded total weogte" + en.getValue());
+            i ++;
+        }
+        System.out.println(STRINGBREAK);
+    }
+
     //EFFECTS: Saves the data for all players in a competition to two CSV files
     public void save(String saveLocation) throws IOException{
         PrintWriter pw1 = new PrintWriter(new FileOutputStream(saveLocation + "Player.csv", true));
@@ -81,7 +124,6 @@ public class Competition extends Loadable implements Saveable {
             }
         }
         pw2.close();
-
     }
 
     //EFFECTS: Reads data from competition files

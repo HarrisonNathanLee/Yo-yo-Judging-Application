@@ -111,7 +111,7 @@ public class PrelimTwoSemiCompetitionDataAnalysis extends CompetitionDataAnalysi
         int ep1 = 7;
         int ep2 = 14;
         int ep3 = partsOfLine.size();
-        System.out.println(ANALYSISINTRO);
+        System.out.println(ANALYSISINTROMEMORY);
         System.out.println(STRINGBREAK);
         printLoadOutputHelper(MEANSTRING,partsOfLine,sp,ep1);
         printLoadOutputHelper(VARIANCESTRING,partsOfLine,ep1,ep2);
@@ -147,6 +147,7 @@ public class PrelimTwoSemiCompetitionDataAnalysis extends CompetitionDataAnalysi
 
     //EFFECTS: Prints analyzed competition information
     public void printAnalyzedCompetitionInformation(CompetitionDataAnalysis cdata){
+        System.out.println(ANALYSISINTROCURRENT);
         System.out.println(MEANSTRING + middleStrings.get(0)+ ENDSTRING + meanPositiveClicks);
         System.out.println(MEANSTRING + middleStrings.get(1) + ENDSTRING + meanNegativeClicks);
         System.out.println(MEANSTRING + middleStrings.get(2) + ENDSTRING + meanClickerscore);
@@ -168,6 +169,7 @@ public class PrelimTwoSemiCompetitionDataAnalysis extends CompetitionDataAnalysi
         System.out.println(SDSTRING + middleStrings.get(4)+ ENDSTRING + sdControl);
         System.out.println(SDSTRING + middleStrings.get(5)+ ENDSTRING + sdChoreography);
         System.out.println(SDSTRING + middleStrings.get(6)+ ENDSTRING + sdBodyControl);
+        System.out.println(STRINGBREAK);
     }
 
 }

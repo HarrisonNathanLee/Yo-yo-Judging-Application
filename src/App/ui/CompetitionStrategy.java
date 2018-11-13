@@ -108,6 +108,7 @@ public class CompetitionStrategy implements AppStrategy {
             }
             if (anotherPlayer.equals("no")) {
                 cData.callAllDataAnalysis();
+                c.addSortPrintHMAP();
                 cData.printAnalyzedCompetitionInformation(cData);
                 c.save(competitionName+routineType);
                 cData.save(competitionName+routineType);

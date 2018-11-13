@@ -118,6 +118,7 @@ public class WorldFinalPlayer extends Player {
         System.out.println("Construction: " + p.getConstruction());
         System.out.println("Body control: " + p.getBodyControl());
         System.out.println("Showmanship: " + p.getShowmanship());
+        System.out.println(STRINGBREAK);
     }
 }
 

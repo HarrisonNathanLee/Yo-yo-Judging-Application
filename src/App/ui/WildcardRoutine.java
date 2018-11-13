@@ -14,16 +14,27 @@ public class WildcardRoutine extends Routine{
         setPlayerInformation(p);
         p.setRoutineLength(routineType);
         clicker(p,data);
-        System.out.println(p.getFirstName() + " " + p.getLastName() + " positive clicks: " + p.getPositiveClicks());
         data.callAllDataAnalysis();
-        System.out.println("Clicks per second: " + data.getCPS());
-        System.out.println("-------------------------------------------");
+        printRoutineClickInformation(p);
+        printAnalyzedRoutineInformation(data,p);
         String firstName = p.getFirstName();
         callAllSave(p, data, firstName, routineType);
         return data;
     }
 
-    // where the is a noun - supertype
+    public void printRoutineClickInformation(Player p) {
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s technical data: ");
+        System.out.println("Positive clicks: " + p.getPositiveClicks());
+        System.out.println("Clickerscore: " + p.getClickerScore());
+        System.out.println(STRINGBREAK);
+    }
+    public void printAnalyzedRoutineInformation(PlayerDataAnalysis data, Player p){
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s analyzed technical data");
+        System.out.println("Clicks per second: " + data.getCPS());
+        System.out.println(STRINGBREAK);
+
+    }
+
     //MODIFIES: This, player
     //EFFECTS: Will increase/decrease the clicker score of a player and then return the clicker score after the routine is over
     @Override
@@ -43,7 +54,6 @@ public class WildcardRoutine extends Routine{
                 p.resetClicks();
             } else if (keyPress.equals("s")) {
                 p.produceClickerScore();
-                System.out.println(p.getFirstName()+ " " + p.getLastName() + "'s" + " final clickerscore is: " + p.getClickerScore());
                 break;
             }
         }

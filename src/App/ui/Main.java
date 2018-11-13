@@ -1,6 +1,8 @@
 package App.ui;
 
 import App.Exceptions.*;
+import App.Model.ReadWebPage;
+import App.Model.Scraper;
 import App.player.*;
 
 import java.io.IOException;
@@ -14,6 +16,7 @@ public class Main {
     private PrelimTwoSemiRoutine prelimTwoSemiRoutine;
     private WorldFinalRoutine worldFinalRoutine;
     static AppStrategy appStrategy;
+    private Scraper scrpr;
 
     //MODIFIES: This, Player
     //EFFECTS: Starts the yo-yo judging application
@@ -66,12 +69,17 @@ public class Main {
     }
 
     //EFFECTS: An intro to the application, displayed at the start
-    public void applicationWelcome(){
+    public void applicationWelcome() throws Exception {
         System.out.println("Welcome to the yo-yo judging application");
         System.out.println("Created by: Harrison Lee");
+        System.out.println("Read WYYC 2018 Freestyle Rules at: ");
+        System.out.println("http://iyyf.org/wyyc2018-rules/freestyle-rules-2018/");
+        System.out.println("performance evaluation descriptors from above");
+        scrpr = new Scraper();
+        scrpr.scrape();
     }
 
-    public static void main (String[]args) throws IOException {
+    public static void main (String[]args) throws Exception{
         Main yyjh = new Main();
         yyjh.applicationWelcome();
         String competitionOrPlayerMode;
@@ -151,7 +159,7 @@ public class Main {
 //        setPlayerInformation(p);
 //        p.setRoutineLength(routineType);
 //        clicker(p,data);
-//        printRawRoutineInformation(p);
+//        printRoutineClickInformation(p);
 //        setUpEvaluationQuestionLists();
 //        setAllPerformanceEvals(p, performanceEvaluationQuestions, evaluationKeywords);
 //        p.getPerformanceEvals(p);
@@ -169,7 +177,7 @@ public class Main {
 //        setPlayerInformation(p);
 //        p.setRoutineLength(routineType);
 //        clicker(p,data);
-//        printRawRoutineInformation(p);
+//        printRoutineClickInformation(p);
 //        setUpEvaluationQuestionLists();
 //        setAllPerformanceEvals(p, performanceEvaluationQuestionsWorld, evaluationKeywordsWorld);
 //        p.getPerformanceEvals(p);
@@ -181,7 +189,7 @@ public class Main {
 //    }
 //
 //    //EFFECTS: Prints various post performance information
-//    public void printRawRoutineInformation(Player p) {
+//    public void printRoutineClickInformation(Player p) {
 //        System.out.println(p.getFirstName() + " " + p.getLastName() + " positive clicks: " + p.getPositiveClicks());
 //        System.out.println(p.getFirstName() + " " + p.getLastName() + " negative clicks: " + p.getNegativeClicks());
 //        System.out.println(p.getFirstName() + " " + p.getLastName() + " final reset score is: " + p.getRestartFinal());

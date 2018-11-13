@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class Routine {
+    protected static final String STRINGBREAK =  "---------------------------------------";
     Scanner scanner = new Scanner(System.in);
     protected ArrayList<String> performanceEvaluationQuestions;
     protected ArrayList<String> evaluationKeywords;
@@ -19,12 +20,13 @@ public abstract class Routine {
         setPlayerInformation(p);
         p.setRoutineLength(routineType);
         clicker(p,data);
-        printRawRoutineInformation(p);
         setUpEvaluationQuestionLists();
         setAllPerformanceEvals(p, performanceEvaluationQuestions, evaluationKeywords);
+        printRoutineClickInformation(p);
         p.getPerformanceEvals(p);
         data.callAllDataAnalysis();
-        printAnalyzedRoutineInformation(data);
+        printRoutineMajorDeductInformation(p);
+        printAnalyzedRoutineInformation(data, p);
         String firstName = p.getFirstName();
         callAllSave(p, data, firstName, routineType);
         return data;
@@ -77,32 +79,45 @@ public abstract class Routine {
                 data.resetFireTilt();
             } else if (keyPress.equals("s")) {
                 p.produceClickerScore();
-                System.out.println(p.getFirstName()+ " " + p.getLastName() + "'s" + " final clickerscore is: " + p.getClickerScore());
                 break;
             }
         }
     }
 
     //EFFECTS: Prints various post performance information
-    public void printRawRoutineInformation(Player p) {
-        System.out.println(p.getFirstName() + " " + p.getLastName() + " positive clicks: " + p.getPositiveClicks());
-        System.out.println(p.getFirstName() + " " + p.getLastName() + " negative clicks: " + p.getNegativeClicks());
-        System.out.println(p.getFirstName() + " " + p.getLastName() + " final reset score is: " + p.getRestartFinal());
-        System.out.println(p.getFirstName() + " " + p.getLastName() + " final change score is: " + p.getChangeFinal());
-        System.out.println(p.getFirstName() + " " + p.getLastName() + " final discard score is: " + p.getDiscardFinal());
+    public void printRoutineClickInformation(Player p) {
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s technical data: ");
+        System.out.println("Positive clicks: " + p.getPositiveClicks());
+        System.out.println("Negative clicks: " + p.getNegativeClicks());
+        System.out.println("Clickerscore: " + p.getClickerScore());
+        System.out.println(STRINGBREAK);
+
+    }
+
+    private void printRoutineMajorDeductInformation(Player p) {
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s major deduct scores: ");
+        System.out.println("Number of resets: " + p.getNumberOfRestarts());
+        System.out.println("Final reset score is: " + p.getRestartFinal());
+        System.out.println("Number of changes: " + p.getNumberOfChanges());
+        System.out.println("Final change score is: " + p.getChangeFinal());
+        System.out.println("Number of discards: " + p.getNumberOfDiscards());
+        System.out.println("Final discard score is: " + p.getDiscardFinal());
+        System.out.println(STRINGBREAK);
     }
 
     //EFFECTS: Prints analyzed routine information of a player
-    public void printAnalyzedRoutineInformation(PlayerDataAnalysis data) {
+    public void printAnalyzedRoutineInformation(PlayerDataAnalysis data, Player p) {
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s analyzed technical data:");
         System.out.println("Total majors: " + data.getTotalMajors());
         System.out.println("Total weighted score: " + data.getTotalWeightedScore());
         System.out.println("Fire sections in routine: " + data.getNumberOfFireSectionsInRoutine());
         System.out.println("Tilted sections in routine: " + data.getNumberOfTiltedSectionsInRoutine());
         System.out.println("Clicks per second: " + data.getCPS());
         System.out.println("Clicks ratio: " + data.getCR());
-        System.out.println("The player's clicks if perfect: " + data.getNumberIfPerfect());
-        System.out.println("The player's clicks if perfect per second:" + data.getCIPPS());
-        System.out.println("-------------------------------------------");
+        System.out.println("Clicks if perfect: " + data.getNumberIfPerfect());
+        System.out.println("Clicks if perfect per second:" + data.getCIPPS());
+        System.out.println(STRINGBREAK);
+
     }
 
     //MODIFIES: This, player

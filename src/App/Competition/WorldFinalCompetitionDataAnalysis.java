@@ -150,7 +150,7 @@ public class WorldFinalCompetitionDataAnalysis extends CompetitionDataAnalysis {
         int ep1 = 11;
         int ep2 = 22;
         int ep3 = partsOfLine.size();
-        System.out.println(ANALYSISINTRO);
+        System.out.println(ANALYSISINTROMEMORY);
         System.out.println(STRINGBREAK);
         printLoadOutputHelper(MEANSTRING,partsOfLine,sp,ep1);
         printLoadOutputHelper(VARIANCESTRING,partsOfLine,ep1,ep2);
@@ -197,6 +197,7 @@ public class WorldFinalCompetitionDataAnalysis extends CompetitionDataAnalysis {
 
     //EFFECTS: Prints analyzed competition information
     public void printAnalyzedCompetitionInformation(CompetitionDataAnalysis cdata){
+        System.out.println(ANALYSISINTROCURRENT);
         System.out.println(MEANSTRING + middleStrings.get(0)+ ENDSTRING + meanPositiveClicks);
         System.out.println(MEANSTRING + middleStrings.get(1) + ENDSTRING + meanNegativeClicks);
         System.out.println(MEANSTRING + middleStrings.get(2) + ENDSTRING + meanClickerscore);
@@ -230,6 +231,7 @@ public class WorldFinalCompetitionDataAnalysis extends CompetitionDataAnalysis {
         System.out.println(SDSTRING + middleStrings.get(8)+ ENDSTRING + sdConstruction);
         System.out.println(SDSTRING + middleStrings.get(9)+ ENDSTRING + sdBodyControl);
         System.out.println(SDSTRING + middleStrings.get(10)+ ENDSTRING + sdShowmanship);
+        System.out.println(STRINGBREAK);
     }
 
 }

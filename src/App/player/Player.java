@@ -39,7 +39,7 @@ public abstract class Player extends Loadable implements Saveable{
     protected String saveLocation = "player.csv";
     protected static final String STRINGBREAK  = "---------------------------------------";
     protected static final String SCORESFROMMEMORY = "Player information and raw scores from memory";
-    protected static final String PERFORMANCEEVALS = "'s performance evaluation scores are: ";
+    protected static final String PERFORMANCEEVALS = "'s performance evaluation scores: ";
     protected static final String POSITIVE = "positive";
     protected static final String NEGATIVE = "negative";
     ArrayList<String> clicksLog = new ArrayList<>();

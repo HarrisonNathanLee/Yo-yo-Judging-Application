@@ -19,7 +19,8 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
     protected static final String SDSTRING = "Standard deviation of ";
     protected static final String ENDSTRING = "amongst routines: ";
     protected static final String STRINGBREAK = "---------------------------------------";
-    protected static final String ANALYSISINTRO = "Analyzed competition information from memory";
+    protected static final String ANALYSISINTROMEMORY = "Analyzed competition data from memory: ";
+    protected static final String ANALYSISINTROCURRENT = "Analyzed competition data: ";
     protected ArrayList<String> middleStrings;
 
     protected double meanExecution = 0;
