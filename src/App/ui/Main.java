@@ -1,10 +1,13 @@
 package App.ui;
 
 import App.Exceptions.*;
-import App.Model.ReadWebPage;
+
 import App.Model.Scraper;
 import App.player.*;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import java.util.Scanner;
@@ -17,6 +20,44 @@ public class Main {
     private WorldFinalRoutine worldFinalRoutine;
     static AppStrategy appStrategy;
     private Scraper scrpr;
+    private JPanel panelMain;
+    private JButton competitionButton;
+    private JButton individualButton;
+
+
+
+    public Main() {
+        competitionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,"Starting competition mode");
+                appStrategy = new CompetitionStrategy();
+                try {
+                    appStrategy.callMode();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (AlreadyInCompetitionException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        });
+        individualButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,"starting individual mode ");
+                appStrategy = new IndividualStrategy();
+                try {
+                    appStrategy.callMode();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (AlreadyInCompetitionException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        });
+    }
 
     //MODIFIES: This, Player
     //EFFECTS: Starts the yo-yo judging application
@@ -75,11 +116,18 @@ public class Main {
         System.out.println("Read WYYC 2018 Freestyle Rules at: ");
         System.out.println("http://iyyf.org/wyyc2018-rules/freestyle-rules-2018/");
         System.out.println("performance evaluation descriptors from above");
-        scrpr = new Scraper();
-        scrpr.scrape();
+//        scrpr = new Scraper();
+//        scrpr.scrape();
     }
 
     public static void main (String[]args) throws Exception{
+        JFrame frame = new JFrame("Yo-yo Judge Application");
+        frame.setContentPane(new Main().panelMain);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
+
         Main yyjh = new Main();
         yyjh.applicationWelcome();
         String competitionOrPlayerMode;

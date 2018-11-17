@@ -1,10 +1,12 @@
 package App.player;
 
+import App.Model.Subject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class Loadable {
+public abstract class Loadable  {
 
     //REQUIRES: File to exist in memory
     //EFFECTS: Reads file from memory

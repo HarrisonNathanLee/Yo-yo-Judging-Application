@@ -8,8 +8,7 @@ public class LabelChanger extends JFrame implements ActionListener
 {
     private JLabel label;
     private JTextField field;
-    public LabelChanger()
-    {
+    public LabelChanger() {
         super("The title");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(400, 90));

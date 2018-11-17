@@ -496,7 +496,7 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
 
 
     //EFFECTS: Returns the sum of the elements in a list
-    public Double getSum(ArrayList<Double> evalValues){
+    private Double getSum(ArrayList<Double> evalValues){
         Double sum = 0.0;
         for(Double eval: evalValues){
             sum += eval;
@@ -505,7 +505,7 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
     }
 
     //EFFECTS: Returns the number of elements in a list
-    public Integer getCount(ArrayList<Player> players){
+    private Integer getCount(ArrayList<Player> players){
         return players.size();
     }
 
@@ -620,7 +620,7 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
     }
 
     //EFFECTS: Produces the variance for a single eval parameter
-    public Double produceVariance (ArrayList<Player> players, String parameter){
+    public  Double produceVariance (ArrayList<Player> players, String parameter){
         double sumObservationDifferenceFromMean = getObservationDifferenceFromMeanSquared(players,parameter);
         Integer count = getCount(players);
         Double variance = sumObservationDifferenceFromMean /(count - 1);

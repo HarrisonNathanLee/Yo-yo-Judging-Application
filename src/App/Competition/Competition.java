@@ -59,7 +59,7 @@ public class Competition extends Loadable implements Saveable {
         dataAnalyses.add(data);
     }
 
-    public void addPlayersToHMAP(){
+    private void addPlayersToHMAP(){
         for(PlayerDataAnalysis data: dataAnalyses){
             String firstName = data.getPlayer().getFirstName();
             Double totalWeightedScore = data.getTotalWeightedScore();
@@ -70,7 +70,7 @@ public class Competition extends Loadable implements Saveable {
 
     // Taken from https://www.geeksforgeeks.org/sorting-a-hashmap-according-to-values/
 
-    public HashMap<String,Integer> sortByValue (HashMap<String, Integer> hm){
+    private HashMap<String,Integer> sortByValue (HashMap<String, Integer> hm){
         List<Map.Entry<String,Integer> > list =
                 new LinkedList<Map.Entry<String, Integer> > (hm.entrySet());
         Collections.sort(list, new Comparator <Map.Entry<String, Integer>>(){
