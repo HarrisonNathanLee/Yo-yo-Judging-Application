@@ -6,6 +6,7 @@ import App.Model.Scraper;
 import App.player.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -25,7 +26,6 @@ public class Main {
     private JButton individualButton;
 
 
-
     public Main() {
         competitionButton.addActionListener(new ActionListener() {
             @Override
@@ -37,7 +37,7 @@ public class Main {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 } catch (AlreadyInCompetitionException e1) {
-                    e1.printStackTrace();
+                    System.out.println(e1.getMessage());
                 }
 
             }
@@ -45,19 +45,24 @@ public class Main {
         individualButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"starting individual mode ");
+                panelMain.setVisible(false);
+                //JOptionPane.showMessageDialog(null,"starting individual mode ");
                 appStrategy = new IndividualStrategy();
+                //appStrategy.panelSetUp();
                 try {
                     appStrategy.callMode();
+
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 } catch (AlreadyInCompetitionException e1) {
-                    e1.printStackTrace();
+                    System.out.println(e1.getMessage());
                 }
 
             }
         });
     }
+
+
 
     //MODIFIES: This, Player
     //EFFECTS: Starts the yo-yo judging application
@@ -120,34 +125,36 @@ public class Main {
 //        scrpr.scrape();
     }
 
+    private void createComponents(){
+
+    }
+
     public static void main (String[]args) throws Exception{
         JFrame frame = new JFrame("Yo-yo Judge Application");
         frame.setContentPane(new Main().panelMain);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-
-
         Main yyjh = new Main();
-        yyjh.applicationWelcome();
-        String competitionOrPlayerMode;
-        competitionOrPlayerMode = yyjh.competitionOrPlayerMode();
-        if (competitionOrPlayerMode.equals("competition")) {
-            appStrategy = new CompetitionStrategy();
-            try {
-                appStrategy.callMode();
-            } catch (AlreadyInCompetitionException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        else if (competitionOrPlayerMode.equals("individual")) {
-            appStrategy = new IndividualStrategy();
-            try {
-                appStrategy.callMode();
-            } catch (AlreadyInCompetitionException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+//        yyjh.applicationWelcome();
+//        String competitionOrPlayerMode;
+//        competitionOrPlayerMode = yyjh.competitionOrPlayerMode();
+//        if (competitionOrPlayerMode.equals("competition")) {
+//            appStrategy = new CompetitionStrategy();
+//            try {
+//                appStrategy.callMode();
+//            } catch (AlreadyInCompetitionException e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
+//        else if (competitionOrPlayerMode.equals("individual")) {
+//            appStrategy = new IndividualStrategy();
+//            try {
+//                appStrategy.callMode();
+//            } catch (AlreadyInCompetitionException e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }
     }
 }
 
