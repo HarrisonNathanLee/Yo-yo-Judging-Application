@@ -31,10 +31,9 @@ public class IndividualStrategy implements AppStrategy {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String choice = scanner.nextLine();
                 String routineType = null;
                 try {
-                    routineType = retrieveRoutineType(choice);
+                    routineType = retrieveRoutineType("start");
                 } catch (IncorrectUserInputException e1) {
                     System.out.println(e1.getMessage());
                 }
@@ -71,7 +70,8 @@ public class IndividualStrategy implements AppStrategy {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        individualMode(yyjh = new Main());
+        yyjh = new Main();
+        //individualMode(yyjh = new Main());
     }
 
     //MODIFIES: This, Player, PlayerDataAnalysis, App.Competition, CompetitionDataAnalysis

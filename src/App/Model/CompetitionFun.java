@@ -1,6 +1,5 @@
 package App.Model;
 
-
 import java.util.ArrayList;
 
 public class CompetitionFun extends Subject {
