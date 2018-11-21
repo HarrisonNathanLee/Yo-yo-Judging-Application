@@ -131,11 +131,12 @@ public class Main {
 
     public static void main (String[]args) throws Exception{
         JFrame frame = new JFrame("Yo-yo Judge Application");
-        frame.setContentPane(new Main().panelMain);
+        frame.add(new Main().panelMain);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
         Main yyjh = new Main();
+
 //        yyjh.applicationWelcome();
 //        String competitionOrPlayerMode;
 //        competitionOrPlayerMode = yyjh.competitionOrPlayerMode();
@@ -213,7 +214,7 @@ public class Main {
 //    public PlayerDataAnalysis runStartAsPrelimTwoSemiPlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
 //        setPlayerInformation(p);
 //        p.setRoutineLength(routineType);
-//        clicker(p,data);
+//        Clicker(p,data);
 //        printRoutineClickInformation(p);
 //        setUpEvaluationQuestionLists();
 //        setAllPerformanceEvals(p, performanceEvaluationQuestions, evaluationKeywords);
@@ -231,7 +232,7 @@ public class Main {
 //    public PlayerDataAnalysis runStartAsWorldFinalPlayer(Player p, String routineType, PlayerDataAnalysis data) throws IOException {
 //        setPlayerInformation(p);
 //        p.setRoutineLength(routineType);
-//        clicker(p,data);
+//        Clicker(p,data);
 //        printRoutineClickInformation(p);
 //        setUpEvaluationQuestionLists();
 //        setAllPerformanceEvals(p, performanceEvaluationQuestionsWorld, evaluationKeywordsWorld);
@@ -281,7 +282,7 @@ public class Main {
 //
 //    // where the is a noun - supertype
 //    //MODIFIES: This, player
-//    //EFFECTS: Will increase/decrease the clicker score of a player and then return the clicker score after the routine is over
+//    //EFFECTS: Will increase/decrease the Clicker score of a player and then return the Clicker score after the routine is over
 //    public void wildcardClicker(Player p) {
 //        String keyPress = "";
 //        System.out.println("Press the j key to increment the player's score.");
@@ -305,8 +306,8 @@ public class Main {
 //    }
 //
 //    //MODIFIES: This, player
-//    //EFFECTS: Will increase/decrease the clicker score of a player and then return the clicker score after the routine is over
-//    public void clicker(Player p, PlayerDataAnalysis data) {
+//    //EFFECTS: Will increase/decrease the Clicker score of a player and then return the Clicker score after the routine is over
+//    public void Clicker(Player p, PlayerDataAnalysis data) {
 //        String keyPress = "";
 //        System.out.println("Press the j key to increment and the f key to decrement the player's score");
 //        System.out.println("Press the h key to increment the player's score twice(double click)");

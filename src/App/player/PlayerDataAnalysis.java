@@ -165,7 +165,7 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
 
 
     //MODIFIES: This
-    //EFFECTS: Returns a predicted clicker score value if the App.player had zero mistakes
+    //EFFECTS: Returns a predicted Clicker score value if the App.player had zero mistakes
     public void clicksIfPerfect (){
         numberIfPerfect = (int) (player.getPositiveClicks() + (2 * player.getNegativeClicks()));
     }

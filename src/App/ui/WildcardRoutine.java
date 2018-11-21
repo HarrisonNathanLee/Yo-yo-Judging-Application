@@ -36,7 +36,7 @@ public class WildcardRoutine extends Routine{
     }
 
     //MODIFIES: This, player
-    //EFFECTS: Will increase/decrease the clicker score of a player and then return the clicker score after the routine is over
+    //EFFECTS: Will increase/decrease the Clicker score of a player and then return the Clicker score after the routine is over
     @Override
     public void clicker(Player p, PlayerDataAnalysis data) {
         String keyPress = "";

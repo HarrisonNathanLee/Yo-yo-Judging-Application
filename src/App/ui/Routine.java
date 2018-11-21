@@ -43,7 +43,7 @@ public abstract class Routine {
     }
 
     //MODIFIES: This, player
-    //EFFECTS: Will increase/decrease the clicker score of a player and then return the clicker score after the routine is over
+    //EFFECTS: Will increase/decrease the Clicker score of a player and then return the Clicker score after the routine is over
     public void clicker(Player p, PlayerDataAnalysis data) {
         String keyPress = "";
         System.out.println("Press the j key to increment and the f key to decrement the player's score");

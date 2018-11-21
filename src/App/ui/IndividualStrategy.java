@@ -19,59 +19,46 @@ public class IndividualStrategy implements AppStrategy {
     private JButton startButton;
     private JButton loadButton;
 
-    public void panelSetUp(){
-        JFrame frame = new JFrame("Yo-yo Judge Application");
-        frame.setContentPane(new IndividualStrategy().panelIndividual);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
 
     public IndividualStrategy() {
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String routineType = null;
-                try {
-                    routineType = retrieveRoutineType("start");
-                } catch (IncorrectUserInputException e1) {
-                    System.out.println(e1.getMessage());
-                }
-                try {
-                    yyjh.start(routineType);
-                } catch (IOException e1) {
-                    System.out.println(e1.getMessage());
-                    individualMode(yyjh = new Main());
-                }
-            }
-        });
-        loadButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String firstName = retrieveJudgedPlayerName();
-                String routineType = null;
-                try {
-                    routineType = retrieveRoutineType("load");
-                } catch (IncorrectUserInputException e1) {
-                    System.out.println(e1.getMessage());
-                }
-                try {
-                    individualModeRead(firstName,routineType);
-                } catch (IOException e1) {
-                    System.out.println(e1.getMessage());
-                }
-            }
-        });
+//        startButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String routineType = null;
+//                try {
+//                    routineType = retrieveRoutineType("start");
+//                } catch (IncorrectUserInputException e1) {
+//                    System.out.println(e1.getMessage());
+//                }
+//                try {
+//                    yyjh.start(routineType);
+//                } catch (IOException e1) {
+//                    System.out.println(e1.getMessage());
+//                    individualMode(yyjh = new Main());
+//                }
+//            }
+//        });
+//        loadButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String firstName = retrieveJudgedPlayerName();
+//                String routineType = null;
+//                try {
+//                    routineType = retrieveRoutineType("load");
+//                } catch (IncorrectUserInputException e1) {
+//                    System.out.println(e1.getMessage());
+//                }
+//                try {
+//                    individualModeRead(firstName,routineType);
+//                } catch (IOException e1) {
+//                    System.out.println(e1.getMessage());
+//                }
+//            }
+//        });
     }
 
     public void callMode(){
-        JFrame frame = new JFrame("Yo-yo Judge Application");
-        frame.setContentPane(new IndividualStrategy().panelIndividual);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        yyjh = new Main();
-        //individualMode(yyjh = new Main());
+        individualMode(yyjh = new Main());
     }
 
     //MODIFIES: This, Player, PlayerDataAnalysis, App.Competition, CompetitionDataAnalysis

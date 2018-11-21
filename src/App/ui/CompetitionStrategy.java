@@ -15,10 +15,6 @@ public class CompetitionStrategy implements AppStrategy {
     Scanner scanner = new Scanner(System.in);
     private Main yyjh;
 
-    public void panelSetUp(){
-        System.out.println("hi");
-    }
-
     @Override
     public void callMode() throws IOException, AlreadyInCompetitionException {
         competitionMode(yyjh = new Main());

@@ -133,7 +133,7 @@ public abstract class Player extends Loadable implements Saveable{
     public void setNumberOfDiscards(int numberOfDiscards) { this.numberOfDiscards = numberOfDiscards; }
 
     //MODIFIES: This
-    //EFFECTS: Sets the number of clicker score of the App.player
+    //EFFECTS: Sets the number of Clicker score of the App.player
     public void setClickerScore(double clickerScore) { this.clickerScore = clickerScore; }
 
     //MODIFIES: This
@@ -201,7 +201,7 @@ public abstract class Player extends Loadable implements Saveable{
         return lastName;
     }
 
-    //EFFECTS: Returns the clicker score of the App.player
+    //EFFECTS: Returns the Clicker score of the App.player
     public double getClickerScore() {
         return clickerScore;
     }

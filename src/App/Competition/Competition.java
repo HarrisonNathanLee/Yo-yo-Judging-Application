@@ -94,7 +94,7 @@ public class Competition extends Loadable implements Saveable {
         System.out.println(STRINGBREAK);
         System.out.println("Competition Results:");
         for (Map.Entry<String, Integer> en: hmap2.entrySet()){
-            System.out.println(i + ": " +en.getKey() + " with a rounded total weogte" + en.getValue());
+            System.out.println(i + ": " +en.getKey() + " with a rounded total weighted score of: " + en.getValue());
             i ++;
         }
         System.out.println(STRINGBREAK);
