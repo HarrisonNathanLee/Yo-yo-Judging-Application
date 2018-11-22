@@ -2,7 +2,7 @@ package App.ui;
 
 import javax.swing.*;
 
-public class competitionLoad {
+public class CompetitionLoad {
     private JTextField typeTheNameOfTextField;
     private JPanel panelCompetitionLoad;
     private JTextField typeTheRoutineTypeTextField;

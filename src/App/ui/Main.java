@@ -14,23 +14,21 @@ import java.util.Scanner;
 
 
 public class Main {
-    Scanner scanner = new Scanner(System.in);
+    //Scanner scanner = new Scanner(System.in);
     private WildcardRoutine wildcardRoutine;
     private PrelimTwoSemiRoutine prelimTwoSemiRoutine;
     private WorldFinalRoutine worldFinalRoutine;
     static AppStrategy appStrategy;
-    //private CardLayout cardLayout = new CardLayout();
     private Scraper scrpr;
     private JPanel panelMain;
-    private CardLayout card = (CardLayout)panelMain.getLayout();
     private JPanel firstPanel;
     private JButton competitionButton;
     private JButton individualButton;
     private JPanel panelStartOrLoad;
     private JPanel panelPickRoutineType;
     private JPanel panelPlayerInformation;
-    private JButton enterApp;
     private JFrame frame;
+    CardLayout card = (CardLayout)panelMain.getLayout();
 
 
     public Main() {
@@ -40,7 +38,7 @@ public class Main {
         competitionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                onCompetitonPress();
+                onCompetitionPress();
 //                appStrategy = new CompetitionStrategy();
 //                try {
 //                    appStrategy.callMode();
@@ -68,11 +66,20 @@ public class Main {
         });
     }
 
-    public void onCompetitonPress(){
+    public void onCompetitionPress(){
         showCard("card2");
+        appStrategy = new CompetitionStrategy();
+//        try {
+//            appStrategy.callMode();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (AlreadyInCompetitionException e) {
+//            e.printStackTrace();
+//        }
     }
     public void onIndividualPress(){
         showCard("card2");
+        appStrategy = new IndividualStrategy();
     }
 
     public void onStartPress(){
@@ -129,13 +136,13 @@ public class Main {
         return null;
     }
 
-    //EFFECTS: Will return the mode - either competition or individual mode, based on user input
-    public String competitionOrPlayerMode (){
-        System.out.println("Type competition to begin competition mode and individual to begin individual player mode");
-        String competitionOrPlayerMode;
-        competitionOrPlayerMode = scanner.nextLine();
-        return competitionOrPlayerMode;
-    }
+//    //EFFECTS: Will return the mode - either competition or individual mode, based on user input
+//    public String competitionOrPlayerMode (){
+//        System.out.println("Type competition to begin competition mode and individual to begin individual player mode");
+//        String competitionOrPlayerMode;
+//        competitionOrPlayerMode = scanner.nextLine();
+//        return competitionOrPlayerMode;
+//    }
 
     //EFFECTS: An intro to the application, displayed at the start
     public void applicationWelcome() throws Exception {
@@ -182,7 +189,6 @@ public class Main {
 
     private void createUIComponents() {
         panelStartOrLoad = new StartOrLoad().getPanel();
-        panelPlayerInformation= new PlayerInformation().getPanel();
         panelPickRoutineType = new PickRoutineType().getPanel();
         // TODO: place custom component creation code here
     }

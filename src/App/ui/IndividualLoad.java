@@ -2,7 +2,7 @@ package App.ui;
 
 import javax.swing.*;
 
-public class individualLoad {
+public class IndividualLoad {
     private JTextField typeTheNameOfTextField;
     private JTextField typeTheNameOfTextField1;
     private JButton submitButton;
