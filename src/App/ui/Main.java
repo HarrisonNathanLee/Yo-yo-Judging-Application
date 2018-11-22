@@ -1,7 +1,6 @@
 package App.ui;
 
-import App.Exceptions.*;
-
+import App.Exceptions.AlreadyInCompetitionException;
 import App.Model.Scraper;
 import App.player.*;
 
@@ -20,49 +19,73 @@ public class Main {
     private PrelimTwoSemiRoutine prelimTwoSemiRoutine;
     private WorldFinalRoutine worldFinalRoutine;
     static AppStrategy appStrategy;
+    //private CardLayout cardLayout = new CardLayout();
     private Scraper scrpr;
     private JPanel panelMain;
+    private CardLayout card = (CardLayout)panelMain.getLayout();
+    private JPanel firstPanel;
     private JButton competitionButton;
     private JButton individualButton;
+    private JPanel panelStartOrLoad;
+    private JPanel panelPickRoutineType;
+    private JPanel panelPlayerInformation;
+    private JButton enterApp;
+    private JFrame frame;
 
 
     public Main() {
+        addCard(panelStartOrLoad,"card2");
+        addCard(panelPlayerInformation,"card3");
+        addCard(panelPickRoutineType,"card4");
         competitionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"Starting competition mode");
-                appStrategy = new CompetitionStrategy();
-                try {
-                    appStrategy.callMode();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (AlreadyInCompetitionException e1) {
-                    System.out.println(e1.getMessage());
-                }
+                onCompetitonPress();
+//                appStrategy = new CompetitionStrategy();
+//                try {
+//                    appStrategy.callMode();
+//                } catch (IOException e1) {
+//                    e1.printStackTrace();
+//                } catch (AlreadyInCompetitionException e1) {
+//                    System.out.println(e1.getMessage());
+//                }
 
             }
         });
         individualButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelMain.setVisible(false);
-                //JOptionPane.showMessageDialog(null,"starting individual mode ");
-                appStrategy = new IndividualStrategy();
-                //appStrategy.panelSetUp();
-                try {
-                    appStrategy.callMode();
-
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (AlreadyInCompetitionException e1) {
-                    System.out.println(e1.getMessage());
-                }
-
+                onIndividualPress();
+//                appStrategy = new IndividualStrategy();
+//                try {
+//                    appStrategy.callMode();
+//                } catch (IOException e1) {
+//                    e1.printStackTrace();
+//                } catch (AlreadyInCompetitionException e1) {
+//                    e1.printStackTrace();
+//                }
             }
         });
     }
 
+    public void onCompetitonPress(){
+        showCard("card2");
+    }
+    public void onIndividualPress(){
+        showCard("card2");
+    }
 
+    public void onStartPress(){
+        showCard("card4");
+    }
+
+    public void addCard(JPanel panel, String cardName){
+        card.addLayoutComponent(panel,cardName);
+    }
+
+    public void showCard(String cardName){
+        card.show(panelMain,cardName);
+    }
 
     //MODIFIES: This, Player
     //EFFECTS: Starts the yo-yo judging application
@@ -125,17 +148,15 @@ public class Main {
 //        scrpr.scrape();
     }
 
-    private void createComponents(){
 
-    }
 
     public static void main (String[]args) throws Exception{
-        JFrame frame = new JFrame("Yo-yo Judge Application");
-        frame.add(new Main().panelMain);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
         Main yyjh = new Main();
+        yyjh.frame = new JFrame("Yo-yo Judge Application");
+        yyjh.frame.setContentPane(new Main().panelMain);
+        yyjh.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        yyjh.frame.pack();
+        yyjh.frame.setVisible(true);
 
 //        yyjh.applicationWelcome();
 //        String competitionOrPlayerMode;
@@ -156,6 +177,14 @@ public class Main {
 //                System.out.println(e.getMessage());
 //            }
 //        }
+    }
+
+
+    private void createUIComponents() {
+        panelStartOrLoad = new StartOrLoad().getPanel();
+        panelPlayerInformation= new PlayerInformation().getPanel();
+        panelPickRoutineType = new PickRoutineType().getPanel();
+        // TODO: place custom component creation code here
     }
 }
 

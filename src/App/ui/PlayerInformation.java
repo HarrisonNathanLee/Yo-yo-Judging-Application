@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PlayerInformation {
-    private JPanel panel1;
+    private JPanel panelPlayerInformation;
     private JTextField enterThePlayerSTextField;
     private JTextField enterThePlayerSTextField1;
     private JTextField enterThePlayerSTextField2;
@@ -18,5 +18,9 @@ public class PlayerInformation {
 
             }
         });
+    }
+
+    public JPanel getPanel(){
+        return panelPlayerInformation;
     }
 }

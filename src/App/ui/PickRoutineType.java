@@ -12,6 +12,10 @@ public class PickRoutineType {
     private JButton twoMinuteFinalButton;
     private JButton semiFinalButton;
 
+    public JPanel getPanel(){
+        return panelPickRoutineType;
+    }
+
     public PickRoutineType() {
         wildcardButton.addActionListener(new ActionListener() {
             @Override

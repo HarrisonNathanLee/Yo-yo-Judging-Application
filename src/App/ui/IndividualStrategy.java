@@ -10,17 +10,15 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import App.ui.StartOrLoad;
 
 public class IndividualStrategy implements AppStrategy {
     private Main yyjh;
 
     Scanner scanner = new Scanner(System.in);
-    private JPanel panelIndividual;
-    private JButton startButton;
-    private JButton loadButton;
-
 
     public IndividualStrategy() {
+        //yyjh.addCard(panelStartOrLoad,"card2");
 //        startButton.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
@@ -58,43 +56,47 @@ public class IndividualStrategy implements AppStrategy {
     }
 
     public void callMode(){
+        //yyjh.onIndividualPress();
         individualMode(yyjh = new Main());
+
     }
+
 
     //MODIFIES: This, Player, PlayerDataAnalysis, App.Competition, CompetitionDataAnalysis
     //EFFECTS: Runs the application in individual mode (judge an individual player)
     public void individualMode(Main yyjh){
-        System.out.println("Type start to start judging a player or load to load from memory");
-        String choice = scanner.nextLine();
-        if (choice.equals("start")) {
-            try {
-                try {
-                    String routineType = retrieveRoutineType(choice);
-                    yyjh.start(routineType);
-                } catch (IncorrectUserInputException e) {
-                    System.out.println(e.getMessage());
-                    individualMode(yyjh = new Main());
-                }
-            } catch (IOException e) {
-                System.out.println("Data save problem");
-            }
-        }
-        else if (choice.equals("load")) {
-            String firstName = retrieveJudgedPlayerName();
-            String routineType = null;
-            try {
-                routineType = retrieveRoutineType(choice);
-            } catch (IncorrectUserInputException e) {
-                System.out.println(e.getMessage());
-                individualMode(yyjh = new Main());
-            }
-            try {
-                individualModeRead(firstName, routineType);
-            }
-            catch (IOException e) {
-                System.out.println("Player name and routine type combination inputted is not saved in memory");
-            }
-        }
+        //yyjh.showCard("card2");
+//        System.out.println("Type start to start judging a player or load to load from memory");
+//        String choice = scanner.nextLine();
+//        if (choice.equals("start")) {
+//            try {
+//                try {
+//                    String routineType = retrieveRoutineType(choice);
+//                    yyjh.start(routineType);
+//                } catch (IncorrectUserInputException e) {
+//                    System.out.println(e.getMessage());
+//                    individualMode(yyjh = new Main());
+//                }
+//            } catch (IOException e) {
+//                System.out.println("Data save problem");
+//            }
+//        }
+//        else if (choice.equals("load")) {
+//            String firstName = retrieveJudgedPlayerName();
+//            String routineType = null;
+//            try {
+//                routineType = retrieveRoutineType(choice);
+//            } catch (IncorrectUserInputException e) {
+//                System.out.println(e.getMessage());
+//                individualMode(yyjh = new Main());
+//            }
+//            try {
+//                individualModeRead(firstName, routineType);
+//            }
+//            catch (IOException e) {
+//                System.out.println("Player name and routine type combination inputted is not saved in memory");
+//            }
+//        }
     }
 
 
