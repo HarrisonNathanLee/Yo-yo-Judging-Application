@@ -186,7 +186,6 @@ public class Main {
 //        }
     }
 
-
     private void createUIComponents() {
         panelStartOrLoad = new StartOrLoad().getPanel();
         panelPickRoutineType = new PickRoutineType().getPanel();
