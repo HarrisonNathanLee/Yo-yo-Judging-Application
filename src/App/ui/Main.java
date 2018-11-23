@@ -21,35 +21,31 @@ public class Main {
     static AppStrategy appStrategy;
     private Scraper scrpr;
     private JPanel panelMain;
-    private JPanel firstPanel;
     private JButton competitionButton;
     private JButton individualButton;
-    private JPanel panelStartOrLoad;
-    private JPanel panelPickRoutineType;
-    private JPanel panelPlayerInformation;
     private JFrame frame;
-    CardLayout card = (CardLayout)panelMain.getLayout();
+    //CardLayout card = (CardLayout)panelMain.getLayout();
 
 
     public Main() {
-        addCard(panelStartOrLoad,"card2");
-        addCard(panelPlayerInformation,"card3");
-        addCard(panelPickRoutineType,"card4");
-        competitionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onCompetitionPress();
-//                appStrategy = new CompetitionStrategy();
-//                try {
-//                    appStrategy.callMode();
-//                } catch (IOException e1) {
-//                    e1.printStackTrace();
-//                } catch (AlreadyInCompetitionException e1) {
-//                    System.out.println(e1.getMessage());
-//                }
-
-            }
-        });
+//        addCard(panelStartOrLoad,"card2");
+//        addCard(panelPlayerInformation,"card3");
+//        addCard(panelPickRoutineType,"card4");
+//        competitionButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                onCompetitionPress();
+////                appStrategy = new CompetitionStrategy();
+////                try {
+////                    appStrategy.callMode();
+////                } catch (IOException e1) {
+////                    e1.printStackTrace();
+////                } catch (AlreadyInCompetitionException e1) {
+////                    System.out.println(e1.getMessage());
+////                }
+//
+//            }
+//        });
         individualButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,8 +63,9 @@ public class Main {
     }
 
     public void onCompetitionPress(){
-        showCard("card2");
-        appStrategy = new CompetitionStrategy();
+        //frame.setContentPane(new StartOrLoad().getPanel());
+//        showCard("card2");
+//        appStrategy = new CompetitionStrategy();
 //        try {
 //            appStrategy.callMode();
 //        } catch (IOException e) {
@@ -78,8 +75,11 @@ public class Main {
 //        }
     }
     public void onIndividualPress(){
-        showCard("card2");
-        appStrategy = new IndividualStrategy();
+        System.out.println("Pressed!");
+        StartOrLoad panel = new StartOrLoad();
+        frame.setContentPane(panel.panelStartOrLoad);
+//        showCard("card2");
+//        appStrategy = new IndividualStrategy();
     }
 
     public void onStartPress(){
@@ -87,11 +87,12 @@ public class Main {
     }
 
     public void addCard(JPanel panel, String cardName){
-        card.addLayoutComponent(panel,cardName);
+        //card.addLayoutComponent(panel,cardName);
     }
 
     public void showCard(String cardName){
-        card.show(panelMain,cardName);
+
+        //card.show(panelMain,cardName);
     }
 
     //MODIFIES: This, Player
@@ -187,8 +188,8 @@ public class Main {
     }
 
     private void createUIComponents() {
-        panelStartOrLoad = new StartOrLoad().getPanel();
-        panelPickRoutineType = new PickRoutineType().getPanel();
+//        panelStartOrLoad = new StartOrLoad().getPanel();
+//        panelPickRoutineType = new PickRoutineType().getPanel();
         // TODO: place custom component creation code here
     }
 }
