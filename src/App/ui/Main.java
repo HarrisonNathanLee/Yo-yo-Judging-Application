@@ -76,8 +76,10 @@ public class Main {
     }
     public void onIndividualPress(){
         System.out.println("Pressed!");
-        StartOrLoad panel = new StartOrLoad();
-        frame.setContentPane(panel.panelStartOrLoad);
+        frame.remove(panelMain);
+        frame.setContentPane(new StartOrLoad(frame).getPanel());
+        frame.setVisible(true);
+        //frame.setVisible(true);
 //        showCard("card2");
 //        appStrategy = new IndividualStrategy();
     }
@@ -163,6 +165,7 @@ public class Main {
         yyjh.frame = new JFrame("Yo-yo Judge Application");
         yyjh.frame.setContentPane(new Main().panelMain);
         yyjh.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        yyjh.frame.setSize(400,400);
         yyjh.frame.pack();
         yyjh.frame.setVisible(true);
 

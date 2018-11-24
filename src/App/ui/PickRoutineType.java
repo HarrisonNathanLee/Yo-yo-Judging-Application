@@ -17,26 +17,25 @@ public class PickRoutineType{
     private JButton wildcardButton;
     private JButton twoMinuteFinalButton;
     private JButton semiFinalButton;
-    private JPanel panelPlayerInformation;
     private Player p;
     private PlayerDataAnalysis data;
-    CardLayout card = (CardLayout)panelPickRoutineType.getLayout();
-
-    public JPanel getPanel(){
-        return panelPickRoutineType;
-    }
+    private JFrame frame;
 
 
-    public PickRoutineType() {
-        card.addLayoutComponent(panelPlayerInformation,"card2");
+    public PickRoutineType(JFrame frame) {
+        this.frame = frame;
+        frame.setContentPane(panelPickRoutineType);
+        frame.setVisible(true);
         wildcardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 data = createPlayerSubtype("Wildcard");
                 p = data.getPlayer();
                 p.setRoutineType("Wildcard");
+                StateSingleton.getInstance().setPlayerDataAnalysis(data);
                 StateSingleton.getInstance().setPlayer(p);
-                card.show(panelPickRoutineType,"card2");
+                nextPanel();
+
             }
         });
         prelimButton.addActionListener(new ActionListener() {
@@ -45,8 +44,9 @@ public class PickRoutineType{
                 data = createPlayerSubtype("Prelim");
                 p = data.getPlayer();
                 p.setRoutineType("Prelim");
+                StateSingleton.getInstance().setPlayerDataAnalysis(data);
                 StateSingleton.getInstance().setPlayer(p);
-                card.show(panelPickRoutineType,"card2");
+                nextPanel();
 
             }
         });
@@ -56,8 +56,9 @@ public class PickRoutineType{
                 data = createPlayerSubtype("Semi");
                 p = data.getPlayer();
                 p.setRoutineType("Semi");
+                StateSingleton.getInstance().setPlayerDataAnalysis(data);
                 StateSingleton.getInstance().setPlayer(p);
-                card.show(panelPickRoutineType,"card2");
+                nextPanel();
 
             }
         });
@@ -67,8 +68,9 @@ public class PickRoutineType{
                 data = createPlayerSubtype("Two Minute Final");
                 p = data.getPlayer();
                 p.setRoutineType("Two Minute Final");
+                StateSingleton.getInstance().setPlayerDataAnalysis(data);
                 StateSingleton.getInstance().setPlayer(p);
-                card.show(panelPickRoutineType,"card2");
+                nextPanel();
 
             }
         });
@@ -78,8 +80,10 @@ public class PickRoutineType{
                 data = createPlayerSubtype("World Final");
                 p = data.getPlayer();
                 p.setRoutineType("World Final");
+                StateSingleton.getInstance().setPlayerDataAnalysis(data);
                 StateSingleton.getInstance().setPlayer(p);
-                card.show(panelPickRoutineType,"card2");
+                nextPanel();
+
             }
         });
     }
@@ -103,8 +107,14 @@ public class PickRoutineType{
         return null;
     }
 
-
-    private void createUIComponents() {
-        panelPlayerInformation = new PlayerInformation().getPanel();
+    public JPanel getPanel(){
+        return panelPickRoutineType;
     }
+
+    public void nextPanel(){
+        frame.remove(panelPickRoutineType);
+        frame.setContentPane(new PlayerInformation(frame).getPanel());
+        frame.setVisible(true);
+    }
+
 }

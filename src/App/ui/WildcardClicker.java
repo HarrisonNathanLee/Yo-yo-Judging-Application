@@ -3,10 +3,11 @@ package App.ui;
 import javax.swing.*;
 
 public class WildcardClicker {
-    private JTextField playerPositiveClicksTextField;
     private JPanel panelWildcardClicker;
+    private JFrame frame;
 
-    public WildcardClicker(){
+    public WildcardClicker(JFrame jframe){
+        this.frame = frame;
 
     }
 

@@ -13,8 +13,13 @@ public class WorldEvalInput {
     private JTextField enterTrickDiversityScoreTextField;
     private JPanel panelWorldEvalInput;
     private JButton submitButton;
+    private JFrame frame;
 
     public JPanel getPanel() {
         return panelWorldEvalInput;
+    }
+
+    public WorldEvalInput (JFrame frame){
+        this.frame = frame;
     }
 }

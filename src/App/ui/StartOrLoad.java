@@ -10,37 +10,34 @@ public class StartOrLoad {
     private JButton startButton;
     private JButton loadButton;
     public JPanel panelStartOrLoad;
-    private JPanel panelPickRoutineType;
-    private JPanel panelIndividualLoad;
-    private JPanel panelCompetitionLoad;
+    private JFrame frame;
     //CardLayout card = (CardLayout)panelStartOrLoad.getLayout();
 
-    public StartOrLoad() {
-//        card.addLayoutComponent(panelPickRoutineType,"card2");
-//        card.addLayoutComponent(panelIndividualLoad,"card3");
-//        startButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                card.show(panelStartOrLoad,"card2");
-//            }
-//        });
-//        loadButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                card.show(panelStartOrLoad,"card3");
-//
-//            }
-//        });
+    public StartOrLoad(JFrame frame) {
+        this.frame = frame;
+        frame.setContentPane(panelStartOrLoad);
+        frame.setVisible(true);
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(panelStartOrLoad);
+                frame.setContentPane(new PickRoutineType(frame).getPanel());
+                frame.setVisible(true);
+            }
+        });
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(panelStartOrLoad);
+                frame.setContentPane(new IndividualLoad(frame).getPanel());
+                frame.setVisible(true);
+
+            }
+        });
     }
 
-//    public JPanel getPanel(){
-//        return panelStartOrLoad;
-//    }
-
-    private void createUIComponents() {
-//        panelPickRoutineType = new PickRoutineType().getPanel();
-//        panelIndividualLoad = new IndividualLoad().getPanel();
-//        panelCompetitionLoad = new CompetitionLoad().getPanel();
-
+    public JPanel getPanel(){
+        return panelStartOrLoad;
     }
+
 }

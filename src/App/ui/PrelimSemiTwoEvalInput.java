@@ -9,8 +9,13 @@ public class PrelimSemiTwoEvalInput {
     private JTextField enterBodyControlScoreTextField;
     private JButton submitButton;
     private JPanel panelSemiTwoEvalInput;
+    private JFrame frame;
 
     public JPanel getPanel(){
         return panelSemiTwoEvalInput;
+    }
+
+    public PrelimSemiTwoEvalInput(JFrame frame){
+        this.frame = frame;
     }
 }

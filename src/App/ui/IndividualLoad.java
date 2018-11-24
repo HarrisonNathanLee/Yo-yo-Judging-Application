@@ -13,10 +13,11 @@ public class IndividualLoad {
     private JTextField routineTypeTextField;
     private JButton submitButton;
     private JPanel panelIndividualLoad;
+    private JFrame frame;
 
-    public IndividualLoad (){
+    public IndividualLoad (JFrame frame){
+        this.frame = frame;
         Player p = new WildcardPlayer();
-
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -30,7 +31,6 @@ public class IndividualLoad {
             }
         });
     }
-
 
 
     public JPanel getPanel(){

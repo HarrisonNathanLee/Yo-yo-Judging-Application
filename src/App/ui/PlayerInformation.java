@@ -11,18 +11,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PlayerInformation{
+public class PlayerInformation {
     private JPanel panelPlayerInformation;
-    private JPanel firstPanel;
     private JTextField firstNameTextField;
     private JTextField lastNameTextField;
     private JTextField divisionTextField;
+    private JLabel firstNameJLabel;
+    private JLabel lastNameJLabel;
+    private JLabel divisionJLabel;
     private JButton submitButton;
-    private JPanel panelWildcardClicker;
-    private JPanel panelClicker;
-    CardLayout card = (CardLayout)panelPlayerInformation.getLayout();
+    private JFrame frame;
 
-    public PlayerInformation() {
+    public PlayerInformation(JFrame frame) {
+        this.frame = frame;
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -38,18 +39,24 @@ public class PlayerInformation{
                 System.out.println(lastName);
                 System.out.println(division);
                 System.out.println(StateSingleton.getInstance().getPlayer().getRoutineType());
-                //card.addLayoutComponent(panelWildcardClicker,"card2");
-                //card.addLayoutComponent(panelClicker,"card3");
-                card.show(panelPlayerInformation, "Card3");
+                if (p.getRoutineType().equals("Wildcard")){
+                    frame.remove(panelPlayerInformation);
+                    frame.setContentPane(new WildcardClicker(frame).getPanel());
+                    frame.setVisible(true);
+                }
+                else{
+                    frame.remove(panelPlayerInformation);
+                    frame.setContentPane(new Clicker(frame).getPanel());
+                    frame.setVisible(true);
+                }
             }
         });
     }
-    public JPanel getPanel(){
+
+    public JPanel getPanel() {
         return panelPlayerInformation;
     }
 
-    private void createUIComponents() {
-        panelClicker = new Clicker().getPanel();
-        panelWildcardClicker = new WildcardClicker().getPanel();
-    }
 }
+
+
