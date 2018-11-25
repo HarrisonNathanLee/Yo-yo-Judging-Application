@@ -4,7 +4,7 @@ package App.player;
 public class WorldFinalPlayerDataAnalysis extends PlayerDataAnalysis{
 
     //CONSTRUCTOR
-    public WorldFinalPlayerDataAnalysis(WorldFinalPlayer p) {
+    public WorldFinalPlayerDataAnalysis(Player p) {
         super(p);
     }
 

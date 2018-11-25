@@ -86,7 +86,6 @@ public class CompetitionStrategy implements AppStrategy {
             PrelimTwoSemiCompetitionDataAnalysis cData = new PrelimTwoSemiCompetitionDataAnalysis(competition);
             return cData;
         }
-
         else if(routineType.equals("Final")){
             WorldFinalCompetitionDataAnalysis cData = new WorldFinalCompetitionDataAnalysis(competition);
             return cData;

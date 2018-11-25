@@ -23,7 +23,7 @@ public class Competition extends Loadable implements Saveable {
     private HashMap<String, Integer> hmap = new HashMap<String, Integer>();
 
     //MODIFIES: This
-    //EFFECTS: Sets the competitionName of the competition
+    //EFFECTS: Sets the CompetitionInformation of the competition
     public void setCompetitionName(String competitionName) {
         this.competitionName = competitionName;
     }
@@ -34,12 +34,19 @@ public class Competition extends Loadable implements Saveable {
         this.competitionRoutineType = competitionRoutineType;
     }
 
+    public void setCompetitionDivision(String competitionDivision) {
+        this.competitionDivision = competitionDivision;
+    }
+
+    public String getCompetitionDivision() {
+        return competitionDivision;
+    }
     //EFFECTS: Returns the return type of the competition
     public String getCompetitionRoutineType() {
         return competitionRoutineType;
     }
 
-    //EFFECTS: Returns the competitionName of the competition
+    //EFFECTS: Returns the CompetitionInformation of the competition
     public String getCompetitionName() {
         return competitionName;
     }

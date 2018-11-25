@@ -3,7 +3,7 @@ package App.player;
 public class PrelimTwoSemiPlayerDataAnalysis extends PlayerDataAnalysis {
 
     //CONSTRUCTOR
-    public PrelimTwoSemiPlayerDataAnalysis(PrelimTwoSemiPlayer p) {
+    public PrelimTwoSemiPlayerDataAnalysis(Player p) {
         super(p);
     }
 

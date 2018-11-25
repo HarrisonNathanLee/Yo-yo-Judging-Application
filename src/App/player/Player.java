@@ -62,7 +62,8 @@ public abstract class Player extends Loadable implements Saveable{
 
     //MODIFIES: This
     //EFFECTS: Retrieves the routine type of the App.player
-    public void setRoutineType(String routineType) { this.routineType = routineType; }
+    public void setRoutineType(String routineType) {
+        this.routineType = routineType; }
 
     //MODIFIES: This
     //EFFECTS: Retrieves the execution score of the App.player

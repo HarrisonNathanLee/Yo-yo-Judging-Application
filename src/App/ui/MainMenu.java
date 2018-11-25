@@ -1,5 +1,7 @@
 package App.ui;
 
+import App.Model.StateSingleton;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,14 +20,16 @@ public class MainMenu {
                 frame.remove(panelCompetitionOrIndividual);
                 frame.setContentPane(new StartOrLoad(frame).getPanel());
                 frame.setVisible(true);
+                StateSingleton.getInstance().setMode(false);
             }
         });
         Competition.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.remove(panelCompetitionOrIndividual);
-                frame.setContentPane(new StartOrLoad(frame).getPanel());
+                frame.setContentPane(new CompetitionInformation(frame).getPanel());
                 frame.setVisible(true);
+                StateSingleton.getInstance().setMode(true);
             }
         });
     }

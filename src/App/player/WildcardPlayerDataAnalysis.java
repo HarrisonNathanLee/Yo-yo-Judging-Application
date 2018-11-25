@@ -10,7 +10,7 @@ import java.util.List;
 
 public class WildcardPlayerDataAnalysis extends PlayerDataAnalysis {
 
-    public WildcardPlayerDataAnalysis(WildcardPlayer p) {
+    public WildcardPlayerDataAnalysis(Player p) {
         super(p);
     }
 

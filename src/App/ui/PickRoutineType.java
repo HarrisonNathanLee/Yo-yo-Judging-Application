@@ -1,12 +1,11 @@
 package App.ui;
 
-import App.Model.ObjectContainer;
+import App.Competition.*;
 import App.Model.StateSingleton;
 import App.player.*;
 
 import App.player.PlayerDataAnalysis;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,6 +18,8 @@ public class PickRoutineType{
     private JButton semiFinalButton;
     private Player p;
     private PlayerDataAnalysis data;
+    private CompetitionDataAnalysis cData;
+    private Competition c;
     private JFrame frame;
 
 
@@ -29,11 +30,12 @@ public class PickRoutineType{
         wildcardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                data = createPlayerSubtype("Wildcard");
-                p = data.getPlayer();
-                p.setRoutineType("Wildcard");
-                StateSingleton.getInstance().setPlayerDataAnalysis(data);
-                StateSingleton.getInstance().setPlayer(p);
+                if (StateSingleton.getInstance().getMode()){
+                    createCompetitionAndCompetitionDataAnalysisSubtype("Wildcard");
+                }
+                else{
+                    createPlayerAndDataSubtype("Wildcard");
+                }
                 nextPanel();
 
             }
@@ -41,11 +43,12 @@ public class PickRoutineType{
         prelimButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                data = createPlayerSubtype("Prelim");
-                p = data.getPlayer();
-                p.setRoutineType("Prelim");
-                StateSingleton.getInstance().setPlayerDataAnalysis(data);
-                StateSingleton.getInstance().setPlayer(p);
+                if (StateSingleton.getInstance().getMode()){
+                    createCompetitionAndCompetitionDataAnalysisSubtype("Prelim");
+                }
+                else{
+                    createPlayerAndDataSubtype("Prelim");
+                }
                 nextPanel();
 
             }
@@ -53,11 +56,12 @@ public class PickRoutineType{
         semiFinalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                data = createPlayerSubtype("Semi");
-                p = data.getPlayer();
-                p.setRoutineType("Semi");
-                StateSingleton.getInstance().setPlayerDataAnalysis(data);
-                StateSingleton.getInstance().setPlayer(p);
+                if (StateSingleton.getInstance().getMode()){
+                    createCompetitionAndCompetitionDataAnalysisSubtype("Semi");
+                }
+                else{
+                    createPlayerAndDataSubtype("Semi");
+                }
                 nextPanel();
 
             }
@@ -65,11 +69,12 @@ public class PickRoutineType{
         twoMinuteFinalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                data = createPlayerSubtype("Two Minute Final");
-                p = data.getPlayer();
-                p.setRoutineType("Two Minute Final");
-                StateSingleton.getInstance().setPlayerDataAnalysis(data);
-                StateSingleton.getInstance().setPlayer(p);
+                if (StateSingleton.getInstance().getMode()){
+                    createCompetitionAndCompetitionDataAnalysisSubtype("Two Minute Final");
+                }
+                else{
+                    createPlayerAndDataSubtype("Two Minute Final");
+                }
                 nextPanel();
 
             }
@@ -77,11 +82,12 @@ public class PickRoutineType{
         worldFinalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                data = createPlayerSubtype("World Final");
-                p = data.getPlayer();
-                p.setRoutineType("World Final");
-                StateSingleton.getInstance().setPlayerDataAnalysis(data);
-                StateSingleton.getInstance().setPlayer(p);
+                if (StateSingleton.getInstance().getMode()){
+                    createCompetitionAndCompetitionDataAnalysisSubtype("World Final");
+                }
+                else{
+                    createPlayerAndDataSubtype("World FInal");
+                }
                 nextPanel();
 
             }
@@ -90,21 +96,75 @@ public class PickRoutineType{
 
     //MODIFIES: This, Player
     //EFFECTS: Creates player and playerDataAnalysis subtypes depending on user-inputted routineType
-    public PlayerDataAnalysis createPlayerSubtype(String routineType) {
+    public void createPlayerAndDataSubtype(String routineType) {
         if (routineType.equals("Wildcard")) {
-            WildcardPlayer p = new WildcardPlayer();
-            WildcardPlayerDataAnalysis data = new WildcardPlayerDataAnalysis(p);
-            return data;
+            p = new WildcardPlayer();
+            p.setRoutineType("Wildcard");
+            p.setRoutineLength("Wildcard");
+            data = new WildcardPlayerDataAnalysis(p);
+            StateSingleton.getInstance().setPlayer(p);
+            StateSingleton.getInstance().setPlayerDataAnalysis(data);
         } else if (routineType.equals("Prelim") || routineType.equals("Semi") || routineType.equals("Two Minute Final")) {
-            PrelimTwoSemiPlayer p = new PrelimTwoSemiPlayer();
-            PrelimTwoSemiPlayerDataAnalysis data = new PrelimTwoSemiPlayerDataAnalysis(p);
-            return data;
+            p = new PrelimTwoSemiPlayer();
+            data = new PrelimTwoSemiPlayerDataAnalysis(p);
+            if (routineType.equals("Prelim")){
+                p.setRoutineType("Prelim");
+                p.setRoutineLength("Prelim");
+            }
+            else if(routineType.equals("Semi")){
+                p.setRoutineType("Semi");
+                p.setRoutineLength("Semi");
+            }
+            else if(routineType.equals("Two Minute Final")){
+                p.setRoutineType("Two Minute Final");
+                p.setRoutineLength("Two Minute Final");
+            }
+            StateSingleton.getInstance().setPlayer(p);
+            StateSingleton.getInstance().setPlayerDataAnalysis(data);
         } else if (routineType.equals("World Final")) {
-            WorldFinalPlayer p = new WorldFinalPlayer();
-            WorldFinalPlayerDataAnalysis data = new WorldFinalPlayerDataAnalysis(p);
-            return data;
+            p = new WorldFinalPlayer();
+            p.setRoutineType("World Final");
+            p.setRoutineLength("World Final");
+            data = new WorldFinalPlayerDataAnalysis(p);
+            StateSingleton.getInstance().setPlayer(p);
+            StateSingleton.getInstance().setPlayerDataAnalysis(data);
         }
-        return null;
+    }
+
+    //EFFECTS: Factory - creates competition data analysis subtype based on user input
+    public void createCompetitionAndCompetitionDataAnalysisSubtype(String routineType){
+        c = new Competition();
+        if(routineType.equals("Wildcard")){
+            cData = new WildcardCompetitionDataAnalysis(c);
+            c.setCompetitionRoutineType("Wildcard");
+            StateSingleton.getInstance().setCompetition(c);
+            StateSingleton.getInstance().setCompetitionDataAnalysis(cData);
+
+        }
+        else if(routineType.equals("Prelim") || routineType.equals("Two Minute Final") || routineType.equals("Semi")){
+            cData = new PrelimTwoSemiCompetitionDataAnalysis(c);
+            if (routineType.equals("Prelim")){
+                c.setCompetitionRoutineType("Prelim");
+            }
+            else if(routineType.equals("Semi")){
+                c.setCompetitionRoutineType("Semi");
+            }
+            else if(routineType.equals("Two Minute Final")){
+                c.setCompetitionRoutineType("Two Minute Final");
+            }
+
+            StateSingleton.getInstance().setCompetition(c);
+            StateSingleton.getInstance().setCompetitionDataAnalysis(cData);
+
+
+        }
+        else if(routineType.equals("Final")){
+            cData = new WorldFinalCompetitionDataAnalysis(c);
+            c.setCompetitionRoutineType("World Final");
+            StateSingleton.getInstance().setCompetition(c);
+            StateSingleton.getInstance().setCompetitionDataAnalysis(cData);
+
+        }
     }
 
     public JPanel getPanel(){

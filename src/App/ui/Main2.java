@@ -13,3 +13,6 @@ public class Main2 {
 
     }
 }
+
+//TODO: Add previous panel option
+//TOOD; CompetitionStrategy??? Individual Strategy????
