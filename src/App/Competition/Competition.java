@@ -109,7 +109,7 @@ public class Competition extends Loadable implements Saveable {
 
     //EFFECTS: Saves the data for all players in a competition to two CSV files
     public void save(String saveLocation) throws IOException{
-        PrintWriter pw1 = new PrintWriter(new FileOutputStream(saveLocation + "Player.csv", true));
+        PrintWriter pw1 = new PrintWriter(new FileOutputStream(saveLocation, true));
         for (Player p: players) {
             if (p == null){
                 // do nothing
@@ -120,7 +120,7 @@ public class Competition extends Loadable implements Saveable {
             }
         }
         pw1.close();
-        PrintWriter pw2 = new PrintWriter(new FileOutputStream(saveLocation + "PlayerDataAnalysis.csv", true));
+        PrintWriter pw2 = new PrintWriter(new FileOutputStream(saveLocation, true));
         for (PlayerDataAnalysis data : dataAnalyses) {
             if (data == null){
                 // do nothing
@@ -135,8 +135,8 @@ public class Competition extends Loadable implements Saveable {
 
     //EFFECTS: Reads data from competition files
     public void load(String saveLocation) throws IOException {
-        List<String> playerLines = Files.readAllLines(Paths.get(saveLocation + "Player.csv"));
-        List<String> playerDataAnalysisLines = Files.readAllLines(Paths.get(saveLocation + "PlayerDataAnalysis.csv"));
+        List<String> playerLines = Files.readAllLines(Paths.get(saveLocation));
+        List<String> playerDataAnalysisLines = Files.readAllLines(Paths.get(saveLocation));
         int i = 0;
         for (String playerLine : playerLines) {
             ArrayList<String> playerPartsOfLine = splitOnComma(playerLine);

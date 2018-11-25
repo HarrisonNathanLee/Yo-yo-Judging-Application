@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static App.player.Player.ANALYZEDDATA;
+
 public class WildcardPlayerDataAnalysis extends PlayerDataAnalysis {
 
     public WildcardPlayerDataAnalysis(Player p) {
@@ -61,12 +63,10 @@ public class WildcardPlayerDataAnalysis extends PlayerDataAnalysis {
 
     //EFFECTS: Prints wildcard App.player data analysis information from memory
     public void printLoadOutput(ArrayList<String> partsOfLine){
-        System.out.println(SCORESFROMMEMORY);
         System.out.println(STRINGBREAK);
-        System.out.println("firstName: " + partsOfLine.get(0));
-        System.out.println("lastName: " + partsOfLine.get(1));
-        System.out.println("CPS: " + partsOfLine.get(2));
-        System.out.println(STRINGBREAK);
+        String fullName = partsOfLine.get(0) + " " + partsOfLine.get(1) + "'s ";
+        System.out.println(fullName + ANALYZEDDATA);
+        System.out.println("Clicks per second: " + partsOfLine.get(2));
     }
 
 }

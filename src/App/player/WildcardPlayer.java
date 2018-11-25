@@ -54,13 +54,14 @@ public class WildcardPlayer extends Player {
     public void printLoadOutput(ArrayList<String> partsOfLine){
         System.out.println(SCORESFROMMEMORY);
         System.out.println(STRINGBREAK);
-        System.out.println("firstName: " + partsOfLine.get(0));
-        System.out.println("lastName: " + partsOfLine.get(1));
-        System.out.println("division: " + partsOfLine.get(2));
-        System.out.println("routineType: " + partsOfLine.get(3));
-        System.out.println("positiveClicks: " + partsOfLine.get(4));
-        System.out.println("clickerScore: " + partsOfLine.get(5));
+        String fullName = partsOfLine.get(0) + " " + partsOfLine.get(1) + "'s ";
+        System.out.println(fullName + "routine information:");
+        System.out.println("Division: " + partsOfLine.get(2));
+        System.out.println("Routine Type: " + partsOfLine.get(3));
         System.out.println(STRINGBREAK);
+        System.out.println(fullName + "technical data:");
+        System.out.println("Positive clicks: " + partsOfLine.get(4));
+        System.out.println("Clickerscore: " + partsOfLine.get(5));
     }
 
 

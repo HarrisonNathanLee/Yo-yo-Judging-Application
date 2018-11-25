@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import App.Model.StateSingleton;
 import App.ui.*;
 
 public class StartOrLoad {
@@ -20,9 +22,18 @@ public class StartOrLoad {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.remove(panelStartOrLoad);
-                frame.setContentPane(new PickRoutineType(frame).getPanel());
-                frame.setVisible(true);
+                if (StateSingleton.getInstance().getMode()){
+                    frame.remove(panelStartOrLoad);
+                    frame.setContentPane(new CompetitionInformation(frame).getPanel());
+                    frame.setVisible(true);
+                    StateSingleton.getInstance().setStartOrLoad(true);
+                }
+                else{
+                    frame.remove(panelStartOrLoad);
+                    frame.setContentPane(new PickRoutineType(frame).getPanel());
+                    frame.setVisible(true);
+                    StateSingleton.getInstance().setStartOrLoad(true);
+                }
             }
         });
         loadButton.addActionListener(new ActionListener() {
@@ -31,6 +42,7 @@ public class StartOrLoad {
                 frame.remove(panelStartOrLoad);
                 frame.setContentPane(new IndividualLoad(frame).getPanel());
                 frame.setVisible(true);
+                StateSingleton.getInstance().setStartOrLoad(false);
 
             }
         });

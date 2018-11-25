@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 public class StartJudging {
     private JPanel panelStartJudging;
-    private JFrame frame
+    private JFrame frame;
 
 
     public StartJudging(JFrame frame) {

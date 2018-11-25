@@ -9,16 +9,19 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
 import static App.ui.Routine.STRINGBREAK;
 
-public class IndividualModeOutput {
+public class IndividualModeOutput extends ConsoleToUI{
     private static final String PERFORMANCEEVALS = "'s performance evaluation scores: ";
     private JPanel panelIndividualModeOutput;
     private JTextPane outputTextPane;
+    private JButton continueButton;
     private JFrame frame;
     private Player p ;
     private PlayerDataAnalysis data;
@@ -27,18 +30,57 @@ public class IndividualModeOutput {
         this.frame = frame;
         p = StateSingleton.getInstance().getPlayer();
         data = StateSingleton.getInstance().getPlayerDataAnalysis();
-        data.callAllDataAnalysis();
-        redirectSystemStreams();
-        printRoutineClickInformation(p);
-        printRoutineMajorDeductInformation(p);
-        if (p.getRoutineType().equals("Prelim") ||p.getRoutineType().equals("Semi") || p.getRoutineType().equals("Two Minute Final")) {
-            prelimTwoSemiPerformanceEvals(p);
+        if (StateSingleton.getInstance().getStartOrLoad()){
+            data.callAllDataAnalysis();
+            redirectSystemStreams(outputTextPane);
+            if (p.getRoutineType().equals("Prelim") ||p.getRoutineType().equals("Semi") || p.getRoutineType().equals("Two Minute Final")) {
+                printRoutineClickInformation(p);
+                printRoutineMajorDeductInformation(p);
+                prelimTwoSemiPerformanceEvals(p);
+                printAnalyzedRoutineInformation(data, p);
+            }
+            else if(p.getRoutineType().equals("World Final")) {
+                printRoutineClickInformation(p);
+                printRoutineMajorDeductInformation(p);
+                worldPerformanceEvals(p);
+                printAnalyzedRoutineInformation(data, p);
+            }
+            else if(p.getRoutineType().equals("Wildcard")){
+                printWildcardRoutineClickInformation(p);
+                printWildcardAnalyzedRoutineInformation(data,p);
+            }
         }
-        else if(p.getRoutineType().equals("World Final")) {
-            worldPerformanceEvals(p);
+        else{
+            String playerSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() +"_" + "Player.csv";
+            String dataSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "PlayerDataAnalysis.csv";
+            redirectSystemStreams(outputTextPane);
+            try {
+                p.load(playerSaveLocation);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+            try {
+                data.load(dataSaveLocation);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
-        printAnalyzedRoutineInformation(data, p);
+        continueButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(StateSingleton.getInstance().getMode()){
+                    frame.remove(panelIndividualModeOutput);
+                    frame.setContentPane(new AnotherPlayer(frame).getPanel());
+                    frame.setVisible(true);
 
+                }
+                else{
+                    frame.remove(panelIndividualModeOutput);
+                    frame.setContentPane(new MainMenu(frame).getPanel());
+                    frame.setVisible(true);
+                }
+            }
+        });
     }
 
     //EFFECTS: Prints judge inputted performance evaluations
@@ -72,7 +114,13 @@ public class IndividualModeOutput {
         System.out.println("Negative clicks: " + p.getNegativeClicks());
         System.out.println("Clickerscore: " + p.getClickerScore());
         System.out.println(STRINGBREAK);
+    }
 
+    public void printWildcardRoutineClickInformation(Player p) {
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s technical data: ");
+        System.out.println("Positive clicks: " + p.getPositiveClicks());
+        System.out.println("Clickerscore: " + p.getClickerScore());
+        System.out.println(STRINGBREAK);
     }
 
     private void printRoutineMajorDeductInformation(Player p) {
@@ -100,41 +148,48 @@ public class IndividualModeOutput {
         System.out.println(STRINGBREAK);
     }
 
-    private void updateTextPane(final String text) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                Document doc = outputTextPane.getDocument();
-                try {
-                    doc.insertString(doc.getLength(), text, null);
-                } catch (BadLocationException e) {
-                    throw new RuntimeException(e);
-                }
-                outputTextPane.setCaretPosition(doc.getLength() - 1);
-            }
-        });
+    public void printWildcardAnalyzedRoutineInformation(PlayerDataAnalysis data, Player p){
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s analyzed technical data");
+        System.out.println("Clicks per second: " + data.getCPS());
+        System.out.println(STRINGBREAK);
+
     }
 
-    private void redirectSystemStreams() {
-        OutputStream out = new OutputStream() {
-            @Override
-            public void write(final int b) throws IOException {
-                updateTextPane(String.valueOf((char) b));
-            }
-
-            @Override
-            public void write(byte[] b, int off, int len) throws IOException {
-                updateTextPane(new String(b, off, len));
-            }
-
-            @Override
-            public void write(byte[] b) throws IOException {
-                write(b, 0, b.length);
-            }
-        };
-
-        System.setOut(new PrintStream(out, true));
-        System.setErr(new PrintStream(out, true));
-    }
+//    private void updateTextPane(final String text) {
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                Document doc = outputTextPane.getDocument();
+//                try {
+//                    doc.insertString(doc.getLength(), text, null);
+//                } catch (BadLocationException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                outputTextPane.setCaretPosition(doc.getLength() - 1);
+//            }
+//        });
+//    }
+//
+//    private void redirectSystemStreams() {
+//        OutputStream out = new OutputStream() {
+//            @Override
+//            public void write(final int b) throws IOException {
+//                updateTextPane(String.valueOf((char) b));
+//            }
+//
+//            @Override
+//            public void write(byte[] b, int off, int len) throws IOException {
+//                updateTextPane(new String(b, off, len));
+//            }
+//
+//            @Override
+//            public void write(byte[] b) throws IOException {
+//                write(b, 0, b.length);
+//            }
+//        };
+//
+//        System.setOut(new PrintStream(out, true));
+//        System.setErr(new PrintStream(out, true));
+//    }
 
     public Container getPanel() {
         return panelIndividualModeOutput;

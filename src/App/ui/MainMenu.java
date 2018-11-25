@@ -27,7 +27,7 @@ public class MainMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.remove(panelCompetitionOrIndividual);
-                frame.setContentPane(new CompetitionInformation(frame).getPanel());
+                frame.setContentPane(new StartOrLoad(frame).getPanel());
                 frame.setVisible(true);
                 StateSingleton.getInstance().setMode(true);
             }

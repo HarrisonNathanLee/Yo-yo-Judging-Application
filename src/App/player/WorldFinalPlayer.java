@@ -84,32 +84,38 @@ public class WorldFinalPlayer extends Player {
     public void printLoadOutput(ArrayList<String> partsOfLine){
         System.out.println(SCORESFROMMEMORY);
         System.out.println(STRINGBREAK);
-        System.out.println("firstName: " + partsOfLine.get(0));
-        System.out.println("lastName: " + partsOfLine.get(1));
-        System.out.println("division: " + partsOfLine.get(2));
-        System.out.println("routineType: " + partsOfLine.get(3));
-        System.out.println("positiveClicks: " + partsOfLine.get(4));
-        System.out.println("negativeClicks: " + partsOfLine.get(5));
-        System.out.println("clickerScore: " + partsOfLine.get(6));
-        System.out.println("numberOfRestarts: " + partsOfLine.get(7));
-        System.out.println("numberOfChanges: " + partsOfLine.get(8));
-        System.out.println("numberOfDiscards: " + partsOfLine.get(9));
-        System.out.println("restartFinal: " + partsOfLine.get(10));
-        System.out.println("changeFinal: " + partsOfLine.get(11));
-        System.out.println("discardFinal: " + partsOfLine.get(12));
-        System.out.println("execution: " + partsOfLine.get(13));
-        System.out.println("control: " + partsOfLine.get(14));
-        System.out.println("trickDiversity: " + partsOfLine.get(15));
-        System.out.println("spaceUseAndEmphasis: " + partsOfLine.get(16));
-        System.out.println("choreography: " + partsOfLine.get(17));
-        System.out.println("bodyControl: " + partsOfLine.get(18));
-        System.out.println("showmanship: " + partsOfLine.get(19));
+        String fullName = partsOfLine.get(0) + " " + partsOfLine.get(1) + "'s ";
+        System.out.println(fullName + "routine information:");
+        System.out.println(fullName + ROUTINEINFORMATION);
+        System.out.println("Division: " + partsOfLine.get(2));
+        System.out.println("Routine type: " + partsOfLine.get(3));
+        System.out.println(STRINGBREAK);
+        System.out.println(fullName + TECHNICALDATA);
+        System.out.println("Positive Clicks: " + partsOfLine.get(4));
+        System.out.println("Negative Clicks: " + partsOfLine.get(5));
+        System.out.println("Clickerscore: " + partsOfLine.get(6));
+        System.out.println(STRINGBREAK);
+        System.out.println(fullName + MAJORDEDUCTSCORES);
+        System.out.println("Number of restarts: " + partsOfLine.get(7));
+        System.out.println("Final restart score: " + partsOfLine.get(10));
+        System.out.println("Number of changes: " + partsOfLine.get(8));
+        System.out.println("Final change score: " + partsOfLine.get(11));
+        System.out.println("Number of discards: " + partsOfLine.get(9));
+        System.out.println("Final discard score: " + partsOfLine.get(12));
+        System.out.println(fullName + PERFORMANCEEVALS);
+        System.out.println("Execution: " + partsOfLine.get(13));
+        System.out.println("Control: " + partsOfLine.get(14));
+        System.out.println("Trick Diversity: " + partsOfLine.get(15));
+        System.out.println("Space Use And Emphasis: " + partsOfLine.get(16));
+        System.out.println("Choreography: " + partsOfLine.get(17));
+        System.out.println("Body Control: " + partsOfLine.get(18));
+        System.out.println("Showmanship: " + partsOfLine.get(19));
         System.out.println(STRINGBREAK);
     }
 
     //EFFECTS: Prints judge inputted performance evaluations
     public void getPerformanceEvals(Player p) {
-        System.out.println(p.getFirstName() + " " + p.getLastName() + PERFORMANCEEVALS);
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s" + PERFORMANCEEVALS);
         System.out.println("Execution: " + p.getExecution());
         System.out.println("Control: " + p.getControl());
         System.out.println("Trick Diversity: " + p.getTrickDiversity());

@@ -2,10 +2,12 @@ package App.ui;
 
 import App.Model.StateSingleton;
 import App.player.Player;
+import App.player.PlayerDataAnalysis;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class WorldEvalInput {
     private JTextField enterExecutionScoreTextField;
@@ -27,6 +29,7 @@ public class WorldEvalInput {
     public WorldEvalInput (JFrame frame){
         this.frame = frame;
         Player p = StateSingleton.getInstance().getPlayer();
+        PlayerDataAnalysis data = StateSingleton.getInstance().getPlayerDataAnalysis();
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,9 +50,22 @@ public class WorldEvalInput {
                 p.setConstruction(construction);
                 p.setTrickDiversity(trickDiversity);
                 StateSingleton.getInstance().setPlayer(p);
+                String playerSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "Player.csv";
+                String dataSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "PlayerDataAnalysis.csv";
+                try {
+                    p.save(playerSaveLocation);
+                } catch (IOException e1) {
+                    System.out.println(e1.getMessage());
+                }
+                try {
+                    data.save(dataSaveLocation);
+                } catch (IOException e1) {
+                    System.out.println(e1.getMessage());
+                }
                 frame.remove(panelWorldEvalInput);
                 frame.setContentPane(new IndividualModeOutput(frame).getPanel());
                 frame.setVisible(true);
+
             }
         });
     }

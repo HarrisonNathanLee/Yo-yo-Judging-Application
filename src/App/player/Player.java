@@ -38,10 +38,14 @@ public abstract class Player extends Loadable implements Saveable{
     protected int discardFinal = 0;
     protected String saveLocation = "player.csv";
     protected static final String STRINGBREAK  = "---------------------------------------";
-    protected static final String SCORESFROMMEMORY = "Player information and raw scores from memory";
-    protected static final String PERFORMANCEEVALS = "'s performance evaluation scores: ";
+    protected static final String SCORESFROMMEMORY = "Player data from memory";
+    protected static final String PERFORMANCEEVALS = "performance evaluation scores: ";
     protected static final String POSITIVE = "positive";
     protected static final String NEGATIVE = "negative";
+    protected static final String TECHNICALDATA = "technical data:";
+    protected static final String ROUTINEINFORMATION = "routine information:";
+    protected static final String MAJORDEDUCTSCORES = "major deduct scores:";
+    protected static final String ANALYZEDDATA = "analyzed technical data:";
     ArrayList<String> clicksLog = new ArrayList<>();
 
     //MODIFIES: This

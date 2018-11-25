@@ -12,7 +12,16 @@ public class StateSingleton {
     private PlayerDataAnalysis playerDataAnalysis;
     private Competition competition;
     private CompetitionDataAnalysis competitionDataAnalysis;
-    private Boolean mode; // <- 1 for competition, 0 for individual
+    private Boolean mode; // <- true for competition, false for individual
+    private Boolean startOrLoad ; // <- true for start, false for load
+
+    public Boolean getStartOrLoad() {
+        return startOrLoad;
+    }
+
+    public void setStartOrLoad(Boolean startOrLoad) {
+        this.startOrLoad = startOrLoad;
+    }
 
     private StateSingleton() {
     }

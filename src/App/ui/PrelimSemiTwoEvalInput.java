@@ -2,10 +2,12 @@ package App.ui;
 
 import App.Model.StateSingleton;
 import App.player.Player;
+import App.player.PlayerDataAnalysis;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class PrelimSemiTwoEvalInput {
     private JTextField enterExecutionScoreTextField;
@@ -23,6 +25,7 @@ public class PrelimSemiTwoEvalInput {
     public PrelimSemiTwoEvalInput(JFrame frame){
         this.frame = frame;
         Player p = StateSingleton.getInstance().getPlayer();
+        PlayerDataAnalysis data = StateSingleton.getInstance().getPlayerDataAnalysis();
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -38,6 +41,19 @@ public class PrelimSemiTwoEvalInput {
                 frame.remove(panelSemiTwoEvalInput);
                 frame.setContentPane(new IndividualModeOutput(frame).getPanel());
                 frame.setVisible(true);
+                String playerSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "Player.csv";
+                String dataSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "PlayerDataAnalysis.csv";
+                try {
+                    p.save(playerSaveLocation);
+                } catch (IOException e1) {
+                    System.out.println(e1.getMessage());
+                }
+                try {
+                    data.save(dataSaveLocation);
+                } catch (IOException e1) {
+                    System.out.println(e1.getMessage());
+                }
+
             }
         });
     }

@@ -32,12 +32,12 @@ public class PickRoutineType{
             public void actionPerformed(ActionEvent e) {
                 if (StateSingleton.getInstance().getMode()){
                     createCompetitionAndCompetitionDataAnalysisSubtype("Wildcard");
+                    nextCompetitionPanel();
                 }
-                else{
+                else {
                     createPlayerAndDataSubtype("Wildcard");
+                    nextIndividualPanel();
                 }
-                nextPanel();
-
             }
         });
         prelimButton.addActionListener(new ActionListener() {
@@ -45,11 +45,12 @@ public class PickRoutineType{
             public void actionPerformed(ActionEvent e) {
                 if (StateSingleton.getInstance().getMode()){
                     createCompetitionAndCompetitionDataAnalysisSubtype("Prelim");
+                    nextCompetitionPanel();
                 }
                 else{
                     createPlayerAndDataSubtype("Prelim");
+                    nextIndividualPanel();
                 }
-                nextPanel();
 
             }
         });
@@ -58,12 +59,13 @@ public class PickRoutineType{
             public void actionPerformed(ActionEvent e) {
                 if (StateSingleton.getInstance().getMode()){
                     createCompetitionAndCompetitionDataAnalysisSubtype("Semi");
+                    nextCompetitionPanel();
+
                 }
                 else{
                     createPlayerAndDataSubtype("Semi");
+                    nextIndividualPanel();
                 }
-                nextPanel();
-
             }
         });
         twoMinuteFinalButton.addActionListener(new ActionListener() {
@@ -71,12 +73,12 @@ public class PickRoutineType{
             public void actionPerformed(ActionEvent e) {
                 if (StateSingleton.getInstance().getMode()){
                     createCompetitionAndCompetitionDataAnalysisSubtype("Two Minute Final");
+                    nextCompetitionPanel();
                 }
                 else{
                     createPlayerAndDataSubtype("Two Minute Final");
+                    nextIndividualPanel();
                 }
-                nextPanel();
-
             }
         });
         worldFinalButton.addActionListener(new ActionListener() {
@@ -84,12 +86,12 @@ public class PickRoutineType{
             public void actionPerformed(ActionEvent e) {
                 if (StateSingleton.getInstance().getMode()){
                     createCompetitionAndCompetitionDataAnalysisSubtype("World Final");
+                    nextCompetitionPanel();
                 }
                 else{
-                    createPlayerAndDataSubtype("World FInal");
+                    createPlayerAndDataSubtype("World Final");
+                    nextIndividualPanel();
                 }
-                nextPanel();
-
             }
         });
     }
@@ -139,7 +141,6 @@ public class PickRoutineType{
             c.setCompetitionRoutineType("Wildcard");
             StateSingleton.getInstance().setCompetition(c);
             StateSingleton.getInstance().setCompetitionDataAnalysis(cData);
-
         }
         else if(routineType.equals("Prelim") || routineType.equals("Two Minute Final") || routineType.equals("Semi")){
             cData = new PrelimTwoSemiCompetitionDataAnalysis(c);
@@ -156,7 +157,6 @@ public class PickRoutineType{
             StateSingleton.getInstance().setCompetition(c);
             StateSingleton.getInstance().setCompetitionDataAnalysis(cData);
 
-
         }
         else if(routineType.equals("Final")){
             cData = new WorldFinalCompetitionDataAnalysis(c);
@@ -171,7 +171,13 @@ public class PickRoutineType{
         return panelPickRoutineType;
     }
 
-    public void nextPanel(){
+    public void nextIndividualPanel(){
+        frame.remove(panelPickRoutineType);
+        frame.setContentPane(new PlayerInformation(frame).getPanel());
+        frame.setVisible(true);
+    }
+
+    public void nextCompetitionPanel(){
         frame.remove(panelPickRoutineType);
         frame.setContentPane(new PlayerInformation(frame).getPanel());
         frame.setVisible(true);

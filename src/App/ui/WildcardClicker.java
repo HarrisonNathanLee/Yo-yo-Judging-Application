@@ -7,6 +7,7 @@ import App.player.PlayerDataAnalysis;
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class WildcardClicker {
     private JPanel panelWildcardClicker;
@@ -40,6 +41,21 @@ public class WildcardClicker {
                     p.produceClickerScore();
                     System.out.println(p.getClickerScore());
                     StateSingleton.getInstance().setPlayer(p);
+                    String playerSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "Player.csv";
+                    String dataSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "PlayerDataAnalysis.csv";
+                    try {
+                        p.save(playerSaveLocation);
+                    } catch (IOException e1) {
+                        System.out.println(e1.getMessage());
+                    }
+                    try {
+                        data.save(dataSaveLocation);
+                    } catch (IOException e1) {
+                        System.out.println(e1.getMessage());
+                    }
+                    frame.remove(panelWildcardClicker);
+                    frame.setContentPane(new IndividualModeOutput(frame).getPanel());
+                    frame.setVisible(true);
                 }
             }
         });
