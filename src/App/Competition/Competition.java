@@ -94,6 +94,8 @@ public class Competition extends Loadable implements Saveable {
         return temporary;
     }
 
+
+
     public void addSortPrintHMAP(){
         addPlayersToHMAP();
         Map<String, Integer> hmap2 = sortByValue(hmap);
@@ -109,7 +111,7 @@ public class Competition extends Loadable implements Saveable {
 
     //EFFECTS: Saves the data for all players in a competition to two CSV files
     public void save(String saveLocation) throws IOException{
-        PrintWriter pw1 = new PrintWriter(new FileOutputStream(saveLocation, true));
+        PrintWriter pw1 = new PrintWriter(new FileOutputStream(saveLocation+"Players.csv", true));
         for (Player p: players) {
             if (p == null){
                 // do nothing
@@ -120,7 +122,7 @@ public class Competition extends Loadable implements Saveable {
             }
         }
         pw1.close();
-        PrintWriter pw2 = new PrintWriter(new FileOutputStream(saveLocation, true));
+        PrintWriter pw2 = new PrintWriter(new FileOutputStream(saveLocation+"PlayerDataAnalyses.csv", true));
         for (PlayerDataAnalysis data : dataAnalyses) {
             if (data == null){
                 // do nothing
@@ -135,8 +137,8 @@ public class Competition extends Loadable implements Saveable {
 
     //EFFECTS: Reads data from competition files
     public void load(String saveLocation) throws IOException {
-        List<String> playerLines = Files.readAllLines(Paths.get(saveLocation));
-        List<String> playerDataAnalysisLines = Files.readAllLines(Paths.get(saveLocation));
+        List<String> playerLines = Files.readAllLines(Paths.get(saveLocation+"Players.csv"));
+        List<String> playerDataAnalysisLines = Files.readAllLines(Paths.get(saveLocation+"PlayerDataAnalyses.csv"));
         int i = 0;
         for (String playerLine : playerLines) {
             ArrayList<String> playerPartsOfLine = splitOnComma(playerLine);

@@ -26,14 +26,6 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="5c979" class="javax.swing.JTextField" binding="divisionTextField">
-        <constraints>
-          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
       <component id="564df" class="javax.swing.JLabel" binding="firstNameJLabel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -48,14 +40,6 @@
         </constraints>
         <properties>
           <text value="Input the player's last name"/>
-        </properties>
-      </component>
-      <component id="5580a" class="javax.swing.JLabel" binding="divisionJLabel">
-        <constraints>
-          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Input the player's division"/>
         </properties>
       </component>
       <vspacer id="b413a">
@@ -80,6 +64,28 @@
         <properties>
           <hideActionText value="false"/>
           <text value="Submit"/>
+        </properties>
+      </component>
+      <component id="fc22d" class="javax.swing.JComboBox" binding="divisionComboBox">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="1a"/>
+            <item value="2a"/>
+            <item value="3a"/>
+            <item value="4a"/>
+            <item value="5a"/>
+          </model>
+        </properties>
+      </component>
+      <component id="c3247" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Input the player's division"/>
         </properties>
       </component>
     </children>

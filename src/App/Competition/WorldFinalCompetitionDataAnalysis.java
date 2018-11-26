@@ -151,10 +151,12 @@ public class WorldFinalCompetitionDataAnalysis extends CompetitionDataAnalysis {
         int ep2 = 22;
         int ep3 = partsOfLine.size();
         System.out.println(ANALYSISINTROMEMORY);
-        System.out.println(STRINGBREAK);
         printLoadOutputHelper(MEANSTRING,partsOfLine,sp,ep1);
+        System.out.println(STRINGBREAK);
         printLoadOutputHelper(VARIANCESTRING,partsOfLine,ep1,ep2);
+        System.out.println(STRINGBREAK);
         printLoadOutputHelper(SDSTRING, partsOfLine,ep2,ep3);
+        System.out.println(STRINGBREAK);
     }
 
     //MODIFIES: This
@@ -209,6 +211,7 @@ public class WorldFinalCompetitionDataAnalysis extends CompetitionDataAnalysis {
         System.out.println(MEANSTRING + middleStrings.get(8) + ENDSTRING + meanConstruction);
         System.out.println(MEANSTRING + middleStrings.get(9) + ENDSTRING + meanBodyControl);
         System.out.println(MEANSTRING + middleStrings.get(10) + ENDSTRING + meanShowmanship);
+        System.out.println(STRINGBREAK);
         System.out.println(VARIANCESTRING + middleStrings.get(0)+ ENDSTRING + variancePositiveClicks);
         System.out.println(VARIANCESTRING + middleStrings.get(1)+ ENDSTRING + varianceNegativeClicks);
         System.out.println(VARIANCESTRING + middleStrings.get(2)+ ENDSTRING + varianceClickerscore);
@@ -220,6 +223,7 @@ public class WorldFinalCompetitionDataAnalysis extends CompetitionDataAnalysis {
         System.out.println(VARIANCESTRING + middleStrings.get(8)+ ENDSTRING + varianceConstruction);
         System.out.println(VARIANCESTRING + middleStrings.get(9)+ ENDSTRING + varianceBodyControl);
         System.out.println(VARIANCESTRING + middleStrings.get(10)+ ENDSTRING + varianceShowmanship);
+        System.out.println(STRINGBREAK);
         System.out.println(SDSTRING + middleStrings.get(0)+ ENDSTRING + sdPositiveClicks);
         System.out.println(SDSTRING + middleStrings.get(1)+ ENDSTRING + sdNegativeClicks);
         System.out.println(SDSTRING + middleStrings.get(2)+ ENDSTRING + sdClickerscore);

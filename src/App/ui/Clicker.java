@@ -6,6 +6,7 @@ import App.player.Player;
 import App.player.PlayerDataAnalysis;
 
 import javax.swing.*;
+import javax.swing.plaf.nimbus.State;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,17 +26,24 @@ public class Clicker extends ObjectContainer {
     private JLabel discardsJLabel;
     private JLabel numberChangesJLabel;
     private JLabel numberDiscardsJLabel;
+    private JLabel timeRemainingLabel;
     private JFrame frame;
+    private Timer stopwatch;
+    private int count;
+    private int delay = 1000;
+    private Player p;
+    private PlayerDataAnalysis data;
 
-    public Clicker(JFrame frame){
+    public Clicker(JFrame frame) {
         this.frame = frame;
+        p = StateSingleton.getInstance().getPlayer();
+        data = StateSingleton.getInstance().getPlayerDataAnalysis();
+        startTimer(p.getRoutineLength());
         panelClicker.setFocusable(true);
         panelClicker.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                Player p = StateSingleton.getInstance().getPlayer();
-                PlayerDataAnalysis data = StateSingleton.getInstance().getPlayerDataAnalysis();
-                if (e.getKeyCode()== KeyEvent.VK_F) {
+                if (e.getKeyCode() == KeyEvent.VK_F) {
                     p.removeClick();
                     numberNegativeClicksJLabel.setText(String.valueOf(p.getNegativeClicks()));
                     StateSingleton.getInstance().setPlayer(p);
@@ -89,34 +97,47 @@ public class Clicker extends ObjectContainer {
                     p.produceClickerScore();
                     System.out.println(p.getClickerScore());
                     StateSingleton.getInstance().setPlayer(p);
-                    if (p.getRoutineType().equals("World Final")){
-                        frame.remove(panelClicker);
-                        frame.setContentPane(new WorldEvalInput(frame).getPanel());
-                        frame.setVisible(true);
+                    nextPanel();
 
-                    }
-                    else {
-                        frame.remove(panelClicker);
-                        frame.setContentPane(new PrelimSemiTwoEvalInput(frame).getPanel());
-                        frame.setVisible(true);
-                    }
                 }
             }
         });
 
     }
 
-    public JPanel getPanel(){
+    public JPanel getPanel() {
         return panelClicker;
     }
+    public void nextPanel(){
+        p = StateSingleton.getInstance().getPlayer();
+        if (p.getRoutineType().equals("World Final")) {
+            frame.remove(panelClicker);
+            frame.setContentPane(new WorldEvalInput(frame).getPanel());
+            frame.setVisible(true);
 
-    public void startRoutine(int n) {
-        int timeDelay = 50; // msecs delay
-        new Timer(timeDelay , new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                System.out.println("anything");
-            }
-        }).start();
+        } else {
+            frame.remove(panelClicker);
+            frame.setContentPane(new PrelimSemiTwoEvalInput(frame).getPanel());
+            frame.setVisible(true);
+        }
     }
-
+    public void startTimer(int countPassed) {
+        ActionListener action = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (count == 0) {
+                    stopwatch.stop();
+                    StateSingleton.getInstance().setPlayer(p);
+                    nextPanel();
+                } else {
+                    timeRemainingLabel.setText("Seconds remaining: " + count);
+                    count--;
+                }
+            }
+        };
+        stopwatch = new Timer(delay, action);
+        stopwatch.setInitialDelay(0);
+        stopwatch.start();
+        count = countPassed;
+    }
 }

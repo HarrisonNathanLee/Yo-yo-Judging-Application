@@ -35,7 +35,8 @@ public class AnotherPlayer {
             public void actionPerformed(ActionEvent e) {
                 c = StateSingleton.getInstance().getCompetition();
                 cData = StateSingleton.getInstance().getCompetitionDataAnalysis();
-                String playerSaveLocation = c.getCompetitionName() + "_" + c.getCompetitionRoutineType() + "_" + c.getCompetitionDivision() + "_" + "Players.csv";
+                cData.callAllDataAnalysis();
+                String playerSaveLocation = c.getCompetitionName() + "_" + c.getCompetitionRoutineType() + "_" + c.getCompetitionDivision() + "_";
                 String dataSaveLocation = c.getCompetitionName() + "_" + c.getCompetitionRoutineType() + "_" + c.getCompetitionDivision() + "_" + "CompetitionDataAnalysis.csv";
                 try {
                     c.save(playerSaveLocation);
@@ -47,6 +48,8 @@ public class AnotherPlayer {
                 } catch (FileNotFoundException e1) {
                     System.out.println(e1.getMessage());
                 }
+                StateSingleton.getInstance().setCompetition(c);
+                StateSingleton.getInstance().setCompetitionDataAnalysis(cData);
                 frame.remove(panelAnotherPlayer);
                 frame.setContentPane(new CompetitionModeOutput(frame).getPanel());
                 frame.setVisible(true);
@@ -55,7 +58,7 @@ public class AnotherPlayer {
         });
     }
 
-    public Container getPanel() {
+    public JPanel getPanel() {
         return panelAnotherPlayer;
     }
 }

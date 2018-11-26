@@ -1,5 +1,7 @@
 package App.Competition;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.util.ArrayList;
 
 public class PrelimTwoSemiCompetitionDataAnalysis extends CompetitionDataAnalysis {
@@ -112,10 +114,12 @@ public class PrelimTwoSemiCompetitionDataAnalysis extends CompetitionDataAnalysi
         int ep2 = 14;
         int ep3 = partsOfLine.size();
         System.out.println(ANALYSISINTROMEMORY);
-        System.out.println(STRINGBREAK);
         printLoadOutputHelper(MEANSTRING,partsOfLine,sp,ep1);
+        System.out.println(STRINGBREAK);
         printLoadOutputHelper(VARIANCESTRING,partsOfLine,ep1,ep2);
+        System.out.println(STRINGBREAK);
         printLoadOutputHelper(SDSTRING, partsOfLine,ep2,ep3);
+        System.out.println(STRINGBREAK);
     }
 
     //MODIFIES: This
@@ -155,6 +159,7 @@ public class PrelimTwoSemiCompetitionDataAnalysis extends CompetitionDataAnalysi
         System.out.println(MEANSTRING + middleStrings.get(4) + ENDSTRING + meanControl);
         System.out.println(MEANSTRING + middleStrings.get(5) + ENDSTRING + meanChoreography);
         System.out.println(MEANSTRING + middleStrings.get(6) + ENDSTRING + meanBodyControl);
+        System.out.println(STRINGBREAK);
         System.out.println(VARIANCESTRING + middleStrings.get(0)+ ENDSTRING + variancePositiveClicks);
         System.out.println(VARIANCESTRING + middleStrings.get(1)+ ENDSTRING + varianceNegativeClicks);
         System.out.println(VARIANCESTRING + middleStrings.get(2)+ ENDSTRING + varianceClickerscore);
@@ -162,6 +167,7 @@ public class PrelimTwoSemiCompetitionDataAnalysis extends CompetitionDataAnalysi
         System.out.println(VARIANCESTRING + middleStrings.get(4)+ ENDSTRING + varianceControl);
         System.out.println(VARIANCESTRING + middleStrings.get(5)+ ENDSTRING + varianceChoreography);
         System.out.println(VARIANCESTRING + middleStrings.get(6)+ ENDSTRING + varianceBodyControl);
+        System.out.println(STRINGBREAK);
         System.out.println(SDSTRING + middleStrings.get(0)+ ENDSTRING + sdPositiveClicks);
         System.out.println(SDSTRING + middleStrings.get(1)+ ENDSTRING + sdNegativeClicks);
         System.out.println(SDSTRING + middleStrings.get(2)+ ENDSTRING + sdClickerscore);

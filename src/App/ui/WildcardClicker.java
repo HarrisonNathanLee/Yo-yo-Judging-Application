@@ -19,14 +19,14 @@ public class WildcardClicker {
         panelWildcardClicker.setFocusable(true);
         panelWildcardClicker.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyPressed(KeyEvent e) {
                 Player p = StateSingleton.getInstance().getPlayer();
                 PlayerDataAnalysis data = StateSingleton.getInstance().getPlayerDataAnalysis();
                 if (e.getKeyCode() == KeyEvent.VK_J) {
                     p.awardClick();
                     numberPositiveClicksJLabel.setText(String.valueOf(p.getPositiveClicks()));
                     StateSingleton.getInstance().setPlayer(p);
-                    System.out.println("-1");
+                    System.out.println("+1");
                 } else if (e.getKeyCode() == KeyEvent.VK_H) {
                     p.doubleClick();
                     numberPositiveClicksJLabel.setText(String.valueOf(p.getPositiveClicks()));

@@ -13,7 +13,6 @@ public class CompetitionInformation {
     private JPanel panelCompetitionInformation;
     private JButton submitButton;
     private JComboBox divisionComboBox;
-    private JComboBox routineTypeComboBox;
     private JFrame frame;
     private Competition c;
 
@@ -24,14 +23,12 @@ public class CompetitionInformation {
             public void actionPerformed(ActionEvent e) {
                 String competitionName = competitionNameTextField.getText();
                 String competitionDivision = divisionComboBox.getSelectedItem().toString();
-                String routineType = routineTypeComboBox.getSelectedItem().toString();
                 c = new Competition();
                 c.setCompetitionName(competitionName);
                 c.setCompetitionDivision(competitionDivision);
-                c.setCompetitionRoutineType(routineType);
                 StateSingleton.getInstance().setCompetition(c);
                 frame.remove(panelCompetitionInformation);
-                frame.setContentPane(new PlayerInformationCompetition(frame).getPanel());
+                frame.setContentPane(new PickRoutineType(frame).getPanel());
                 frame.setVisible(true);
 
             }

@@ -22,7 +22,6 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
     protected static final String ANALYSISINTROMEMORY = "Analyzed competition data from memory: ";
     protected static final String ANALYSISINTROCURRENT = "Analyzed competition data: ";
     protected ArrayList<String> middleStrings;
-
     protected double meanExecution = 0;
     protected double meanControl = 0;
     protected double meanTrickDiversity = 0;
@@ -649,14 +648,14 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
 
     //EFFECTS: Saves competition data analysis information to a csv file
     public void save(String saveLocation) throws FileNotFoundException {
-        PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation + ENDOFFILENAME, false));
+        PrintWriter pw = new PrintWriter(new FileOutputStream(saveLocation, false));
         pw.write(toSaveString());
         pw.close();
     }
 
     //EFFECTS: Loads competition data analysis from CSV file
     public void load(String saveLocation) throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get(saveLocation + ENDOFFILENAME));
+        List<String> lines = Files.readAllLines(Paths.get(saveLocation));
         String line = lines.get(0);
         ArrayList<String> partsOfLine = splitOnComma(line);
         printLoadOutput(partsOfLine);
@@ -669,7 +668,6 @@ public abstract class CompetitionDataAnalysis extends Loadable implements Saveab
             System.out.println(statType + middleStrings.get(i-startingpoint) + ENDSTRING + partsOfline.get(i));
         }
     }
-
     public abstract String toSaveString();
 
     public abstract void loadOutput(ArrayList<String> partsOfLine);

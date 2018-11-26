@@ -12,10 +12,10 @@ import java.io.IOException;
 
 public class IndividualLoad {
     private JTextField firstNameTextField;
-    private JTextField routineTypeTextField;
     private JButton submitButton;
     private JPanel panelIndividualLoad;
     private JTextField lastNameTextField;
+    private JComboBox routineTypeComboBox;
     private JFrame frame;
 //    private Player p;
 //    private PlayerDataAnalysis data;
@@ -27,7 +27,7 @@ public class IndividualLoad {
             public void actionPerformed(ActionEvent e) {
                 String firstName = firstNameTextField.getText();
                 String lastName = lastNameTextField.getText();
-                String routineType = routineTypeTextField.getText();
+                String routineType = routineTypeComboBox.getSelectedItem().toString();
                 PlayerDataAnalysis data = createPlayerAndDataSubtype(routineType);
                 Player p = data.getPlayer();
                 p.setFirstName(firstName);

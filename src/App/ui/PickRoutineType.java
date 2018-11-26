@@ -135,7 +135,7 @@ public class PickRoutineType{
 
     //EFFECTS: Factory - creates competition data analysis subtype based on user input
     public void createCompetitionAndCompetitionDataAnalysisSubtype(String routineType){
-        c = new Competition();
+        c = StateSingleton.getInstance().getCompetition();
         if(routineType.equals("Wildcard")){
             cData = new WildcardCompetitionDataAnalysis(c);
             c.setCompetitionRoutineType("Wildcard");
@@ -179,7 +179,7 @@ public class PickRoutineType{
 
     public void nextCompetitionPanel(){
         frame.remove(panelPickRoutineType);
-        frame.setContentPane(new PlayerInformation(frame).getPanel());
+        frame.setContentPane(new PlayerInformationCompetition(frame).getPanel());
         frame.setVisible(true);
     }
 

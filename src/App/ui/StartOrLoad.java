@@ -13,7 +13,6 @@ public class StartOrLoad {
     private JButton loadButton;
     public JPanel panelStartOrLoad;
     private JFrame frame;
-    //CardLayout card = (CardLayout)panelStartOrLoad.getLayout();
 
     public StartOrLoad(JFrame frame) {
         this.frame = frame;
@@ -22,28 +21,30 @@ public class StartOrLoad {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                frame.remove(panelStartOrLoad);
                 if (StateSingleton.getInstance().getMode()){
-                    frame.remove(panelStartOrLoad);
                     frame.setContentPane(new CompetitionInformation(frame).getPanel());
-                    frame.setVisible(true);
-                    StateSingleton.getInstance().setStartOrLoad(true);
+
                 }
                 else{
-                    frame.remove(panelStartOrLoad);
                     frame.setContentPane(new PickRoutineType(frame).getPanel());
-                    frame.setVisible(true);
-                    StateSingleton.getInstance().setStartOrLoad(true);
                 }
+                frame.setVisible(true);
+                StateSingleton.getInstance().setStartOrLoad(true);
             }
         });
         loadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.remove(panelStartOrLoad);
-                frame.setContentPane(new IndividualLoad(frame).getPanel());
+                if (StateSingleton.getInstance().getMode()){
+                    frame.setContentPane(new CompetitionLoad(frame).getPanel());
+                }
+                else {
+                    frame.setContentPane(new IndividualLoad(frame).getPanel());
+                }
                 frame.setVisible(true);
                 StateSingleton.getInstance().setStartOrLoad(false);
-
             }
         });
     }

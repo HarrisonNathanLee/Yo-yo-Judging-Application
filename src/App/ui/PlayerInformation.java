@@ -15,11 +15,10 @@ public class PlayerInformation {
     private JPanel panelPlayerInformation;
     private JTextField firstNameTextField;
     private JTextField lastNameTextField;
-    private JTextField divisionTextField;
     private JLabel firstNameJLabel;
     private JLabel lastNameJLabel;
-    private JLabel divisionJLabel;
     private JButton submitButton;
+    private JComboBox divisionComboBox;
     private JFrame frame;
 
     public PlayerInformation(JFrame frame) {
@@ -30,7 +29,7 @@ public class PlayerInformation {
                 Player p = StateSingleton.getInstance().getPlayer();
                 String firstName = firstNameTextField.getText();
                 String lastName = lastNameTextField.getText();
-                String division = divisionTextField.getText();
+                String division = divisionComboBox.getSelectedItem().toString();
                 p.setFirstName(firstName);
                 p.setLastName(lastName);
                 p.setDivision(division);

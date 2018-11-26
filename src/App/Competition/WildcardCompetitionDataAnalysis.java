@@ -61,10 +61,12 @@ public class WildcardCompetitionDataAnalysis extends CompetitionDataAnalysis {
         int ep2 = 4;
         int ep3 = partsOfLine.size();
         System.out.println(ANALYSISINTROMEMORY);
-        System.out.println(STRINGBREAK);
         printLoadOutputHelper(MEANSTRING,partsOfLine,sp,ep1);
+        System.out.println(STRINGBREAK);
         printLoadOutputHelper(VARIANCESTRING,partsOfLine,ep1,ep2);
+        System.out.println(STRINGBREAK);
         printLoadOutputHelper(SDSTRING, partsOfLine,ep2,ep3);
+        System.out.println(STRINGBREAK);
     }
 
     //MODIFIES: This
@@ -83,8 +85,10 @@ public class WildcardCompetitionDataAnalysis extends CompetitionDataAnalysis {
         System.out.println(ANALYSISINTROCURRENT);
         System.out.println(MEANSTRING + middleStrings.get(0)+ ENDSTRING + meanPositiveClicks);
         System.out.println(MEANSTRING + middleStrings.get(2) + ENDSTRING + meanClickerscore);
+        System.out.println(STRINGBREAK);
         System.out.println(VARIANCESTRING + middleStrings.get(0)+ ENDSTRING + variancePositiveClicks);
         System.out.println(VARIANCESTRING + middleStrings.get(2)+ ENDSTRING + varianceClickerscore);
+        System.out.println(STRINGBREAK);
         System.out.println(SDSTRING + middleStrings.get(0)+ ENDSTRING + sdPositiveClicks);
         System.out.println(SDSTRING + middleStrings.get(2)+ ENDSTRING + sdClickerscore);
         System.out.println(STRINGBREAK);
