@@ -48,7 +48,7 @@ public class PlayerInformationCompetition implements UpdatePanel {
                 } catch (AlreadyInCompetitionException e1) {
                     setExceptionThrown(true);
                     firstNameTextField.setText(playerAlreadyInComp);
-                    lastNameTextField.setText(lastNameTextField);
+                    lastNameTextField.setText(playerAlreadyInComp);
                 }
                 String routineType = StateSingleton.getInstance().getCompetition().getCompetitionRoutineType();
                 String division = StateSingleton.getInstance().getCompetition().getCompetitionDivision();

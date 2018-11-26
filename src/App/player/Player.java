@@ -196,6 +196,14 @@ public abstract class Player extends Loadable implements Saveable{
         }
     }
 
+    public String getPlayerSaveLocation(){
+        return getFirstName() + "_" + getLastName() + "_" + getRoutineType() + "_" + "Player.csv";
+    }
+
+    public String getDataSaveLocation(){
+        return getFirstName() + "_" + getLastName() + "_" + getRoutineType() + "_" + "PlayerDataAnalysis.csv";
+    }
+
     //EFFECTS: Returns the first name of the App.player
     public String getFirstName() {
         return firstName;

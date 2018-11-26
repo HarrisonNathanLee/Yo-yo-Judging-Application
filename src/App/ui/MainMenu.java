@@ -10,6 +10,7 @@ public class MainMenu implements UpdatePanel{
     private JButton Competition;
     private JButton Individual;
     private JPanel panelCompetitionOrIndividual;
+    private JLabel theYoYoJudgingLabel;
     private JFrame frame;
 
     public MainMenu(JFrame frame){
