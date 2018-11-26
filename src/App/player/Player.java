@@ -46,6 +46,16 @@ public abstract class Player extends Loadable implements Saveable{
     protected static final String ROUTINEINFORMATION = "routine information:";
     protected static final String MAJORDEDUCTSCORES = "major deduct scores:";
     protected static final String ANALYZEDDATA = "analyzed technical data:";
+    public static final String EXECUTIONDESCRIPTION = "Success Rate of Tricks, Success, Less mistakes, Completion";
+    public static final String CONTROlDESCRIPTION = "Control of Yo-Yo/String, Line of String, Trajectory of Yo-Yo, Smooth landings and flowing transitions";
+    public static final String TRICKDIVERSITYDESCRIPTION = "Trick Choice, Trick Mix, Trick Order and Trick Presentation";
+    public static final String SPACEUSEANDEMPHASISDESCRIPTION = "Size of expression, moves, performance, Effective use of stage and space, and/or focusing on/into a subject effectively";
+    public static final String CHOREOGRAPHYDESCRIPTION = "Music Use concentrating on hitting sounds, beats, cues, etc.;";
+    public static final String CONSTRUCTIONDESCRIPTION = "Music Use concentrating on mood, tone, routine, theme, etc.";
+    public static final String BODYCONTROlDESCRIPTION = "Stage Manners, Posture, Stage Professionalism, Attitude";
+    public static final String SHOWMANSHIPDESCRIPTION = "Theme/Story, Enjoyment, Entertainment, Overall Impression of Show";
+
+
     ArrayList<String> clicksLog = new ArrayList<>();
 
     //MODIFIES: This
@@ -417,8 +427,29 @@ public abstract class Player extends Loadable implements Saveable{
         loadOutput(partsOfLine);
     }
 
+
     //EFFECTS: Prints judge inputted performance evaluations
     public abstract void getPerformanceEvals(Player p);
+
+    //EFFECTS: Prints various post performance information
+    public void printRoutineClickInformation(Player p) {
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s technical data: ");
+        System.out.println("Positive clicks: " + p.getPositiveClicks());
+        System.out.println("Negative clicks: " + p.getNegativeClicks());
+        System.out.println("Clickerscore: " + p.getClickerScore());
+        System.out.println(STRINGBREAK);
+    }
+
+    public void printRoutineMajorDeductInformation(Player p) {
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s major deduct scores: ");
+        System.out.println("Number of resets: " + p.getNumberOfRestarts());
+        System.out.println("Final reset score is: " + p.getRestartFinal());
+        System.out.println("Number of changes: " + p.getNumberOfChanges());
+        System.out.println("Final change score is: " + p.getChangeFinal());
+        System.out.println("Number of discards: " + p.getNumberOfDiscards());
+        System.out.println("Final discard score is: " + p.getDiscardFinal());
+        System.out.println(STRINGBREAK);
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         JFrame j = new JFrame();
         j.setContentPane(new MainMenu(j).getPanel());
-        j.setSize(500,500);
+        j.setSize(700,700);
         j.setVisible(true);
 
     }

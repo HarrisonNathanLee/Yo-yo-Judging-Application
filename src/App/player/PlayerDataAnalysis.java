@@ -265,71 +265,18 @@ public abstract class PlayerDataAnalysis extends Loadable implements Saveable, D
         CIPPS = Double.parseDouble(partsOfLine.get(7));
     }
 
+    //EFFECTS: Prints analyzed routine information of a player
+    public void printAnalyzedRoutineInformation(PlayerDataAnalysis data, Player p) {
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s analyzed technical data:");
+        System.out.println("Total majors: " + data.getTotalMajors());
+        System.out.println("Total weighted score: " + data.getTotalWeightedScore());
+        System.out.println("Fire sections in routine: " + data.getNumberOfFireSectionsInRoutine());
+        System.out.println("Tilted sections in routine: " + data.getNumberOfTiltedSectionsInRoutine());
+        System.out.println("Clicks per second: " + data.getCPS());
+        System.out.println("Clicks ratio: " + data.getCR());
+        System.out.println("Clicks if perfect: " + data.getNumberIfPerfect());
+        System.out.println("Clicks if perfect per second:" + data.getCIPPS());
+        System.out.println(STRINGBREAK);
+    }
+
 }
-
-//    //EFFECTS: Will count the number of TILTED(judge has deducted multiple clicks in a row) sections in a routine
-//    public void clicksOnTilt() {
-//        int numberOfNegativeInRow = 0;
-//        for (String click : player.clicksLog) {
-//            if (click.equals("negative")) {
-//                numberOfNegativeInRow++;
-//            } else if (click.equals("positive")) {
-//                numberOfNegativeInRow = 0;
-//            }
-//
-//            if (numberOfNegativeInRow == TILTED) {
-//                numberOfTiltedSectionsInRoutine++;
-//                numberOfNegativeInRow = 0;
-//            }
-//        }
-//    }
-
-
-
-//    //EFFECTS: Will count the number of FIRE(judge has awarded multiple clicks in a row) sections in a routine
-//    public void clicksOnFire() {
-//        int numberOfPositiveInRow = 0;
-//        for (String click : player.clicksLog) {
-//            if (click.equals("positive")) {
-//                numberOfPositiveInRow++;
-//            } else if (click.equals("negative")) {
-//                numberOfPositiveInRow = 0;
-//            }
-//            if (numberOfPositiveInRow == FIRE) {
-//                numberOfFireSectionsInRoutine++;
-//                numberOfPositiveInRow = 0;
-//            }
-//        }
-//    }
-
-//TODO: Implement when I have a UI and can get timer functionality working
-    /*
-
-    //REQUIRES:
-    //MODIFIES: this
-    //EFFECTS: Creates intervals of time depending on how long the routine is
-    public void createIntervals(){
-        return true;
-    }
-
-    //REQUIRES:
-    //MODIFIES: this
-    //EFFECTS: Generates a value for titled and fire depending on how long the routine is
-    public void createTiltedFire(){
-        return true;
-    }
-
-    //REQUIRES:
-    //MODIFIES:
-    //EFFECTS: Will return the number of clicks per the number of intervals in a routine
-    public void clicksPerInterval(){
-        return true;
-    }
-
-    //REQUIRES:
-    //MODIFIES:
-    //EFFECTS: Will assign each click to the time the click was pressed throughout the duration of the routine
-    public void mapClicksToTime (){
-        return true;
-    }
-    */

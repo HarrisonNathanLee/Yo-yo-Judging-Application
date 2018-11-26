@@ -96,14 +96,3 @@ public class WildcardCompetitionDataAnalysis extends CompetitionDataAnalysis {
 
 }
 
-//    public void printLoadOutput(ArrayList<String> partsOfLine){
-//        System.out.println("Analyzed competition information from memory");
-//        System.out.println("---------------------------------------");
-//        System.out.println("Mean positive clicks amongst routines: " + partsOfLine.get(0));
-//        System.out.println("Mean clickerscore amongst routines: " + partsOfLine.get(1));
-//        System.out.println("Variance positive clicks amongst routines: " + partsOfLine.get(2));
-//        System.out.println("Variance clickerscore amongst routines: " + partsOfLine.get(3));
-//        System.out.println("Standard deviation of positive clicks amongst routines: " + partsOfLine.get(4));
-//        System.out.println("Standard deviation of clickerscore amongst routines: " + partsOfLine.get(5));
-//
-//    }

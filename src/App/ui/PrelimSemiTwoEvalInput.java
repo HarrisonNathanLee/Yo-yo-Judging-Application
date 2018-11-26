@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static App.player.Player.*;
+import static App.player.Player.CONSTRUCTIONDESCRIPTION;
+
 public class PrelimSemiTwoEvalInput implements UpdatePanel {
     private JTextField enterExecutionScoreTextField;
     private JTextField enterControlScoreTextField;
@@ -17,6 +20,10 @@ public class PrelimSemiTwoEvalInput implements UpdatePanel {
     private JTextField enterBodyControlScoreTextField;
     private JButton submitButton;
     private JPanel panelSemiTwoEvalInput;
+    private JLabel enterExecutionScoreLabel;
+    private JLabel enterControlScoreLabel;
+    private JLabel enterChoreographyScoreLabel;
+    private JLabel enterBodyControlScoreLabel;
     private JFrame frame;
     private Player p;
     private PlayerDataAnalysis data;
@@ -109,5 +116,16 @@ public class PrelimSemiTwoEvalInput implements UpdatePanel {
                 }
             }
         });
+    }
+
+    private void createUIComponents() {
+        enterExecutionScoreLabel = new JLabel();
+        enterExecutionScoreLabel.setToolTipText(EXECUTIONDESCRIPTION);
+        enterControlScoreLabel = new JLabel();
+        enterControlScoreLabel.setToolTipText(CONTROlDESCRIPTION);
+        enterBodyControlScoreLabel = new JLabel();
+        enterBodyControlScoreLabel.setToolTipText(BODYCONTROlDESCRIPTION);
+        enterChoreographyScoreLabel = new JLabel();
+        enterChoreographyScoreLabel.setToolTipText(CHOREOGRAPHYDESCRIPTION);
     }
 }

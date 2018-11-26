@@ -68,6 +68,15 @@ public class WildcardPlayer extends Player {
     public void getPerformanceEvals(Player p){
         System.out.println("return nothing");
     }
+
+
+    @Override
+    public void printRoutineClickInformation(Player p) {
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s technical data: ");
+        System.out.println("Positive clicks: " + p.getPositiveClicks());
+        System.out.println("Clickerscore: " + p.getClickerScore());
+        System.out.println(STRINGBREAK);
+    }
 }
 
 

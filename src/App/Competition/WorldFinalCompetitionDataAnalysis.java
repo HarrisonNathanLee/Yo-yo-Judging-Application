@@ -239,41 +239,4 @@ public class WorldFinalCompetitionDataAnalysis extends CompetitionDataAnalysis {
     }
 
 }
-//    public void printLoadOutput(ArrayList<String> partsOfLine){
-//        System.out.println("Analyzed competition information from memory");
-//        System.out.println("---------------------------------------");
-//        System.out.println("Mean positive clicks amongst routines: " + partsOfLine.get(0));
-//        System.out.println("Mean negative clicks amongst routines: " +partsOfLine.get(1));
-//        System.out.println("Mean clickerscore amongst routines: " + partsOfLine.get(2));
-//        System.out.println("Mean execution score amongst routines: " + partsOfLine.get(3));
-//        System.out.println("Mean control score amongst routines: " + partsOfLine.get(4));
-//        System.out.println("Mean trick diversity score amongst routines: " + partsOfLine.get(5));
-//        System.out.println("Mean space use & emphasis score amongst routines: " + partsOfLine.get(6));
-//        System.out.println("Mean music use 1: choreography score amongst routines: " + partsOfLine.get(7));
-//        System.out.println("Mean music use 2: construction score amongst routines: " + partsOfLine.get(8));
-//        System.out.println("Mean body control score amongst routines: " + partsOfLine.get(9));
-//        System.out.println("Mean showmanship score amongst routines: " + partsOfLine.get(10));
-//        System.out.println("Variance of positive clicks amongst routines: " + partsOfLine.get(11));
-//        System.out.println("Variance of negative clicks amongst routines: " +partsOfLine.get(12));
-//        System.out.println("Variance of clickerscore amongst routines: " + partsOfLine.get(13));
-//        System.out.println("Variance of execution score amongst routines: " + partsOfLine.get(14));
-//        System.out.println("Variance of control score amongst routines: " + partsOfLine.get(15));
-//        System.out.println("Variance of trick diversity score amongst routines: " + partsOfLine.get(16));
-//        System.out.println("Variance of space use & emphasis score amongst routines: " + partsOfLine.get(17));
-//        System.out.println("Variance of music use 1: choreography score amongst routines: " + partsOfLine.get(18));
-//        System.out.println("Variance of music use 2: construction score amongst routines: " + partsOfLine.get(19));
-//        System.out.println("Variance of body control score amongst routines: " + partsOfLine.get(20));
-//        System.out.println("Variance of showmanship score amongst routines: " + partsOfLine.get(21));
-//        System.out.println("Standard deviation of positive clicks amongst routines: " + partsOfLine.get(22));
-//        System.out.println("Standard deviation of negative clicks amongst routines: " +partsOfLine.get(23));
-//        System.out.println("Standard deviation of clickerscore amongst routines: " + partsOfLine.get(24));
-//        System.out.println("Standard deviation of execution score amongst routines: " + partsOfLine.get(25));
-//        System.out.println("Standard deviation of control score amongst routines: " + partsOfLine.get(26));
-//        System.out.println("Standard deviation of trick diversity score amongst routines: " + partsOfLine.get(27));
-//        System.out.println("Standard deviation of space use & emphasis score amongst routines: " + partsOfLine.get(28));
-//        System.out.println("Standard deviation of music use 1: choreography score amongst routines: " + partsOfLine.get(29));
-//        System.out.println("Standard deviation of music use 2: construction score amongst routines: " + partsOfLine.get(30));
-//        System.out.println("Standard deviation of body control score amongst routines: " + partsOfLine.get(32));
-//        System.out.println("Standard deviation of showmanship score amongst routines: " + partsOfLine.get(33));
-//
-//    }
+

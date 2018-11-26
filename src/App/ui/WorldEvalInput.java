@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static App.player.Player.*;
+
 public class WorldEvalInput implements UpdatePanel{
     private JTextField enterExecutionScoreTextField;
     private JTextField enterControlScoreTextField;
@@ -20,6 +22,14 @@ public class WorldEvalInput implements UpdatePanel{
     private JTextField enterTrickDiversityScoreTextField;
     private JPanel panelWorldEvalInput;
     private JButton submitButton;
+    private JLabel enterExecutionScoreLabel;
+    private JLabel enterControlScoreLabel;
+    private JLabel enterTrickDiversityScoreLabel;
+    private JLabel enterSpaceUseAndLabel;
+    private JLabel enterChoreographyScoreLabel;
+    private JLabel enterConstructionScoreLabel;
+    private JLabel enterBodyControlScoreLabel;
+    private JLabel enterShowmanshipScoreLabel;
     private JFrame frame;
     private String errorMessage = "Please input an integer between 1 and 10";
 
@@ -151,5 +161,24 @@ public class WorldEvalInput implements UpdatePanel{
         frame.remove(panelWorldEvalInput);
         frame.setContentPane(new IndividualModeOutput(frame).getPanel());
         frame.setVisible(true);
+    }
+
+    private void createUIComponents() {
+        enterExecutionScoreLabel = new JLabel();
+        enterExecutionScoreLabel.setToolTipText(EXECUTIONDESCRIPTION);
+        enterControlScoreLabel = new JLabel();
+        enterControlScoreLabel.setToolTipText(CONTROlDESCRIPTION);
+        enterBodyControlScoreLabel = new JLabel();
+        enterBodyControlScoreLabel.setToolTipText(BODYCONTROlDESCRIPTION);
+        enterChoreographyScoreLabel = new JLabel();
+        enterChoreographyScoreLabel.setToolTipText(CHOREOGRAPHYDESCRIPTION);
+        enterShowmanshipScoreLabel = new JLabel();
+        enterShowmanshipScoreLabel.setToolTipText(SHOWMANSHIPDESCRIPTION);
+        enterSpaceUseAndLabel = new JLabel();
+        enterSpaceUseAndLabel.setToolTipText(SPACEUSEANDEMPHASISDESCRIPTION);
+        enterTrickDiversityScoreLabel = new JLabel();
+        enterTrickDiversityScoreLabel.setToolTipText(TRICKDIVERSITYDESCRIPTION);
+        enterConstructionScoreLabel = new JLabel();
+        enterConstructionScoreLabel.setToolTipText(CONSTRUCTIONDESCRIPTION);
     }
 }

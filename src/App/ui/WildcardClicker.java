@@ -45,8 +45,10 @@ public class WildcardClicker extends ClickerTimer implements UpdatePanel{
                     p.produceClickerScore();
                     System.out.println(p.getClickerScore());
                     StateSingleton.getInstance().setPlayer(p);
-                    String playerSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "Player.csv";
-                    String dataSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "PlayerDataAnalysis.csv";
+                    String playerSaveLocation = p.getPlayerSaveLocation();
+                    String dataSaveLocation = p.getDataSaveLocation();
+//                    String playerSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "Player.csv";
+//                    String dataSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "PlayerDataAnalysis.csv";
                     try {
                         p.save(playerSaveLocation);
                     } catch (IOException e1) {

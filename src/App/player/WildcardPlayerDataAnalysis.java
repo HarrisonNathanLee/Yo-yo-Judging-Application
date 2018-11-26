@@ -69,4 +69,11 @@ public class WildcardPlayerDataAnalysis extends PlayerDataAnalysis {
         System.out.println("Clicks per second: " + partsOfLine.get(2));
     }
 
+    @Override
+    public void printAnalyzedRoutineInformation(PlayerDataAnalysis data, Player p){
+        System.out.println(p.getFirstName() + " " + p.getLastName() + "'s analyzed technical data");
+        System.out.println("Clicks per second: " + data.getCPS());
+        System.out.println(STRINGBREAK);
+
+    }
 }

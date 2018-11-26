@@ -179,30 +179,3 @@ public class PrelimTwoSemiCompetitionDataAnalysis extends CompetitionDataAnalysi
     }
 
 }
-
-//    public void printLoadOutput(ArrayList<String> partsOfLine){
-//        System.out.println("Analyzed competition information from memory");
-//        System.out.println("---------------------------------------");
-//        System.out.println("Mean positive clicks amongst routines: " + partsOfLine.get(0));
-//        System.out.println("Mean negative clicks amongst routines: " +partsOfLine.get(1));
-//        System.out.println("Mean clickerscore amongst routines: " + partsOfLine.get(2));
-//        System.out.println("Mean execution score amongst routines: " + partsOfLine.get(3));
-//        System.out.println("Mean control score amongst routines: " + partsOfLine.get(4));
-//        System.out.println("Mean music use 1: choreography score amongst routines: " + partsOfLine.get(5));
-//        System.out.println("Mean body control score amongst routines: " + partsOfLine.get(6));
-//        System.out.println("Variance of positive clicks amongst routines: " + partsOfLine.get(7));
-//        System.out.println("Variance of negative clicks amongst routines: " +partsOfLine.get(8));
-//        System.out.println("Variance of clickerscore amongst routines: " + partsOfLine.get(9));
-//        System.out.println("Variance of execution score amongst routines: " + partsOfLine.get(10));
-//        System.out.println("Variance of control score amongst routines: " + partsOfLine.get(11));
-//        System.out.println("Variance of music use 1: choreography score amongst routines: " + partsOfLine.get(12));
-//        System.out.println("Variance of body control score amongst routines: " + partsOfLine.get(13));
-//        System.out.println("Standard deviation of positive clicks amongst routines: " + partsOfLine.get(14));
-//        System.out.println("Standard deviation of negative clicks amongst routines: " +partsOfLine.get(15));
-//        System.out.println("Standard deviation of clickerscore amongst routines: " + partsOfLine.get(16));
-//        System.out.println("Standard deviation of execution score amongst routines: " + partsOfLine.get(17));
-//        System.out.println("Standard deviation of control score amongst routines: " + partsOfLine.get(18));
-//        System.out.println("Standard deviation of music use 1: choreography score amongst routines: " + partsOfLine.get(19));
-//        System.out.println("Standard deviation of body control score amongst routines: " + partsOfLine.get(20));
-//    }
-

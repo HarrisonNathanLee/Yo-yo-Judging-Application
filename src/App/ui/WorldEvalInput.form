@@ -96,7 +96,7 @@
           <text value="Submit"/>
         </properties>
       </component>
-      <component id="c35be" class="javax.swing.JLabel">
+      <component id="c35be" class="javax.swing.JLabel" binding="enterExecutionScoreLabel" custom-create="true">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -104,7 +104,7 @@
           <text value="Enter execution score"/>
         </properties>
       </component>
-      <component id="82f87" class="javax.swing.JLabel">
+      <component id="82f87" class="javax.swing.JLabel" binding="enterControlScoreLabel" custom-create="true">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -112,7 +112,7 @@
           <text value="Enter control score"/>
         </properties>
       </component>
-      <component id="370a8" class="javax.swing.JLabel">
+      <component id="370a8" class="javax.swing.JLabel" binding="enterTrickDiversityScoreLabel" custom-create="true">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -120,7 +120,7 @@
           <text value="Enter trick diversity score"/>
         </properties>
       </component>
-      <component id="2807a" class="javax.swing.JLabel">
+      <component id="2807a" class="javax.swing.JLabel" binding="enterSpaceUseAndLabel" custom-create="true">
         <constraints>
           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -128,7 +128,7 @@
           <text value="Enter space use and emphasis score"/>
         </properties>
       </component>
-      <component id="8641f" class="javax.swing.JLabel">
+      <component id="8641f" class="javax.swing.JLabel" binding="enterChoreographyScoreLabel" custom-create="true">
         <constraints>
           <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -136,7 +136,7 @@
           <text value="Enter choreography score"/>
         </properties>
       </component>
-      <component id="bb0da" class="javax.swing.JLabel">
+      <component id="bb0da" class="javax.swing.JLabel" binding="enterConstructionScoreLabel" custom-create="true">
         <constraints>
           <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -144,7 +144,7 @@
           <text value="Enter construction score"/>
         </properties>
       </component>
-      <component id="5fb2e" class="javax.swing.JLabel">
+      <component id="5fb2e" class="javax.swing.JLabel" binding="enterBodyControlScoreLabel" custom-create="true">
         <constraints>
           <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -152,7 +152,7 @@
           <text value="Enter body control score"/>
         </properties>
       </component>
-      <component id="c6f1a" class="javax.swing.JLabel">
+      <component id="c6f1a" class="javax.swing.JLabel" binding="enterShowmanshipScoreLabel" custom-create="true">
         <constraints>
           <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
