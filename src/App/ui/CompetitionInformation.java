@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CompetitionInformation {
+public class CompetitionInformation implements UpdatePanel {
     private JTextField competitionNameTextField;
     private JPanel panelCompetitionInformation;
     private JButton submitButton;
@@ -27,15 +27,18 @@ public class CompetitionInformation {
                 c.setCompetitionName(competitionName);
                 c.setCompetitionDivision(competitionDivision);
                 StateSingleton.getInstance().setCompetition(c);
-                frame.remove(panelCompetitionInformation);
-                frame.setContentPane(new PickRoutineType(frame).getPanel());
-                frame.setVisible(true);
-
+                nextPanel();
             }
         });
     }
 
-    public Container getPanel() {
+    public void nextPanel(){
+        frame.remove(panelCompetitionInformation);
+        frame.setContentPane(new PickRoutineType(frame).getPanel());
+        frame.setVisible(true);
+    }
+
+    public JPanel getPanel() {
         return panelCompetitionInformation;
     }
 }

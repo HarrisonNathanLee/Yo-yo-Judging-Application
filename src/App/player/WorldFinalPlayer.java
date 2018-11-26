@@ -85,7 +85,6 @@ public class WorldFinalPlayer extends Player {
         System.out.println(SCORESFROMMEMORY);
         System.out.println(STRINGBREAK);
         String fullName = partsOfLine.get(0) + " " + partsOfLine.get(1) + "'s ";
-        System.out.println(fullName + "routine information:");
         System.out.println(fullName + ROUTINEINFORMATION);
         System.out.println("Division: " + partsOfLine.get(2));
         System.out.println("Routine type: " + partsOfLine.get(3));
@@ -102,6 +101,7 @@ public class WorldFinalPlayer extends Player {
         System.out.println("Final change score: " + partsOfLine.get(11));
         System.out.println("Number of discards: " + partsOfLine.get(9));
         System.out.println("Final discard score: " + partsOfLine.get(12));
+        System.out.println(STRINGBREAK);
         System.out.println(fullName + PERFORMANCEEVALS);
         System.out.println("Execution: " + partsOfLine.get(13));
         System.out.println("Control: " + partsOfLine.get(14));

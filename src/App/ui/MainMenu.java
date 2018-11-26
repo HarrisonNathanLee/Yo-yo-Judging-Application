@@ -6,30 +6,26 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainMenu {
+public class MainMenu implements UpdatePanel{
     private JButton Competition;
     private JButton Individual;
     private JPanel panelCompetitionOrIndividual;
     private JFrame frame;
 
-    public MainMenu(JFrame frame) {
+    public MainMenu(JFrame frame){
         this.frame = frame;
         Individual.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.remove(panelCompetitionOrIndividual);
-                frame.setContentPane(new StartOrLoad(frame).getPanel());
-                frame.setVisible(true);
                 StateSingleton.getInstance().setMode(false);
+                nextPanel();
             }
         });
         Competition.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.remove(panelCompetitionOrIndividual);
-                frame.setContentPane(new StartOrLoad(frame).getPanel());
-                frame.setVisible(true);
                 StateSingleton.getInstance().setMode(true);
+                nextPanel();
             }
         });
     }
@@ -37,4 +33,12 @@ public class MainMenu {
     public JPanel getPanel(){
         return panelCompetitionOrIndividual;
     }
+
+    @Override
+    public void nextPanel() {
+        frame.remove(panelCompetitionOrIndividual);
+        frame.setContentPane(new StartOrLoad(frame).getPanel());
+        frame.setVisible(true);
+    }
+
 }

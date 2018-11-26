@@ -1,6 +1,5 @@
 package App.ui;
 
-import App.Model.ObjectContainer;
 import App.Model.StateSingleton;
 import App.player.Player;
 import App.player.PlayerDataAnalysis;
@@ -11,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PlayerInformation {
+public class PlayerInformation implements UpdatePanel{
     private JPanel panelPlayerInformation;
     private JTextField firstNameTextField;
     private JTextField lastNameTextField;
@@ -38,22 +37,28 @@ public class PlayerInformation {
                 System.out.println(lastName);
                 System.out.println(division);
                 System.out.println(StateSingleton.getInstance().getPlayer().getRoutineType());
-                if (p.getRoutineType().equals("Wildcard")){
-                    frame.remove(panelPlayerInformation);
-                    frame.setContentPane(new WildcardClicker(frame).getPanel());
-                    frame.setVisible(true);
-                }
-                else{
-                    frame.remove(panelPlayerInformation);
-                    frame.setContentPane(new Clicker(frame).getPanel());
-                    frame.setVisible(true);
-                }
+                nextPanel();
             }
         });
     }
 
     public JPanel getPanel() {
         return panelPlayerInformation;
+    }
+
+    @Override
+    public void nextPanel() {
+        if (StateSingleton.getInstance().getPlayer().getRoutineType().equals("Wildcard")){
+            frame.remove(panelPlayerInformation);
+            frame.setContentPane(new WildcardClicker(frame).getPanel());
+            frame.setVisible(true);
+        }
+        else{
+            frame.remove(panelPlayerInformation);
+            frame.setContentPane(new Clicker(frame).getPanel());
+            frame.setVisible(true);
+        }
+
     }
 
 }

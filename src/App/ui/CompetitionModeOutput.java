@@ -13,7 +13,7 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.io.IOException;
 
-public class CompetitionModeOutput extends ConsoleToUI {
+public class CompetitionModeOutput extends ConsoleToUI implements UpdatePanel{
 
     private JFrame frame;
     private JTextPane outputTextPane;
@@ -52,9 +52,7 @@ public class CompetitionModeOutput extends ConsoleToUI {
         continueButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.remove(panelCompetitionModeOutput);
-                frame.setContentPane(new MainMenu(frame).getPanel());
-                frame.setVisible(true);
+                nextPanel();
             }
         });
     }
@@ -63,9 +61,12 @@ public class CompetitionModeOutput extends ConsoleToUI {
         return panelCompetitionModeOutput;
     }
 
-    private void createUIComponents() {
-        panelCompetitionModeOutput = new JPanel();
+    @Override
+    public void nextPanel() {
+        frame.remove(panelCompetitionModeOutput);
+        frame.setContentPane(new MainMenu(frame).getPanel());
+        frame.setVisible(true);
 
-        // TODO: place custom component creation code here
     }
+
 }

@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class WorldEvalInput {
+public class WorldEvalInput implements UpdatePanel{
     private JTextField enterExecutionScoreTextField;
     private JTextField enterControlScoreTextField;
     private JTextField enterBodyControlScoreTextField;
@@ -21,7 +21,17 @@ public class WorldEvalInput {
     private JPanel panelWorldEvalInput;
     private JButton submitButton;
     private JFrame frame;
+    private String errorMessage = "Please input an integer between 1 and 10";
 
+    public Boolean getExceptionThrown() {
+        return exceptionThrown;
+    }
+
+    public void setExceptionThrown(Boolean exceptionThrown) {
+        this.exceptionThrown = exceptionThrown;
+    }
+
+    private Boolean exceptionThrown = false;
     public JPanel getPanel() {
         return panelWorldEvalInput;
     }
@@ -33,22 +43,85 @@ public class WorldEvalInput {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int execution = Integer.parseInt(enterExecutionScoreTextField.getText());
-                int control = Integer.parseInt(enterControlScoreTextField.getText());
-                int bodyControl = Integer.parseInt(enterBodyControlScoreTextField.getText());
-                int showmanship = Integer.parseInt(enterShowmanshipScoreTextField.getText());
-                int spaceUseAndEmphasis= Integer.parseInt(enterSpaceUseAndTextField.getText());
-                int choreograhpy = Integer.parseInt(enterChoreographyScoreTextField.getText());
-                int construction = Integer.parseInt(enterConstructionScoreTextField.getText());
-                int trickDiversity = Integer.parseInt(enterTrickDiversityScoreTextField.getText());
-                p.setExecution(execution);
-                p.setControl(control);
-                p.setBodyControl(bodyControl);
-                p.setShowmanship(showmanship);
-                p.setSpaceUseAndEmphasis(spaceUseAndEmphasis);
-                p.setChoreography(choreograhpy);
-                p.setConstruction(construction);
-                p.setTrickDiversity(trickDiversity);
+                try{
+                    int execution = Integer.parseInt(enterExecutionScoreTextField.getText());
+                    p.setExecution(execution);
+
+                }
+                catch(NumberFormatException e1){
+                    setExceptionThrown(true);
+                    enterExecutionScoreTextField.setText(errorMessage);
+
+                }
+                try{
+                    int control = Integer.parseInt(enterControlScoreTextField.getText());
+                    p.setControl(control);
+                }
+                catch(NumberFormatException e1){
+                    setExceptionThrown(true);
+                    enterControlScoreTextField.setText(errorMessage);
+
+
+                }
+                try{
+                    int bodyControl = Integer.parseInt(enterBodyControlScoreTextField.getText());
+                    p.setBodyControl(bodyControl);
+                }
+                catch(NumberFormatException e1){
+                    setExceptionThrown(true);
+                    enterBodyControlScoreTextField.setText(errorMessage);
+
+                }
+                try{
+                    int showmanship = Integer.parseInt(enterShowmanshipScoreTextField.getText());
+                    p.setShowmanship(showmanship);
+
+                }
+                catch(NumberFormatException e1){
+                    setExceptionThrown(true);
+                    enterShowmanshipScoreTextField.setText(errorMessage);
+
+                }
+                try{
+                    int spaceUseAndEmphasis = Integer.parseInt(enterSpaceUseAndTextField.getText());
+                    p.setSpaceUseAndEmphasis(spaceUseAndEmphasis);
+
+                }
+                catch(NumberFormatException e1){
+                    setExceptionThrown(true);
+                    enterSpaceUseAndTextField.setText(errorMessage);
+
+                }
+                try{
+                    int choreograhpy = Integer.parseInt(enterChoreographyScoreTextField.getText());
+                    p.setChoreography(choreograhpy);
+
+                }
+                catch(NumberFormatException e1){
+                    setExceptionThrown(true);
+                    enterChoreographyScoreTextField.setText(errorMessage);
+
+                }
+                try{
+                    int construction = Integer.parseInt(enterConstructionScoreTextField.getText());
+                    p.setConstruction(construction);
+
+                }
+                catch(NumberFormatException e1){
+                    setExceptionThrown(true);
+                    enterConstructionScoreTextField.setText(errorMessage);
+
+                }
+                try{
+                    int trickDiversity = Integer.parseInt(enterTrickDiversityScoreTextField.getText());
+                    p.setTrickDiversity(trickDiversity);
+
+                }
+                catch(NumberFormatException e1){
+                    setExceptionThrown(true);
+                    enterTrickDiversityScoreTextField.setText(errorMessage);
+
+                }
                 StateSingleton.getInstance().setPlayer(p);
                 String playerSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "Player.csv";
                 String dataSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "PlayerDataAnalysis.csv";
@@ -62,11 +135,19 @@ public class WorldEvalInput {
                 } catch (IOException e1) {
                     System.out.println(e1.getMessage());
                 }
-                frame.remove(panelWorldEvalInput);
-                frame.setContentPane(new IndividualModeOutput(frame).getPanel());
-                frame.setVisible(true);
-
+                if(exceptionThrown){
+                   setExceptionThrown(false);
+                }
+                else{
+                    nextPanel();
+                }
             }
         });
+    }
+
+    public void nextPanel(){
+        frame.remove(panelWorldEvalInput);
+        frame.setContentPane(new IndividualModeOutput(frame).getPanel());
+        frame.setVisible(true);
     }
 }

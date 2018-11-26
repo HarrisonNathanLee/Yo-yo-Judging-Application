@@ -6,6 +6,8 @@ import App.player.Player;
 import App.player.PlayerDataAnalysis;
 import App.ui.PlayerInformation;
 
+import javax.swing.*;
+
 public class StateSingleton {
     private static StateSingleton instance;
     private Player player;
@@ -15,6 +17,16 @@ public class StateSingleton {
     private Boolean mode; // <- true for competition, false for individual
     private Boolean startOrLoad ; // <- true for start, false for load
 
+    private JPanel previousPanel;
+
+
+    public JPanel getPreviousPanel() {
+        return previousPanel;
+    }
+
+    public void setPreviousPanel(JPanel previousPanel) {
+        this.previousPanel = previousPanel;
+    }
     public Boolean getStartOrLoad() {
         return startOrLoad;
     }

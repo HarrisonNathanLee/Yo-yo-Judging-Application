@@ -5,11 +5,12 @@ import App.player.Player;
 import App.player.PlayerDataAnalysis;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class PrelimSemiTwoEvalInput {
+public class PrelimSemiTwoEvalInput implements UpdatePanel {
     private JTextField enterExecutionScoreTextField;
     private JTextField enterControlScoreTextField;
     private JTextField enterChoreographyScoreTextField;
@@ -17,30 +18,74 @@ public class PrelimSemiTwoEvalInput {
     private JButton submitButton;
     private JPanel panelSemiTwoEvalInput;
     private JFrame frame;
+    private Player p;
+    private PlayerDataAnalysis data;
+    private String errorMessage = "Please input an integer between 1 and 10";
 
+    public Boolean getExceptionThrown() {
+        return exceptionThrown;
+    }
+
+    public void setExceptionThrown(Boolean exceptionThrown) {
+        this.exceptionThrown = exceptionThrown;
+    }
+
+    private Boolean exceptionThrown = false;
+
+    @Override
     public JPanel getPanel(){
         return panelSemiTwoEvalInput;
     }
 
+    @Override
+    public void nextPanel() {
+        frame.remove(panelSemiTwoEvalInput);
+        frame.setContentPane(new IndividualModeOutput(frame).getPanel());
+        frame.setVisible(true);
+    }
+
     public PrelimSemiTwoEvalInput(JFrame frame){
         this.frame = frame;
-        Player p = StateSingleton.getInstance().getPlayer();
-        PlayerDataAnalysis data = StateSingleton.getInstance().getPlayerDataAnalysis();
+        p = StateSingleton.getInstance().getPlayer();
+        data = StateSingleton.getInstance().getPlayerDataAnalysis();
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int execution = Integer.parseInt(enterExecutionScoreTextField.getText());
-                int control= Integer.parseInt(enterControlScoreTextField.getText());
-                int chhoreography = Integer.parseInt(enterChoreographyScoreTextField.getText());
-                int bodyControl = Integer.parseInt(enterBodyControlScoreTextField.getText());
-                p.setExecution(execution);
-                p.setControl(control);
-                p.setChoreography(chhoreography);
-                p.setBodyControl(bodyControl);
+                try {
+                    int execution = Integer.parseInt(enterExecutionScoreTextField.getText());
+                    p.setExecution(execution);
+                }
+                catch(NumberFormatException e1){
+                    setExceptionThrown(true);
+                    enterExecutionScoreTextField.setText(errorMessage);
+                }
+                try{
+                    int control= Integer.parseInt(enterControlScoreTextField.getText());
+                    p.setControl(control);
+                }
+                catch (NumberFormatException e1){
+                    setExceptionThrown(true);
+                    enterControlScoreTextField.setText(errorMessage);
+
+                }
+                try{
+                    int choreography = Integer.parseInt(enterChoreographyScoreTextField.getText());
+                    p.setChoreography(choreography);
+                }
+                catch (NumberFormatException e1){
+                    setExceptionThrown(true);
+                    enterChoreographyScoreTextField.setText(errorMessage);
+
+                }
+                try{
+                    int bodyControl = Integer.parseInt(enterBodyControlScoreTextField.getText());
+                    p.setBodyControl(bodyControl);
+                }
+                catch(NumberFormatException e1){
+                    setExceptionThrown(true);
+                    enterChoreographyScoreTextField.setText(errorMessage);
+                }
                 StateSingleton.getInstance().setPlayer(p);
-                frame.remove(panelSemiTwoEvalInput);
-                frame.setContentPane(new IndividualModeOutput(frame).getPanel());
-                frame.setVisible(true);
                 String playerSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "Player.csv";
                 String dataSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "PlayerDataAnalysis.csv";
                 try {
@@ -53,7 +98,12 @@ public class PrelimSemiTwoEvalInput {
                 } catch (IOException e1) {
                     System.out.println(e1.getMessage());
                 }
-
+                if (getExceptionThrown()){
+                    setExceptionThrown(false);
+                }
+                else{
+                    nextPanel();
+                }
             }
         });
     }

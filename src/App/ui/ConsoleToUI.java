@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class ConsoleToUI {
+    protected static final String STRINGBREAK  = "---------------------------------------";
 
 
     private void updateTextPane(final String text, JTextPane textPane) {

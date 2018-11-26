@@ -15,9 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-import static App.ui.Routine.STRINGBREAK;
-
-public class IndividualModeOutput extends ConsoleToUI{
+public class IndividualModeOutput extends ConsoleToUI implements UpdatePanel{
     private static final String PERFORMANCEEVALS = "'s performance evaluation scores: ";
     private JPanel panelIndividualModeOutput;
     private JTextPane outputTextPane;
@@ -68,17 +66,7 @@ public class IndividualModeOutput extends ConsoleToUI{
         continueButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(StateSingleton.getInstance().getMode()){
-                    frame.remove(panelIndividualModeOutput);
-                    frame.setContentPane(new AnotherPlayer(frame).getPanel());
-                    frame.setVisible(true);
-
-                }
-                else{
-                    frame.remove(panelIndividualModeOutput);
-                    frame.setContentPane(new MainMenu(frame).getPanel());
-                    frame.setVisible(true);
-                }
+               nextPanel();
             }
         });
     }
@@ -155,43 +143,22 @@ public class IndividualModeOutput extends ConsoleToUI{
 
     }
 
-//    private void updateTextPane(final String text) {
-//        SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                Document doc = outputTextPane.getDocument();
-//                try {
-//                    doc.insertString(doc.getLength(), text, null);
-//                } catch (BadLocationException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                outputTextPane.setCaretPosition(doc.getLength() - 1);
-//            }
-//        });
-//    }
-//
-//    private void redirectSystemStreams() {
-//        OutputStream out = new OutputStream() {
-//            @Override
-//            public void write(final int b) throws IOException {
-//                updateTextPane(String.valueOf((char) b));
-//            }
-//
-//            @Override
-//            public void write(byte[] b, int off, int len) throws IOException {
-//                updateTextPane(new String(b, off, len));
-//            }
-//
-//            @Override
-//            public void write(byte[] b) throws IOException {
-//                write(b, 0, b.length);
-//            }
-//        };
-//
-//        System.setOut(new PrintStream(out, true));
-//        System.setErr(new PrintStream(out, true));
-//    }
-
-    public Container getPanel() {
+    public JPanel getPanel() {
         return panelIndividualModeOutput;
+    }
+
+    @Override
+    public void nextPanel() {
+        if(StateSingleton.getInstance().getMode()){
+            frame.remove(panelIndividualModeOutput);
+            frame.setContentPane(new AnotherPlayer(frame).getPanel());
+            frame.setVisible(true);
+
+        }
+        else{
+            frame.remove(panelIndividualModeOutput);
+            frame.setContentPane(new MainMenu(frame).getPanel());
+            frame.setVisible(true);
+        }
     }
 }

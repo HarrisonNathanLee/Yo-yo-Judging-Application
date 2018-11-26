@@ -6,8 +6,10 @@ import App.Model.StateSingleton;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import App.Model.Factory;
+import com.sun.xml.internal.ws.util.xml.CDATA;
 
-public class CompetitionLoad {
+public class CompetitionLoad implements UpdatePanel{
     private JTextField competitionNameTextField;
     private JPanel panelCompetitionLoad;
     private JButton submitButton;
@@ -16,6 +18,7 @@ public class CompetitionLoad {
     private JFrame frame;
     private Competition c;
     private CompetitionDataAnalysis cData;
+    private Factory f = new Factory();
 
     public JPanel getPanel(){
 
@@ -30,51 +33,24 @@ public class CompetitionLoad {
                 String competitionName = competitionNameTextField.getText();
                 String competitionDivision = divisionComboBox.getSelectedItem().toString();
                 String competitionRoutineType = routineTypeComboBox.getSelectedItem().toString();
-                createCompetitionAndCompetitionDataAnalysisSubtype(competitionRoutineType);
+                f.createCompetitionAndCompetitionDataAnalysisSubtype(competitionRoutineType,c, cData);
                 c = StateSingleton.getInstance().getCompetition();
                 c.setCompetitionName(competitionName);
                 c.setCompetitionDivision(competitionDivision);
                 StateSingleton.getInstance().setStartOrLoad(false);
                 StateSingleton.getInstance().setCompetition(c);
-                frame.remove(panelCompetitionLoad);
-                frame.setContentPane(new CompetitionModeOutput(frame).getPanel());
-                frame.setVisible(true);
+                nextPanel();
             }
         });
     }
 
-    //EFFECTS: Factory - creates competition data analysis subtype based on user input
-    public void createCompetitionAndCompetitionDataAnalysisSubtype(String routineType){
-        c = new Competition();
-        if(routineType.equals("Wildcard")){
-            cData = new WildcardCompetitionDataAnalysis(c);
-            c.setCompetitionRoutineType("Wildcard");
-            StateSingleton.getInstance().setCompetition(c);
-            StateSingleton.getInstance().setCompetitionDataAnalysis(cData);
-        }
-        else if(routineType.equals("Prelim") || routineType.equals("Two Minute Final") || routineType.equals("Semi")){
-            cData = new PrelimTwoSemiCompetitionDataAnalysis(c);
-            if (routineType.equals("Prelim")){
-                c.setCompetitionRoutineType("Prelim");
-            }
-            else if(routineType.equals("Semi")){
-                c.setCompetitionRoutineType("Semi");
-            }
-            else if(routineType.equals("Two Minute Final")){
-                c.setCompetitionRoutineType("Two Minute Final");
-            }
 
-            StateSingleton.getInstance().setCompetition(c);
-            StateSingleton.getInstance().setCompetitionDataAnalysis(cData);
+    @Override
+    public void nextPanel() {
+        frame.remove(panelCompetitionLoad);
+        frame.setContentPane(new CompetitionModeOutput(frame).getPanel());
+        frame.setVisible(true);
 
-        }
-        else if(routineType.equals("Final")){
-            cData = new WorldFinalCompetitionDataAnalysis(c);
-            c.setCompetitionRoutineType("World Final");
-            StateSingleton.getInstance().setCompetition(c);
-            StateSingleton.getInstance().setCompetitionDataAnalysis(cData);
-
-        }
     }
 
 }

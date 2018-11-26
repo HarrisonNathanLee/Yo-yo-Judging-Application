@@ -9,19 +9,23 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-public class WildcardClicker {
+public class WildcardClicker extends ClickerTimer implements UpdatePanel{
     private JPanel panelWildcardClicker;
     private JLabel numberPositiveClicksJLabel;
+    private JLabel timeRemainingLabel;
     private JFrame frame;
+    private Player p;
+    private PlayerDataAnalysis data;
 
     public WildcardClicker(JFrame frame){
         this.frame = frame;
+        p = StateSingleton.getInstance().getPlayer();
+        data = StateSingleton.getInstance().getPlayerDataAnalysis();
+        startTimer(p.getRoutineLength(),timeRemainingLabel,p);
         panelWildcardClicker.setFocusable(true);
         panelWildcardClicker.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                Player p = StateSingleton.getInstance().getPlayer();
-                PlayerDataAnalysis data = StateSingleton.getInstance().getPlayerDataAnalysis();
                 if (e.getKeyCode() == KeyEvent.VK_J) {
                     p.awardClick();
                     numberPositiveClicksJLabel.setText(String.valueOf(p.getPositiveClicks()));
@@ -53,16 +57,23 @@ public class WildcardClicker {
                     } catch (IOException e1) {
                         System.out.println(e1.getMessage());
                     }
-                    frame.remove(panelWildcardClicker);
-                    frame.setContentPane(new IndividualModeOutput(frame).getPanel());
-                    frame.setVisible(true);
+                    nextPanel();
                 }
             }
         });
     }
 
 
+    @Override
     public JPanel getPanel() {
         return panelWildcardClicker;
+    }
+
+    @Override
+    public void nextPanel(){
+        frame.remove(panelWildcardClicker);
+        frame.setContentPane(new IndividualModeOutput(frame).getPanel());
+        frame.setVisible(true);
+
     }
 }

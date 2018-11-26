@@ -1,6 +1,4 @@
 package App.ui;
-
-import App.Model.ObjectContainer;
 import App.Model.StateSingleton;
 import App.player.Player;
 import App.player.PlayerDataAnalysis;
@@ -15,7 +13,7 @@ import java.awt.event.KeyEvent;
 
 import static java.awt.event.KeyEvent.*;
 
-public class Clicker extends ObjectContainer {
+public class Clicker extends ClickerTimer implements UpdatePanel{
     private JPanel panelClicker;
     private JLabel numberPositiveClicksJLabel;
     private JLabel numberNegativeClicksJLabel;
@@ -28,9 +26,6 @@ public class Clicker extends ObjectContainer {
     private JLabel numberDiscardsJLabel;
     private JLabel timeRemainingLabel;
     private JFrame frame;
-    private Timer stopwatch;
-    private int count;
-    private int delay = 1000;
     private Player p;
     private PlayerDataAnalysis data;
 
@@ -38,7 +33,7 @@ public class Clicker extends ObjectContainer {
         this.frame = frame;
         p = StateSingleton.getInstance().getPlayer();
         data = StateSingleton.getInstance().getPlayerDataAnalysis();
-        startTimer(p.getRoutineLength());
+        startTimer(p.getRoutineLength(),timeRemainingLabel, p);
         panelClicker.setFocusable(true);
         panelClicker.addKeyListener(new KeyAdapter() {
             @Override
@@ -108,6 +103,7 @@ public class Clicker extends ObjectContainer {
     public JPanel getPanel() {
         return panelClicker;
     }
+
     public void nextPanel(){
         p = StateSingleton.getInstance().getPlayer();
         if (p.getRoutineType().equals("World Final")) {
@@ -121,23 +117,5 @@ public class Clicker extends ObjectContainer {
             frame.setVisible(true);
         }
     }
-    public void startTimer(int countPassed) {
-        ActionListener action = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (count == 0) {
-                    stopwatch.stop();
-                    StateSingleton.getInstance().setPlayer(p);
-                    nextPanel();
-                } else {
-                    timeRemainingLabel.setText("Seconds remaining: " + count);
-                    count--;
-                }
-            }
-        };
-        stopwatch = new Timer(delay, action);
-        stopwatch.setInitialDelay(0);
-        stopwatch.start();
-        count = countPassed;
-    }
+
 }
