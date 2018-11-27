@@ -96,6 +96,7 @@ public class PrelimSemiTwoEvalInput implements UpdatePanel {
 
                 String playerSaveLocation = p.getPlayerSaveLocation();
                 String dataSaveLocation = p.getDataSaveLocation();
+                data.callAllDataAnalysis();
 ////               String playerSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "Player.csv";
 //                String dataSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "PlayerDataAnalysis.csv";
                 try {

@@ -35,6 +35,9 @@ public class Clicker extends ClickerTimer implements UpdatePanel{
         data = StateSingleton.getInstance().getPlayerDataAnalysis();
         startTimer(p.getRoutineLength(),timeRemainingLabel, p);
         panelClicker.setFocusable(true);
+        panelClicker.requestFocusInWindow();
+        panelClicker.setFocusTraversalKeysEnabled(false);
+        panelClicker.grabFocus();
         panelClicker.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {

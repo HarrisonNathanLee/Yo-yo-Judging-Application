@@ -92,7 +92,6 @@ public class PickRoutineType implements UpdatePanel{
         });
     }
 
-
     public JPanel getPanel(){
         return panelPickRoutineType;
     }
