@@ -48,7 +48,6 @@ public class CompetitionModeOutput extends ConsoleToUI implements UpdatePanel{
                 System.out.println(e.getMessage());
             }
         }
-
         continueButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

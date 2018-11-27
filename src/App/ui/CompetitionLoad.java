@@ -4,6 +4,7 @@ import App.Competition.*;
 import App.Model.StateSingleton;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import App.Model.Factory;
@@ -44,12 +45,14 @@ public class CompetitionLoad implements UpdatePanel{
         });
     }
 
-
     @Override
     public void nextPanel() {
         frame.remove(panelCompetitionLoad);
-        frame.setContentPane(new CompetitionModeOutput(frame).getPanel());
+        JPanel panel = new CompetitionModeOutput(frame).getPanel();
+        frame.setContentPane(panel);
         frame.setVisible(true);
+
+
 
     }
 

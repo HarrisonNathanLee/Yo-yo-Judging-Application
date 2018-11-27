@@ -29,7 +29,8 @@ public class PlayerInformationCompetition implements UpdatePanel {
         return exceptionThrown;
     }
 
-    public void setExceptionThrown(Boolean exceptionThrown) {
+    public void setExceptionThrown(
+            Boolean exceptionThrown) {
         this.exceptionThrown = exceptionThrown;
     }
 
@@ -88,16 +89,17 @@ public class PlayerInformationCompetition implements UpdatePanel {
 
     @Override
     public void nextPanel() {
+        JPanel panel;
         if (StateSingleton.getInstance().getPlayer().getRoutineType().equals("Wildcard")){
-            frame.remove(panelPlayerInformationCompetition);
-            frame.setContentPane(new WildcardClicker(frame).getPanel());
-            frame.setVisible(true);
+            panel = new WildcardClicker(frame).getPanel();
         }
         else {
-            frame.remove(panelPlayerInformationCompetition);
-            frame.setContentPane(new Clicker(frame).getPanel());
-            frame.setVisible(true);
+            panel = new Clicker(frame).getPanel();
         }
+        frame.remove(panelPlayerInformationCompetition);
+        frame.setContentPane(panel);
+        panel.grabFocus();
+        frame.setVisible(true);
 
     }
 }

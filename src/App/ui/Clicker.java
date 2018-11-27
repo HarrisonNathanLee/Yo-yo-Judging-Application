@@ -10,8 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.security.Key;
 
 import static java.awt.event.KeyEvent.*;
+import javax.swing.KeyStroke;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.Action;
 
 public class Clicker extends ClickerTimer implements UpdatePanel{
     private JPanel panelClicker;
@@ -35,12 +40,13 @@ public class Clicker extends ClickerTimer implements UpdatePanel{
         data = StateSingleton.getInstance().getPlayerDataAnalysis();
         startTimer(p.getRoutineLength(),timeRemainingLabel, p);
         panelClicker.setFocusable(true);
-        panelClicker.requestFocusInWindow();
-        panelClicker.setFocusTraversalKeysEnabled(false);
-        panelClicker.grabFocus();
+        panelClicker.isDisplayable();
+        panelClicker.setVisible(true);
+        panelClicker.requestFocus();
         panelClicker.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+
                 if (e.getKeyCode() == KeyEvent.VK_F) {
                     p.removeClick();
                     numberNegativeClicksJLabel.setText(String.valueOf(p.getNegativeClicks()));
@@ -102,6 +108,7 @@ public class Clicker extends ClickerTimer implements UpdatePanel{
         });
 
     }
+
 
     public JPanel getPanel() {
         return panelClicker;

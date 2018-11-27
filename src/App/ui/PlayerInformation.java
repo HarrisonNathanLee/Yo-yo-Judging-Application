@@ -48,16 +48,18 @@ public class PlayerInformation implements UpdatePanel{
 
     @Override
     public void nextPanel() {
+        JPanel panel;
         if (StateSingleton.getInstance().getPlayer().getRoutineType().equals("Wildcard")){
-            frame.remove(panelPlayerInformation);
-            frame.setContentPane(new WildcardClicker(frame).getPanel());
-            frame.setVisible(true);
+            panel = new WildcardClicker(frame).getPanel();
+
         }
         else{
-            frame.remove(panelPlayerInformation);
-            frame.setContentPane(new Clicker(frame).getPanel());
-            frame.setVisible(true);
+            panel = new Clicker(frame).getPanel();
         }
+        frame.remove(panelPlayerInformation);
+        frame.setContentPane(panel);
+        panel.grabFocus();
+        frame.setVisible(true);
 
     }
 

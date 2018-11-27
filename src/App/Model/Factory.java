@@ -16,16 +16,9 @@ public class Factory {
         }
         else if(routineType.equals("Prelim") || routineType.equals("Two Minute Final") || routineType.equals("Semi")){
             cData = new PrelimTwoSemiCompetitionDataAnalysis(c);
-            if (routineType.equals("Prelim")){
-                c.setCompetitionRoutineType(routineType);
-            }
-            else if(routineType.equals("Semi")){
-                c.setCompetitionRoutineType(routineType);
-            }
-            else if(routineType.equals("Two Minute Final")){
-                c.setCompetitionRoutineType(routineType);
-            }
-
+            c.setCompetitionRoutineType(routineType);
+            c.setCompetitionRoutineType(routineType);
+            c.setCompetitionRoutineType(routineType);
             StateSingleton.getInstance().setCompetition(c);
             StateSingleton.getInstance().setCompetitionDataAnalysis(cData);
 
@@ -51,18 +44,8 @@ public class Factory {
         } else if (routineType.equals("Prelim") || routineType.equals("Semi") || routineType.equals("Two Minute Final")) {
             PrelimTwoSemiPlayer p = new PrelimTwoSemiPlayer();
             PrelimTwoSemiPlayerDataAnalysis data = new PrelimTwoSemiPlayerDataAnalysis(p);
-            if (routineType.equals("Prelim")){
-                p.setRoutineType(routineType);
-                p.setRoutineLength(routineType);
-            }
-            else if(routineType.equals("Semi")){
-                p.setRoutineType(routineType);
-                p.setRoutineLength(routineType);
-            }
-            else if(routineType.equals("Two Minute Final")){
-                p.setRoutineType(routineType);
-                p.setRoutineLength(routineType);
-            }
+            p.setRoutineType(routineType);
+            p.setRoutineLength(routineType);
             return data;
         } else if (routineType.equals("World Final")) {
             WorldFinalPlayer p = new WorldFinalPlayer();
@@ -80,32 +63,22 @@ public class Factory {
     public void createPlayerAndDataSubtype(String routineType, Player p, PlayerDataAnalysis data) {
         if (routineType.equals("Wildcard")) {
             p = new WildcardPlayer();
+            data = new WildcardPlayerDataAnalysis(p);
             p.setRoutineType(routineType);
             p.setRoutineLength(routineType);
-            data = new WildcardPlayerDataAnalysis(p);
             StateSingleton.getInstance().setPlayer(p);
             StateSingleton.getInstance().setPlayerDataAnalysis(data);
         } else if (routineType.equals("Prelim") || routineType.equals("Semi") || routineType.equals("Two Minute Final")) {
             p = new PrelimTwoSemiPlayer();
             data = new PrelimTwoSemiPlayerDataAnalysis(p);
-            if (routineType.equals("Prelim")){
-                p.setRoutineType(routineType);
-                p.setRoutineLength(routineType);
-            }
-            else if(routineType.equals("Semi")){
-                p.setRoutineType(routineType);
-                p.setRoutineLength(routineType);
-            }
-            else if(routineType.equals("Two Minute Final")){
-                p.setRoutineType(routineType);
-                p.setRoutineLength(routineType);
-            }
+            p.setRoutineType(routineType);
+            p.setRoutineLength(routineType);
             StateSingleton.getInstance().setPlayer(p);
             StateSingleton.getInstance().setPlayerDataAnalysis(data);
         } else if (routineType.equals("World Final")) {
             p = new WorldFinalPlayer();
-            p.setRoutineType("World Final");
-            p.setRoutineLength("World Final");
+            p.setRoutineType(routineType);
+            p.setRoutineLength(routineType);
             data = new WorldFinalPlayerDataAnalysis(p);
             StateSingleton.getInstance().setPlayer(p);
             StateSingleton.getInstance().setPlayerDataAnalysis(data);
