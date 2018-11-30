@@ -90,14 +90,14 @@ public class PrelimSemiTwoEvalInput implements UpdatePanel {
                 }
                 catch(NumberFormatException e1){
                     setExceptionThrown(true);
-                    enterChoreographyScoreTextField.setText(errorMessage);
+                    enterBodyControlScoreTextField.setText(errorMessage);
                 }
                 StateSingleton.getInstance().setPlayer(p);
 
                 String playerSaveLocation = p.getPlayerSaveLocation();
                 String dataSaveLocation = p.getDataSaveLocation();
                 data.callAllDataAnalysis();
-////               String playerSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "Player.csv";
+////              String playerSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "Player.csv";
 //                String dataSaveLocation = p.getFirstName() + "_" + p.getLastName() + "_" + p.getRoutineType() + "_" + "PlayerDataAnalysis.csv";
                 try {
                     p.save(playerSaveLocation);

@@ -173,8 +173,6 @@ public class Competition extends Loadable implements Saveable {
         data.printLoadOutput(playerDataAnalysisPartsOfLine);
     }
 
-    //TODO Figure out a way to remove the methods below
-
     @Override
     public void printLoadOutput(ArrayList<String> partsOfLine){
         System.out.println("nothing");
